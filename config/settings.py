@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-s74uw5q)=0j0-r)akx9p!-m6dn^kgtb3%j30npc%qv9ef1h9_g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'habitathunt.onrender.com'
+]
 
 
 # Application definition
