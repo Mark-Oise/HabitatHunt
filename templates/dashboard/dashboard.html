@@ -17,8 +17,9 @@
     <div id="main-content" class="relative w-full h-full overflow-y-auto lg:ml-64">
         <main>
             <div class="px-4 pt-6">
-                <h1 class="text-3xl font-bold">Welcome back, {{ user.name }}</h1>
-                <p class="text-gray-600 mt-2">Here's an overview of your lead generation performance.</p>
+                <h1 class="text-3xl font-bold dark:text-gray-200">Welcome back, {{ user.name }}</h1>
+                <p class="text-gray-600 mt-2 dark:text-gray-100">Here's an overview of your lead generation performance.
+                </p>
 
                 <div class="grid gap-6 xl:grid-cols-4 2xl:grid-cols-4 mt-6">
                     <!-- Total Leads Widget -->
@@ -26,11 +27,11 @@
                         class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-900">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h5 class="text-gray-500 text-sm">Total Leads</h5>
+                                <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Total Leads</h5>
                                 <div class="mt-4">
-                                    <span class="text-3xl font-semibold">2,853</span>
-                                    <span class="ml-2 text-sm text-green-500">+12% <span class="text-gray-400">from last
-                                            month</span></span>
+                                    <span class="text-3xl font-semibold dark:text-gray-100">2,853</span>
+                                    <div class="text-sm text-green-500 mt-1">+12% <span class="text-gray-400">from last
+                                            month</span></div>
                                 </div>
                             </div>
                             <div class="text-gray-400">
@@ -48,9 +49,9 @@
                         class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-900">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h5 class="text-gray-500 text-sm font-bold">Positive Sentiment</h5>
+                                <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Positive Sentiment</h5>
                                 <div class="mt-4">
-                                    <span class="text-3xl font-semibold">76%</span>
+                                    <span class="text-3xl font-semibold dark:text-gray-200">76%</span>
                                     <div class="text-sm text-green-500 mt-1">+8% <span class="text-gray-400">from last
                                             month</span></div>
                                 </div>
@@ -69,11 +70,11 @@
                         class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-900">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h5 class="text-gray-500 text-sm">Engagement Rate</h5>
-                                <div class="flex items-baseline mt-2">
-                                    <h2 class="text-3xl font-semibold">24.3%</h2>
-                                    <span class="text-sm text-red-500 ml-2">-3% <span class="text-gray-500">from last
-                                            month</span></span>
+                                <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Engagement Rate</h5>
+                                <div class="mt-4">
+                                    <span class="text-3xl font-semibold dark:text-gray-200">24.3%</span>
+                                    <div class="text-sm text-red-500 mt-1">-8% <span class="text-gray-400">from last
+                                            month</span></div>
                                 </div>
                             </div>
                             <div class="text-gray-400">
@@ -90,12 +91,13 @@
                     <div
                         class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-900">
                         <div class="flex justify-between items-start">
+
                             <div>
-                                <h5 class="text-gray-500 text-sm">Top Hashtag</h5>
-                                <div class="flex items-baseline mt-2">
-                                    <h2 class="text-3xl font-semibold">#LuxuryHomes</h2>
-                                    <span class="text-sm text-green-500 ml-2">+5K <span
-                                            class="text-gray-500">impressions</span></span>
+                                <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Top Hashtag</h5>
+                                <div class="mt-4">
+                                    <span class="text-3xl font-semibold dark:text-gray-200">#LuxuryHomes</span>
+                                    <div class="text-sm text-green-500 mt-1">+5K <span class="text-gray-400">
+                                            impressions</span></div>
                                 </div>
                             </div>
                             <div class="text-gray-400">
@@ -110,7 +112,7 @@
 
                 <div class="grid w-full grid-cols-1 gap-4 mt-4 xl:grid-cols-1 2xl:grid-cols-3">
 
-                    <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+                    <div class="bg-white dark:bg-gray-900 relative shadow-md sm:rounded-lg overflow-hidden">
                         <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                             <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Recent Leads</h2>
                         </div>
@@ -163,12 +165,29 @@
                                 <tbody>
                                     <tr class="border-b dark:border-gray-700">
                                         <th scope="row"
-                                            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            Apple iMac 27&#34;</th>
-                                        <td class="px-4 py-3">PC</td>
-                                        <td class="px-4 py-3">Apple</td>
+                                            class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                            <img class="w-8 h-8 rounded-full"
+                                                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                                                alt="user photo">
+                                            <div class="ps-2">
+                                                <div class="text-base font-semibold">Neil Sims</div>
+                                                <div class="font-normal text-gray-500">neil.sims@flowbite.com</div>
+                                            </div>
+                                        </th>
+                                        <td class="px-4 py-3">
+                                            <span
+                                                class="inline-flex items-center border border-grey-200 text-grey-900 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                                                Instagram
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3"><span
+                                                class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                                                <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                                Hot
+                                            </span>
+                                        </td>
                                         <td class="px-4 py-3">300</td>
-                                        <td class="px-4 py-3">$2999</td>
+                                        <td class="px-4 py-3">92</td>
                                         <td class="px-4 py-3 flex items-center justify-end">
                                             <button id="apple-imac-27-dropdown-button"
                                                 data-dropdown-toggle="apple-imac-27-dropdown"
