@@ -1,12 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from .managers import CustomUserManager
 
 # Create your models here.
 
 class User(AbstractUser):
-    is_realtor = models.BooleanField(default=False)
-    is_agency = models.BooleanField(default=False)
+    username = None
+    email = models.EmailField(unique=True)
+    name = models.CharField(max_length=255)
 
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+    objects = CustomUserManager()
+
+    def __str__(self):
+        return self.email
+    
 
 class Realtor(models.Model):
     # User and Company Information
@@ -45,42 +54,5 @@ class Realtor(models.Model):
         return self.company_name
 
 
-class Agency(models.Model):
-    # Basic Information
-    name = models.CharField(max_length=255)
-    headquarters_address = models.CharField(max_length=255)
-    main_phone = models.CharField(max_length=20)
-    email = models.EmailField()
-    website = models.URLField()
-    
-    # Business Details
-    founding_date = models.DateField()
-    license_number = models.CharField(max_length=50)
-    operating_states = models.JSONField(default=list)
-    number_of_offices = models.IntegerField()
-    
-    # Team Information
-    number_of_agents = models.IntegerField()
-    realtors = models.ManyToManyField(Realtor, related_name='agencies')
-    
-    # Financial Information
-    annual_sales_volume = models.DecimalField(max_digits=12, decimal_places=2)
-    commission_structure = models.JSONField(default=dict)
-    
-    # Marketing and Branding
-    logo = models.ImageField(upload_to='agency_logos/')
-    brand_colors = models.JSONField(default=dict)
-    social_media_presence = models.JSONField(default=dict)
-    
-    # Status and Verification
-    is_verified = models.BooleanField(default=False)
-    membership_status = models.CharField(max_length=50)
-    
-    # Timestamps
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    deleted_at = models.DateTimeField(null=True, blank=True)
-    is_deleted = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.name
+   
