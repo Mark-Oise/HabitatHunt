@@ -36,6 +36,8 @@ ALLOWED_HOSTS = [
     'habitathunt.onrender.com'
 ]
 
+
+
 SITE_ID = 1
 
 # Application definition
