@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
     'habitathunt.onrender.com'
 ]
 
+SITE_ID = 1
 
 # Application definition
 
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'apps.marketing',
     'apps.accounts',
     'apps.dashboard',
@@ -202,3 +204,4 @@ SOCIALACCOUNT_PROVIDERS = {
         'SECRET': env('GOOGLE_CLIENT_SECRET'),
     }
 }
+
