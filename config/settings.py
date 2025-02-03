@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'apps.marketing',
     'apps.accounts',
     'apps.dashboard',
+    'apps.leads',
     'compressor',
     'allauth',
     'allauth.account',

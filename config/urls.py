@@ -24,7 +24,10 @@ urlpatterns = [
     path('', include('apps.marketing.urls')),
     path('accounts/', include('allauth.urls')),
     path('', include('apps.dashboard.urls')),
+    path('leads/', include('apps.leads.urls')),
+
 ]
+    
 
 
 if settings.DEBUG:
