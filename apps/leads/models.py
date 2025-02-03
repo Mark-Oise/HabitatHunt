@@ -3,6 +3,23 @@ from django.conf import settings
 
 # Create your models here.
 
+PLATFORM_CHOICES = [
+    ('facebook', 'Facebook'),
+    ('instagram', 'Instagram'),
+]
+
+class RawComment(models.Model):
+    username = models.CharField(max_length=255)
+    platform = models.CharField(max_length=20, choices=PLATFORM_CHOICES, default='other')
+    text = models.TextField()
+    likes = models.IntegerField(default=0)
+    replies = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+
 
 class Lead(models.Model):
     STATUS_CHOICES = [
@@ -19,14 +36,6 @@ class Lead(models.Model):
         ('hot', 'Hot'),
     ]
 
-    SOURCE_CHOICES = [
-        ('facebook', 'Facebook'),
-        ('instagram', 'Instagram'),
-        ('linkedin', 'LinkedIn'),
-        ('twitter', 'Twitter'),
-        ('other', 'Other'),
-    ]
-
     # User and basic info
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
@@ -39,9 +48,8 @@ class Lead(models.Model):
     engagement_score = models.FloatField(default=0.0)
     
     # Classification
-    source = models.CharField(max_length=20, choices=SOURCE_CHOICES, default='other')
+    source = models.CharField(max_length=20, choices=PLATFORM_CHOICES, default='other')
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='cold')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
 
     # Metadata
     created_at = models.DateTimeField(auto_now_add=True)
