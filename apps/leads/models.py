@@ -67,22 +67,22 @@ class Lead(models.Model):
     def __str__(self):
         return f'{self.name} - {self.category}'
 
-    def categorize_lead(self):
-        """
-        Automatically categorize lead based on sentiment and engagement scores
-        """
-        if self.sentiment_score > 0.8 and self.engagement_score > 50:
-            self.category = 'hot'
-        elif self.sentiment_score > 0.5 and self.engagement_score > 20:
-            self.category = 'warm'
-        else:
-            self.category = 'cold'
-        self.save()
+    # def categorize_lead(self):
+    #     """
+    #     Automatically categorize lead based on sentiment and engagement scores
+    #     """
+    #     if self.sentiment_score > 0.8 and self.engagement_score > 50:
+    #         self.category = 'hot'
+    #     elif self.sentiment_score > 0.5 and self.engagement_score > 20:
+    #         self.category = 'warm'
+    #     else:
+    #         self.category = 'cold'
+    #     self.save()
 
-    def save(self, *args, **kwargs):
-        """
-        Override save to ensure lead is categorized before saving
-        """
-        if not self.pk:  # Only categorize on creation
-            self.categorize_lead()
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     """
+    #     Override save to ensure lead is categorized before saving
+    #     """
+    #     if not self.pk:  # Only categorize on creation
+    #         self.categorize_lead()
+    #     super().save(*args, **kwargs)
