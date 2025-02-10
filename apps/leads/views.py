@@ -1,13 +1,32 @@
 from django.shortcuts import render
 from .models import Lead
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import redirect
+
 # Create your views here.
 
 
 def leads(request):
     leads = Lead.objects.filter(user=request.user)
-    return render(request, 'dashboard/leads.html', {'leads': leads})
+    total_leads = leads.count()
+    
+    # Handle pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(leads, 10)  # Show 10 leads per page
+    
+    try:
+        leads = paginator.page(page)
+    except PageNotAnInteger:
+        leads = paginator.page(1)
+    except EmptyPage:
+        leads = paginator.page(paginator.num_pages)
+        
+    context = {
+        'leads': leads,
+        'total_leads': total_leads,
+    }
+        
+    return render(request, 'dashboard/leads.html', context)
 
 
 # def create_lead(request):

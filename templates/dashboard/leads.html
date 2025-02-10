@@ -66,9 +66,11 @@
                             <div class="flex-1 flex items-center space-x-2">
                                 <h5>
                                     <span class="text-gray-500">All Leads:</span>
-                                    <span class="dark:text-white">123456</span>
+                                    <span class="dark:text-white">{{ total_leads }}</span>
                                 </h5>
-                                <h5 class="text-gray-500 dark:text-gray-400 ml-1">1-100 (436)</h5>
+                                <h5 class="text-gray-500 dark:text-gray-400 ml-1">
+                                    {{ leads.start_index }}-{{ leads.end_index }} ({{ leads.paginator.count }})
+                                </h5>
                                 <button type="button" class="group" data-tooltip-target="results-tooltip">
                                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         class="h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -81,7 +83,8 @@
                                 </button>
                                 <div id="results-tooltip" role="tooltip"
                                     class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                    Showing 1-100 of 436 results
+                                    Showing {{ leads.start_index }}-{{ leads.end_index }} of {{ leads.paginator.count }}
+                                    results
                                     <div class="tooltip-arrow" data-popper-arrow=""></div>
                                 </div>
                             </div>
@@ -627,6 +630,7 @@
                         </div>
 
 
+                        {% if not leads %}
                         <div id="alert-additional-content-3"
                             class="m-4 p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
                             role="alert">
@@ -643,9 +647,7 @@
                                 New leads will be displayed here once they are available.
                             </div>
                         </div>
-
-
-
+                        {% else %}
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
@@ -669,6 +671,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for lead in leads %}
                                     <tr class="border-b dark:border-gray-700">
                                         <td class="w-4 px-4 py-3">
                                             <div class="flex items-center">
@@ -684,24 +687,24 @@
                                                 src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                                                 alt="user photo">
                                             <div class="ps-2">
-                                                <div class="text-base font-semibold">Neil Sims</div>
-                                                <div class="font-normal text-gray-500">neil.sims@gmail.com</div>
+                                                <div class="text-base font-semibold">{{ lead.name }}</div>
+                                                <div class="font-normal text-gray-500">{{ lead.email }}</div>
                                             </div>
                                         </th>
                                         <td class="px-4 py-3">
                                             <span
                                                 class="inline-flex items-center border border-grey-200 text-grey-900 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-gray-800 dark:text-white dark:border-gray-600">
-                                                Instagram
+                                                {{ lead.source }}
                                             </span>
                                         </td>
                                         <td class="px-4 py-3"><span
                                                 class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
                                                 <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
-                                                Hot
+                                                {{ lead.category }}
                                             </span>
                                         </td>
-                                        <td class="px-4 py-3">300</td>
-                                        <td class="px-4 py-3">92</td>
+                                        <td class="px-4 py-3">{{ lead.sentiment_score }}</td>
+                                        <td class="px-4 py-3">{{ lead.engagement_score }}</td>
                                         <td class="px-4 py-3 flex items-center justify-end">
                                             <button id="apple-imac-27-dropdown-button"
                                                 data-dropdown-toggle="apple-imac-27-dropdown"
@@ -724,8 +727,9 @@
                                                             class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</button>
                                                     </li>
                                                     <li>
-                                                        <button type="button" data-modal-target="delete-modal"
-                                                            data-modal-toggle="delete-modal"
+                                                        <button type="button" data-drawer-target="edit-lead-drawer"
+                                                            data-drawer-show="edit-lead-drawer"
+                                                            aria-controls="edit-lead-drawer"
                                                             class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</button>
                                                     </li>
                                                 </ul>
@@ -737,21 +741,26 @@
                                             </div>
                                         </td>
                                     </tr>
-
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
+                        {% endif %}
+                        {% if leads.has_other_pages %}
                         <nav class="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0"
                             aria-label="Table navigation">
                             <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
                                 Showing
-                                <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
+                                <span class="font-semibold text-gray-900 dark:text-white">
+                                    {{ leads.start_index }}-{{ leads.end_index }}</span>
                                 of
-                                <span class="font-semibold text-gray-900 dark:text-white">1000</span>
+                                <span class="font-semibold text-gray-900 dark:text-white">
+                                    {{ leads.paginator.count }}</span>
                             </span>
                             <ul class="inline-flex items-stretch -space-x-px">
+                                {% if leads.has_previous %}
                                 <li>
-                                    <a href="#"
+                                    <a href="?page={{ leads.previous_page_number }}"
                                         class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                                         <span class="sr-only">Previous</span>
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
@@ -762,28 +771,27 @@
                                         </svg>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#"
-                                        class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                                </li>
+                                {% endif %}
+
+                                {% for i in leads.paginator.page_range %}
+                                {% if leads.number == i %}
                                 <li>
                                     <a href="#" aria-current="page"
-                                        class="z-10 flex items-center justify-center px-3 py-2 text-sm leading-tight border text-primary-600 bg-primary-50 border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                                        class="z-10 flex items-center justify-center px-3 py-2 text-sm leading-tight border text-primary-600 bg-primary-50 border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
+                                        {{ i }}</a>
                                 </li>
+                                {% else %}
                                 <li>
-                                    <a href="#"
-                                        class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
+                                    <a href="?page={{ i }}"
+                                        class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                        {{ i }}</a>
                                 </li>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% if leads.has_next %}
                                 <li>
-                                    <a href="#"
-                                        class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
-                                </li>
-                                <li>
-                                    <a href="#"
+                                    <a href="?page={{ leads.next_page_number }}"
                                         class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                                         <span class="sr-only">Next</span>
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
@@ -794,8 +802,10 @@
                                         </svg>
                                     </a>
                                 </li>
+                                {% endif %}
                             </ul>
                         </nav>
+                        {% endif %}
                     </div>
 
                 </div>
@@ -872,6 +882,7 @@
 
 {% include 'dashboard/components/drawers/read_drawer.html' %}
 {% include 'dashboard/components/drawers/delete_modal.html' %}
+{% include 'dashboard/components/drawers/edit_lead_drawer.html' %}
 
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
