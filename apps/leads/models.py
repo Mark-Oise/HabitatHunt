@@ -39,9 +39,13 @@ class Lead(models.Model):
     # User and basic info
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-    email = models.EmailField()
-    phone = models.CharField(max_length=20, blank=True)
+    username = models.CharField(max_length=255) 
     message = models.TextField(blank=True)
+    profile_url = models.URLField(blank=True, null=True)
+    profile_picture_url = models.URLField(blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    phone = models.CharField(max_length=255, blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
 
     # Lead scoring
     sentiment_score = models.FloatField(default=0.0)
@@ -66,8 +70,17 @@ class Lead(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.category}'
+    
 
-    # def categorize_lead(self):
+    def get_direct_message_url(self):
+        if self.source == 'instagram':
+            return f'https://www.instagram.com/direct/new/?username={self.username}/'
+        elif self.source == 'facebook':
+            return f'https://m.me/{self.username}/'
+        else:
+            return None
+        
+
     #     """
     #     Automatically categorize lead based on sentiment and engagement scores
     #     """
