@@ -1,30 +1,55 @@
-<div id="drawer-read-product-advanced"
+{% for lead in leads %}
+<div id="drawer-read-product-{{ lead.id }}"
     class="overflow-y-auto fixed top-0 left-0 z-40 p-4 w-full max-w-2xl h-screen bg-white transition-transform -translate-x-full dark:bg-gray-800"
     tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
     <div class="mb-4">
         <div class="space-y-4">
-            <div class="flex space-x-4">
-                <img class="h-16 w-16 rounded-lg"
-                    src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
-                    alt="Helene avatar" />
-                <div>
-                    <h2
-                        class="flex items-center text-xl font-bold leading-none text-gray-900 dark:text-white sm:text-2xl">
-                        Helene Engels</h2>
-                    <span
-                        class="mb-2 inline-block rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
-                        PRO Account </span>
+            <div class="flex justify-between items-start mt-4">
+                <div class="flex space-x-4">
+                    <img class="h-16 w-16 rounded-lg"
+                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
+                        alt="Helene avatar" />
+                    <div>
+                        <h2
+                            class="flex items-center text-xl font-bold leading-none text-gray-900 dark:text-white sm:text-2xl">
+                            {{ lead.name }}</h2>
+                        <div class="flex gap-2 mt-2">
+                            <button
+                                class="mb-2 inline-flex items-center rounded bg-white border border-gray-200 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300 hover:bg-gray-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-square-pen">
+                                    <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                    <path
+                                        d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
+                                </svg>
+                            </button>
+                            <span
+                                class="mb-2 inline-block rounded bg-white border border-gray-200 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
+                                {{ lead.source }} </span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="w-10 h-10 mt-4 rounded-lg bg-white flex items-center justify-center">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg border border-gray-200">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                    </button>
                 </div>
             </div>
-
         </div>
     </div>
     <div>
 
     </div>
 
-    <button type="button" data-drawer-dismiss="drawer-read-product-advanced"
-        aria-controls="drawer-read-product-advanced"
+    <button type="button" data-drawer-dismiss="drawer-read-product-{{ lead.id }}"
+        aria-controls="drawer-read-product-{{ lead.id }}"
         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg">
@@ -80,11 +105,14 @@
                                 </svg>
                             </h3>
                             <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700 mb-4">
-                                <div class="bg-gray-900 h-2.5 rounded-full dark:bg-gray-300" style="width: 45%"></div>
+                                <div class="bg-gray-900 h-2.5 rounded-full dark:bg-gray-300"
+                                    style="width: {{ lead.engagement_score }}%">
+                                </div>
                             </div>
 
                             <div class="flex items-center justify-between">
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Score: 85/100</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Score:
+                                    {{ lead.engagement_score|floatformat:0 }}/100</p>
                                 <button data-popover-target="engagement-score-popover"
                                     data-popover-placement="bottom-end" type="button">
                                     <svg class="w-4 h-4 ml-2 text-gray-400 hover:text-gray-500" aria-hidden="true"
@@ -128,11 +156,14 @@
                                 </svg>
                             </h3>
                             <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700 mb-4">
-                                <div class="bg-gray-900 h-2.5 rounded-full dark:bg-gray-300" style="width: 85%"></div>
+                                <div class="bg-gray-900 h-2.5 rounded-full dark:bg-gray-300"
+                                    style="width: {{ lead.sentiment_score }}%">
+                                </div>
                             </div>
 
                             <div class="flex items-center justify-between">
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Score: 85/100</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Score:
+                                    {{ lead.sentiment_score|floatformat:0 }}/100</p>
                                 <button data-popover-target="sentiment-score-popover"
                                     data-popover-placement="bottom-end" type="button">
                                     <svg class="w-4 h-4 ml-2 text-gray-400 hover:text-gray-500" aria-hidden="true"
@@ -165,19 +196,51 @@
                                 </svg>
                             </h3>
                             <div class="flex items-center gap-2">
-                                <div class="w-12 h-12 rounded-lg bg-amber-50 flex items-center justify-center">
+                                <div class="w-12 h-12 rounded-lg flex items-center justify-center 
+                                    {% if lead.category == 'hot' %}bg-green-50
+                                    {% elif lead.category == 'warm' %}bg-amber-50
+                                    {% else %}bg-red-50{% endif %}">
+
+                                    {% if lead.category == 'hot' %}
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-smile text-amber-400">
+                                        stroke-linejoin="round" class="lucide lucide-smile text-green-400">
                                         <circle cx="12" cy="12" r="10" />
-                                        <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                                        <path d="M8 13a4 4 0 0 0 8 0" />
                                         <line x1="9" x2="9.01" y1="9" y2="9" />
                                         <line x1="15" x2="15.01" y1="9" y2="9" />
                                     </svg>
+                                    {% elif lead.category == 'warm' %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-meh text-amber-400">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="8" x2="16" y1="15" y2="15" />
+                                        <line x1="9" x2="9.01" y1="9" y2="9" />
+                                        <line x1="15" x2="15.01" y1="9" y2="9" />
+                                    </svg>
+                                    {% else %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-frown text-red-400">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path d="M16 16s-1.5-2-4-2-4 2-4 2" />
+                                        <line x1="9" x2="9.01" y1="9" y2="9" />
+                                        <line x1="15" x2="15.01" y1="9" y2="9" />
+                                    </svg>
+                                    {% endif %}
                                 </div>
                                 <div>
-                                    <p class="text-gray-900 dark:text-white font-medium">Warm Lead</p>
-                                    <p class="text-sm text-gray-500">Active Interest</p>
+                                    <p class="text-gray-900 dark:text-white font-medium">
+                                        {% if lead.category == 'hot' %}Hot Lead
+                                        {% elif lead.category == 'warm' %}Warm Lead
+                                        {% else %}Cold Lead{% endif %}
+                                    </p>
+                                    <p class="text-sm text-gray-500">
+                                        {% if lead.category == 'hot' %}High Priority
+                                        {% elif lead.category == 'warm' %}Active Interest
+                                        {% else %}Needs Nurturing{% endif %}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -188,15 +251,15 @@
                         <h3 class="text-xl font-bold mb-4 dark:text-white">Contact Information</h3>
                         <div class="space-y-3">
                             <div class="flex items-center gap-2">
-
                                 <svg class="w-5 h-5 text-gray-800 dark:text-gray-300" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                     viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                                        d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
+                                    <path stroke="currentColor" stroke-width="2"
+                                        d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                 </svg>
 
-                                <span class="text-gray-900 dark:text-white">sarah.j@example.com</span>
+
+                                <span class="text-gray-900 dark:text-white">sarah.j</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <svg class="w-6 h-6 text-gray-800 dark:text-gray-300" aria-hidden="true"
@@ -260,15 +323,12 @@
                     <div class="flex bottom-0 left-0 justify-center pb-4 space-x-4 w-full">
                         <button type="button"
                             class="text-white w-full inline-flex items-center justify-center bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                            <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                <path fill-rule="evenodd"
-                                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                    clip-rule="evenodd" />
+                            <svg class="w-5 h-5 mr-1.5 -ml-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                    d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
                             </svg>
-                            Edit
+                            Send Message
                         </button>
                         <button type="button"
                             class="inline-flex w-full items-center text-white justify-center bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
@@ -286,8 +346,10 @@
                 <div id="activity" role="tabpanel"
                     class="hidden opacity-0 mb-4 block w-full p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
 
-                    <h5 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">Activity Timeline</h5>
-                    <p class="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">Recent interactions and updates
+                    <h5 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">Activity Timeline
+                    </h5>
+                    <p class="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">Recent interactions and
+                        updates
                     </p>
 
                     <div class="flow-root">
@@ -393,7 +455,8 @@
                     class="hidden opacity-0 mb-4 block w-full p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
 
                     <h5 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">Notes</h5>
-                    <p class="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">Add notes and reminders about
+                    <p class="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">Add notes and reminders
+                        about
                         this lead
                     </p>
 
@@ -436,10 +499,12 @@
                                         <p class="font-medium text-gray-900 dark:text-white">Sarah Miller</p>
                                         <span class="text-sm text-gray-500">Feb 5, 2024 at 10:30 AM</span>
                                     </div>
-                                    <p class="font-normal text-xsm text-gray-700 dark:text-gray-400">Client expressed
+                                    <p class="font-normal text-xsm text-gray-700 dark:text-gray-400">Client
+                                        expressed
                                         interest
                                         in
-                                        waterfront properties. Budget range flexible for the right property. Following
+                                        waterfront properties. Budget range flexible for the right property.
+                                        Following
                                         up next
                                         week with specific listings.</p>
                                 </div>
@@ -459,3 +524,4 @@
 
 
 </div>
+{% endfor %}

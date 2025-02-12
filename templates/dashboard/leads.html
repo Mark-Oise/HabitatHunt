@@ -48,11 +48,12 @@
                             </button>
                             <button type="button"
                                 class="w-full sm:w-auto flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                    width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01" />
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-download mr-2 w-4 h-4 mr-2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" x2="12" y1="15" y2="3" />
                                 </svg>
 
                                 Export
@@ -229,7 +230,7 @@
                                         </th>
                                         <td class="px-4 py-3">
                                             <span
-                                                class="inline-flex items-center border border-grey-200 text-grey-900 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                                                class="inline-flex items-center border border-gray-200 text-grey-900 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-800 dark:text-white dark:border-gray-600">
                                                 {{ lead.source }}
                                             </span>
                                         </td>
@@ -257,10 +258,13 @@
                                                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                                                     aria-labelledby="apple-imac-27-dropdown-button">
                                                     <li>
-                                                        <button data-drawer-target="drawer-read-product-advanced"
-                                                            data-drawer-show="drawer-read-product-advanced"
-                                                            aria-controls="drawer-read-product-advanced"
-                                                            class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</button>
+                                                        <button type="button"
+                                                            data-drawer-target="drawer-read-product-{{ lead.id }}"
+                                                            data-drawer-show="drawer-read-product-{{ lead.id }}"
+                                                            aria-controls="drawer-read-product-{{ lead.id }}"
+                                                            class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                            Show
+                                                        </button>
                                                     </li>
                                                     <li>
                                                         <button type="button" data-drawer-target="edit-lead-drawer"
