@@ -86,3 +86,35 @@ class Lead(models.Model):
     #     if not self.pk:  # Only categorize on creation
     #         self.categorize_lead()
     #     super().save(*args, **kwargs)
+
+
+class ActivityTimeline(models.Model):
+    ACTION_CHOICES = [
+        ('dm_sent', 'DM Sent'),
+        ('dm_replied', 'DM Replied'),
+        ('call_made', 'Call Made'),
+        ('status_update', 'Status Update')
+    ]
+    
+    lead = models.ForeignKey(Lead, on_delete=models.CASCADE, related_name='activity')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    action = models.CharField(max_length=20, choices=ACTION_CHOICES)
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+        return f'{self.get_action_display()} for {self.lead} at {self.timestamp}'
+    
+
+
+class Note(models.Model):
+    lead = models.ForeignKey(Lead, on_delete=models.CASCADE, related_name='notes')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    note_text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.author} - {self.lead}'
