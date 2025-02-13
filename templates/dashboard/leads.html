@@ -257,7 +257,7 @@
     <div class="flex items-center justify-between pt-2 mb-2">
         <h6 class="text-sm font-medium text-black dark:text-white">Filters</h6>
         <div class="flex items-center space-x-3">
-            <a hx-get="{% url 'leads:filter_leads' %}" hx-target="#leads-listing"
+            <a hx-get="{% url 'leads:filter_leads' %}" hx-target="#leads-listing" onclick="clearAllFilters()"
                 class="flex items-center text-sm font-medium text-primary-600 dark:text-primary-500 hover:underline">Clear
                 all</a>
         </div>
@@ -458,5 +458,24 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="https://flowbite-admin-dashboard.vercel.app//app.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/datepicker.min.js"></script>
+
+<script>
+    function clearAllFilters() {
+        // Clear all checkboxes in the filter form
+        const filterForm = document.querySelector('#accordion-flush form');
+        if (filterForm) {
+            const checkboxes = filterForm.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Clear number inputs (for sentiment and engagement)
+            const numberInputs = filterForm.querySelectorAll('input[type="number"]');
+            numberInputs.forEach(input => {
+                input.value = '';
+            });
+        }
+    }
+</script>
 
 {% endblock %}
