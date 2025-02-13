@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Lead
+from .models import Lead, PLATFORM_CHOICES
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import redirect
 
@@ -24,6 +24,7 @@ def leads(request):
     context = {
         'leads': leads,
         'total_leads': total_leads,
+        'platform_choices': PLATFORM_CHOICES,  # Add platform choices to context
     }
         
     return render(request, 'dashboard/leads.html', context)
