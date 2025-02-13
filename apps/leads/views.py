@@ -24,11 +24,11 @@ def leads(request):
     context = {
         'leads': leads,
         'total_leads': total_leads,
-        'platform_choices': PLATFORM_CHOICES,  # Add platform choices to context
+        'platform_choices': PLATFORM_CHOICES,
+        'status_choices': Lead.STATUS_CHOICES,  # Make sure this matches the model's attribute name
     }
         
     return render(request, 'dashboard/leads.html', context)
-
 
 # def create_lead(request):
 #     if request.method == 'POST':
