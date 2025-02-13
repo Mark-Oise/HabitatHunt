@@ -1,10 +1,14 @@
-from .models import Lead, PLATFORM_CHOICES
+from .models import Lead, PLATFORM_CHOICES, Note
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import csv
 from django.http import HttpResponse
 from datetime import datetime
+from .forms import AddNoteForm
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
 def search_leads(request):
@@ -111,3 +115,28 @@ def export_leads_csv(request):
         ])
     
     return response
+
+
+
+def add_note(request, lead_id):
+    if request.method == 'POST':
+        form = AddNoteForm(request.POST)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.lead = Lead.objects.get(id=lead_id)
+            note.save()
+            return redirect('read_lead', lead_id=lead_id)
+    else:
+        form = AddNoteForm()
+    return render(request, 'dashboard/components/drawers/read_drawer.html', {'form': form})
+
+
+
+@login_required
+def delete_note(request, note_id):
+    if request.method == 'DELETE':
+        note = get_object_or_404(Note, id=note_id, lead__user=request.user)
+        note.delete()
+        return HttpResponse(status=200)
+    
+    return HttpResponse(status=400)

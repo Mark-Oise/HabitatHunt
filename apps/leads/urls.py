@@ -8,4 +8,8 @@ urlpatterns = [
     path('search/', utils.search_leads, name='search_leads'),
     path('filter/', utils.filter_leads, name='filter_leads'),
     path('export-csv/', utils.export_leads_csv, name='export_csv'),
+    # Notes
+    path('leads/<int:lead_id>/notes/add/', utils.add_note, name='add_note'),
+    path('notes/<int:note_id>/delete/', utils.delete_note, name='delete_note'),
+
 ]
