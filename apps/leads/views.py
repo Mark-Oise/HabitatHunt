@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 
 
 def leads(request):
-    leads = Lead.objects.filter(user=request.user)
+    leads = Lead.objects.filter(user=request.user).prefetch_related('activity')
     total_leads = leads.count()
     
     # Handle pagination

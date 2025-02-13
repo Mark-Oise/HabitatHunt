@@ -100,6 +100,10 @@ class Lead(models.Model):
     #         self.categorize_lead()
     #     super().save(*args, **kwargs)
 
+    def get_activity_timeline(self):
+        """Get activity timeline ordered by most recent first"""
+        return self.activity.all().order_by('-created_at')
+
 
 class ActivityTimeline(models.Model):
     ACTION_CHOICES = [
@@ -118,7 +122,7 @@ class ActivityTimeline(models.Model):
 
 
     def __str__(self):
-        return f'{self.get_action_display()} for {self.lead} at {self.timestamp}'
+        return f'{self.get_action_display()} for {self.lead} at {self.created_at}'
     
 
 
