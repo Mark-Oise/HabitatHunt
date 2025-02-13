@@ -2,6 +2,9 @@ from .models import Lead, PLATFORM_CHOICES
 from django.db.models import Q
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import csv
+from django.http import HttpResponse
+from datetime import datetime
 
 
 def search_leads(request):
@@ -74,3 +77,37 @@ def filter_leads(request):
     }
     
     return render(request, 'dashboard/components/leads/lead_items.html', context)
+
+
+def export_leads_csv(request):
+    # Get leads for current user
+    leads = Lead.objects.filter(user=request.user)
+    
+    # Create the HttpResponse object with CSV header
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="HabitatHunt_leads_export_{timestamp}.csv"'
+    
+    # Create CSV writer
+    writer = csv.writer(response)
+    
+    # Write header row
+    writer.writerow([
+        'Name', 'Username', 'Source', 'Category', 'Status',
+        'Sentiment Score', 'Engagement Score', 'Created At'
+    ])
+    
+    # Write data rows
+    for lead in leads:
+        writer.writerow([
+            lead.name,
+            lead.username,
+            lead.get_source_display(),
+            lead.get_category_display(),
+            lead.get_status_display(),
+            lead.sentiment_score,
+            lead.engagement_score,
+            lead.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        ])
+    
+    return response
