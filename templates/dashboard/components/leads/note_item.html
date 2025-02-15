@@ -1,0 +1,32 @@
+<div class="block w-full p-6 mt-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+    id="note-{{ note.id }}">
+    <div class="flex gap-3">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M7 9h5m3 0h2M7 12h2m3 0h5M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.616a1 1 0 0 0-.67.257l-2.88 2.592A.5.5 0 0 1 8 18.477V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+        </svg>
+
+        <div class="flex-1">
+            <div class="flex items-center justify-between mb-2">
+                <p class="font-medium text-gray-900 dark:text-white">
+                    {{ note.author.name }}</p>
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-gray-500">{{ note.created_at|date:"M d, Y" }}
+                        at {{ note.created_at|time:"g:i A" }}</span>
+                    <button class="text-red-600 hover:text-red-800" hx-delete="{% url 'leads:delete_note' note.id %}"
+                        hx-target="#note-{{ note.id }}" hx-swap="outerHTML"
+                        hx-confirm="Are you sure you want to delete this note?"
+                        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
+                {{ note.note_text }}</p>
+        </div>
+    </div>
+</div>

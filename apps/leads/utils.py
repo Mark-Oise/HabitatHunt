@@ -124,11 +124,11 @@ def add_note(request, lead_id):
         if form.is_valid():
             note = form.save(commit=False)
             note.lead = Lead.objects.get(id=lead_id)
+            note.author = request.user
             note.save()
-            return redirect('read_lead', lead_id=lead_id)
-    else:
-        form = AddNoteForm()
-    return render(request, 'dashboard/components/drawers/read_drawer.html', {'form': form})
+            # Return just the new note template
+            return render(request, 'dashboard/components/leads/note_item.html', {'note': note})
+    return HttpResponse(status=400)
 
 
 
