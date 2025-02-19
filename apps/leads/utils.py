@@ -138,5 +138,4 @@ def delete_note(request, note_id):
         note = get_object_or_404(Note, id=note_id, lead__user=request.user)
         note.delete()
         return HttpResponse(status=200)
-    
     return HttpResponse(status=400)

@@ -438,7 +438,7 @@
 
                     <div>
                         <form hx-post="{% url 'leads:add_note' lead.id %}" hx-target="#notes-list-{{ lead.id }}"
-                            hx-swap="outerHTML" hx-on::after-request="this.reset()" hx-trigger="submit"
+                            hx-swap="afterbegin" hx-on::after-request="this.reset()" hx-trigger="submit"
                             class="space-y-2" hx-preserve="true">
                             {% csrf_token %}
                             <textarea name="note_text" rows="4"
