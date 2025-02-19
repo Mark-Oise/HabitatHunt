@@ -9,9 +9,9 @@ urlpatterns = [
     path('filter/', utils.filter_leads, name='filter_leads'),
     path('export-csv/', utils.export_leads_csv, name='export_csv'),
 
-    #Leads CRUD
-    path('add/', views.create_lead, name='add_lead'),
-
+    # #Leads CRUD
+    # path('add/', views.create_lead, name='add_lead'),
+    # path('update/<int:lead_id>/', views.update_lead, name='update_lead'),
 
 
 

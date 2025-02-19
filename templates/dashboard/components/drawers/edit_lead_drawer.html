@@ -1,5 +1,5 @@
 {% for lead in leads %}
-<form action="#" id="edit-lead-drawer-{{ lead.id }}"
+<form hx-post="{% url 'leads:update_lead' lead.id %}" hx-target="#leads-listing" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="edit-lead-drawer-{{ lead.id }}"
     class="fixed top-0 left-0 z-40 w-full h-screen max-w-3xl p-4 overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800"
     tabindex="-1" aria-labelledby="edit-lead-drawer-{{ lead.id }}-label"
     data-drawer-target="edit-lead-drawer-{{ lead.id }}" aria-hidden="true">

@@ -6,6 +6,13 @@ class AddLeadForm(forms.ModelForm):
         model = Lead
         fields = ['name', 'username', 'profile_url', 'email', 'phone', 'location', 'message', 'engagement_score', 'sentiment_score', 'source',
                 'category', 'status']
+        
+
+class UpdateLeadForm(forms.ModelForm):
+    class Meta:
+        model = Lead
+        fields = ['name', 'username', 'email', 'phone', 'location', 'message', 'engagement_score', 'sentiment_score', 'source',
+                'category', 'status']
 
 
 class AddNoteForm(forms.ModelForm):
