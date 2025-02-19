@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Lead, PLATFORM_CHOICES
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import redirect
+from .forms import AddLeadForm
 
 # Create your views here.
 
@@ -30,17 +31,18 @@ def leads(request):
         
     return render(request, 'dashboard/leads.html', context)
 
-# def create_lead(request):
-#     if request.method == 'POST':
-#         form = LeadForm(request.POST)
-#         if form.is_valid():
-#             lead = form.save(commit=False)
-#             lead.user = request.user
-#             lead.save()
-#             return redirect('leads')
-#     else:
-#         form = LeadForm()
-#     return render(request, 'leads/create_lead.html', {'form': form})
+
+def create_lead(request):
+    if request.method == 'POST':
+        form = AddLeadForm(request.POST)
+        if form.is_valid():
+            lead = form.save(commit=False)
+            lead.user = request.user
+            lead.save()
+            return redirect('leads:leads')
+    else:
+        form = AddLeadForm()
+    return render(request, 'dashboard/components/drawers/add_lead.html', {'form': form})
 
 
 # def update_lead(request, lead_id):

@@ -1,10 +1,11 @@
 from django import forms
-from .models import Note
+from .models import Note, Lead
 
-# class LeadForm(forms.ModelForm):
-#     class Meta:
-#         model = Lead
-#         fields = ['name', 'email', 'phone', 'message', 'interest', 'confidence_score', 'source']
+class AddLeadForm(forms.ModelForm):
+    class Meta:
+        model = Lead
+        fields = ['name', 'username', 'profile_url', 'email', 'phone', 'location', 'message', 'engagement_score', 'sentiment_score', 'source',
+                'category', 'status']
 
 
 class AddNoteForm(forms.ModelForm):
