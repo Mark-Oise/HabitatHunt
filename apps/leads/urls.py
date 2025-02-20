@@ -4,6 +4,7 @@ from . import views, utils
 app_name = 'leads'
 
 urlpatterns = [
+    
     path('', views.leads, name='leads'),
     path('search/', utils.search_leads, name='search_leads'),
     path('filter/', utils.filter_leads, name='filter_leads'),
@@ -12,6 +13,7 @@ urlpatterns = [
     # #Leads CRUD
     # path('add/', views.create_lead, name='add_lead'),
     # path('update/<int:lead_id>/', views.update_lead, name='update_lead'),
+    path('delete/<int:lead_id>/', views.delete_lead, name='delete_lead'),
 
 
 

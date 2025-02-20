@@ -51,9 +51,30 @@ def leads(request):
     return render(request, 'dashboard/leads.html', context)
 
 
-
-
-# def delete_lead(request, lead_id):
-#     lead = Lead.objects.get(id=lead_id)
-#     lead.delete()
-#     return redirect('leads')
+def delete_lead(request, lead_id):
+    if request.method == 'POST':
+        lead = get_object_or_404(Lead, id=lead_id, user=request.user)
+        lead.delete()
+        
+        # Get updated leads with proper ordering
+        leads = Lead.objects.filter(user=request.user).prefetch_related('activity').order_by('-created_at')
+        total_leads = leads.count()
+        
+        # Handle pagination
+        page = request.GET.get('page', 1)
+        paginator = Paginator(leads, 10)  # Show 10 leads per page
+        
+        try:
+            leads = paginator.page(page)
+        except PageNotAnInteger:
+            leads = paginator.page(1)
+        except EmptyPage:
+            leads = paginator.page(paginator.num_pages)
+        
+        # Return the entire container with updated counts
+        return render(request, 'dashboard/components/leads/lead_container.html', {
+            'leads': leads,
+            'total_leads': total_leads,
+            'platform_choices': PLATFORM_CHOICES,
+            'status_choices': Lead.STATUS_CHOICES,
+        })
