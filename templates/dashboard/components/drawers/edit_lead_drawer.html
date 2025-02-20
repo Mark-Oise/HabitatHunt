@@ -1,5 +1,9 @@
 {% for lead in leads %}
-<form hx-post="{% url 'leads:update_lead' lead.id %}" hx-target="#leads-listing" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="edit-lead-drawer-{{ lead.id }}"
+<form hx-post="{% url 'leads:leads' %}" 
+hx-target="#leads-table" 
+hx-swap="innerHTML"
+hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' 
+    id="edit-lead-drawer-{{ lead.id }}"
     class="fixed top-0 left-0 z-40 w-full h-screen max-w-3xl p-4 overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800"
     tabindex="-1" aria-labelledby="edit-lead-drawer-{{ lead.id }}-label"
     data-drawer-target="edit-lead-drawer-{{ lead.id }}" aria-hidden="true">
@@ -18,24 +22,25 @@
         <span class="sr-only">Close menu</span>
     </button>
 
+    <input type="hidden" name="lead_id" value="{{ lead.id }}">
+
     <div class="grid gap-4 mb-4 sm:grid-cols-2">
         <div>
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Name</label>
-            <input type="text" name="name" id="name" value="{{ lead.name }}"
+            <label for="name-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+            <input type="text" name="name" id="name-{{ lead.id }}" value="{{ lead.name }}"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                 placeholder="Type lead name" required="">
         </div>
         <div>
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-            <input type="text" name="name" id="name" value="{{ lead.username }}"
+            <label for="username-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+            <input type="text" name="username" id="username-{{ lead.id }}" value="{{ lead.username }}"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                placeholder="Type product name" required="">
+                placeholder="Type username" required="">
         </div>
 
         <div>
-            <label for="source" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Platform</label>
-            <select id="source" name="source"
+            <label for="source-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Platform</label>
+            <select id="source-{{ lead.id }}" name="source"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                 {% for value, label in platform_choices %}
                     <option value="{{ value }}" {% if value == lead.source %}selected{% endif %}>{{ label }}</option>
@@ -43,32 +48,28 @@
             </select>
         </div>
         <div>
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
-            </label>
-            <input type="text" name="name" id="name" value="{{ lead.email }}"
+            <label for="email-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email (optional)</label>
+            <input type="email" name="email" id="email-{{ lead.id }}" value="{% if lead.email %}{{ lead.email }}{% endif %}"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                placeholder="Type product name" required="">
+                placeholder="Type email">
         </div>
         <div>
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone
-                Number
-            </label>
-            <input type="text" name="name" id="name" value="{{ lead.phone }}"
+            <label for="phone-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number (optional)</label>
+            <input type="text" name="phone" id="phone-{{ lead.id }}" value="{% if lead.phone %}{{ lead.phone }}{% endif %}"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                placeholder="Type product name" required="">
+                placeholder="Type phone number">
         </div>
         <div>
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location
-            </label>
-            <input type="text" name="name" id="name" value="{{ lead.location }}"
+            <label for="location-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location (optional)</label>
+            <input type="text" name="location" id="location-{{ lead.id }}" value="{% if lead.location %}{{ lead.location }}{% endif %}"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                placeholder="Type product name" required="">
+                placeholder="Type location">
         </div>
 
         <div class="grid gap-4 sm:col-span-2 md:gap-6 sm:grid-cols-2">
             <div>
-                <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lead Category</label>
-                <select id="category" name="category"
+                <label for="category-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lead Category</label>
+                <select id="category-{{ lead.id }}" name="category"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                     {% for value, label in lead.CATEGORY_CHOICES %}
                         <option value="{{ value }}" {% if value == lead.category %}selected{% endif %}>{{ label }}</option>
@@ -76,8 +77,8 @@
                 </select>
             </div>
             <div>
-                <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                <select id="status" name="status"
+                <label for="status-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
+                <select id="status-{{ lead.id }}" name="status"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                     {% for value, label in status_choices %}
                         <option value="{{ value }}" {% if value == lead.status %}selected{% endif %}>{{ label }}</option>
@@ -85,32 +86,33 @@
                 </select>
             </div>
             <div>
-                <label for="breadth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Engagement
-                    Score</label>
-                <input type="number" name="breadth" id="breadth" value="{{ lead.engagement_score|floatformat:0 }}"
+                <label for="engagement_score-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Engagement Score</label>
+                <input type="number" name="engagement_score" id="engagement_score-{{ lead.id }}" value="{{ lead.engagement_score|floatformat:0 }}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                     placeholder="15" required="">
             </div>
             <div>
-                <label for="width" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sentiment
-                    Score</label>
-                <input type="number" name="width" id="width" value="{{ lead.sentiment_score|floatformat:0 }}"
+                <label for="sentiment_score-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sentiment Score</label>
+                <input type="number" name="sentiment_score" id="sentiment_score-{{ lead.id }}" value="{{ lead.sentiment_score|floatformat:0 }}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                     placeholder="23" required="">
             </div>
         </div>
-        <div class="sm:col-span-2"><label for="description"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Message</label><textarea
-                id="description" rows="4"
+        <div class="sm:col-span-2">
+            <label for="message-{{ lead.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Message (optional)</label>
+            <textarea name="message" id="message-{{ lead.id }}" rows="4"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                placeholder="Write product description here"></textarea></div>
+                placeholder="Write message here">{% if lead.message %}{{ lead.message }}{% endif %}</textarea>
+        </div>
     </div>
 
 
     <div class="grid grid-cols-2 gap-4 mt-6 sm:w-1/2">
-        <button type="submit"
-            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-primary-800">Update
-            lead</button>
+        <button type="submit"  data-drawer-dismiss="edit-lead-drawer-{{ lead.id }}"
+        aria-controls="edit-lead-drawer-{{ lead.id }}"
+            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            Update lead
+        </button>
         <button type="button"
             class="text-red-600 inline-flex justify-center items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
             <svg aria-hidden="true" class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewbox="0 0 20 20"
