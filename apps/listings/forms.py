@@ -9,3 +9,10 @@ class ListingForm(forms.ModelForm):
             'title', 'description', 'price', 'property_type', 'location',
             'contact_info', 'open_house_date', 'status'
         ]
+
+
+class ListingImageForm(forms.ModelForm):
+    class Meta:
+        model = ListingImage
+        fields = ['image', 'caption']
+
