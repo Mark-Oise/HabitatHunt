@@ -14,6 +14,8 @@ urlpatterns = [
     # path('add/', views.create_lead, name='add_lead'),
     # path('update/<int:lead_id>/', views.update_lead, name='update_lead'),
     path('delete/<int:lead_id>/', views.delete_lead, name='delete_lead'),
+    path('bulk-delete/', views.bulk_delete_leads, name='bulk_delete_leads'),
+
 
 
 

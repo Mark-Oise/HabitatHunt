@@ -27,6 +27,11 @@
             initFlowbite();
         });
     </script>
+    <script>
+        document.body.addEventListener('htmx:configRequest', function(event) {
+            event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        });
+    </script>
 </head>
 
 <body class=" bg-gray-50 dark:bg-gray-800">

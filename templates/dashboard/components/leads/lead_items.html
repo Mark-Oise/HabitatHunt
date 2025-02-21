@@ -26,9 +26,9 @@
             <tr class="border-b dark:border-gray-700">
                 <td class="w-4 px-4 py-3">
                     <div class="flex items-center">
-                        <input id="checkbox-table-search-1" type="checkbox" onclick="event.stopPropagation()"
+                        <input id="checkbox-{{ lead.id }}" name="selected_leads" value="{{ lead.id }}" type="checkbox" 
                             class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-green-600 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                        <label for="checkbox-{{ lead.id }}" class="sr-only">checkbox</label>
                     </div>
                 </td>
                 <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">

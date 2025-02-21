@@ -5,6 +5,8 @@ from django.shortcuts import redirect
 from .forms import AddLeadForm, UpdateLeadForm
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -51,6 +53,41 @@ def leads(request):
     return render(request, 'dashboard/leads.html', context)
 
 
+@require_http_methods(["POST"])
+def bulk_delete_leads(request):
+    selected_leads = request.POST.getlist('selected_leads')
+    
+    # Delete only leads that belong to the current user
+    Lead.objects.filter(
+        id__in=selected_leads,
+        user=request.user
+    ).delete()
+    
+    # Get updated leads with proper ordering
+    leads = Lead.objects.filter(user=request.user).prefetch_related('activity').order_by('-created_at')
+    total_leads = leads.count()
+    
+    # Handle pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(leads, 10)
+    
+    try:
+        leads = paginator.page(page)
+    except PageNotAnInteger:
+        leads = paginator.page(1)
+    except EmptyPage:
+        leads = paginator.page(paginator.num_pages)
+        
+    context = {
+        'leads': leads,
+        'total_leads': total_leads,
+        'platform_choices': PLATFORM_CHOICES,
+        'status_choices': Lead.STATUS_CHOICES,
+    }
+    
+    return render(request, 'dashboard/components/leads/lead_container.html', context)
+
+
 def delete_lead(request, lead_id):
     if request.method == 'POST':
         lead = get_object_or_404(Lead, id=lead_id, user=request.user)
@@ -78,3 +115,38 @@ def delete_lead(request, lead_id):
             'platform_choices': PLATFORM_CHOICES,
             'status_choices': Lead.STATUS_CHOICES,
         })
+
+
+
+    if request.method == "DELETE":
+        selected_leads = request.POST.getlist('selected_leads')
+        
+        # Delete only leads that belong to the current user
+        Lead.objects.filter(
+            id__in=selected_leads,
+            user=request.user
+        ).delete()
+        
+        # Get updated leads with proper ordering
+        leads = Lead.objects.filter(user=request.user).prefetch_related('activity').order_by('-created_at')
+        total_leads = leads.count()
+        
+        # Handle pagination
+        page = request.GET.get('page', 1)
+        paginator = Paginator(leads, 10)
+        
+        try:
+            leads = paginator.page(page)
+        except PageNotAnInteger:
+            leads = paginator.page(1)
+        except EmptyPage:
+            leads = paginator.page(paginator.num_pages)
+            
+        context = {
+            'leads': leads,
+            'total_leads': total_leads,
+            'platform_choices': PLATFORM_CHOICES,
+            'status_choices': Lead.STATUS_CHOICES,
+        }
+        
+        return render(request, 'dashboard/components/leads/lead_container.html', context)
