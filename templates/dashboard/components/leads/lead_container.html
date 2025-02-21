@@ -101,9 +101,14 @@
                         </li>
                     </ul>
                     <div class="py-1">
-                        <a href="#"
-                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
-                            all</a>
+                        <button type="button"
+                            hx-post="{% url 'leads:bulk_delete_leads' %}?delete_all=true"
+                            hx-target="#lead-container"
+                            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' 
+                            hx-confirm="Are you sure you want to delete ALL leads? This action cannot be undone."
+                            class="block w-full py-2 px-4 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            Delete All
+                        </button>
                     </div>
                 </div>
             </div>

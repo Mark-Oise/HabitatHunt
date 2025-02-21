@@ -28,7 +28,7 @@
         });
     </script>
     <script>
-        document.body.addEventListener('htmx:configRequest', function(event) {
+        document.body.addEventListener('htmx:configRequest', function (event) {
             event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
         });
     </script>
@@ -40,6 +40,14 @@
     <script src="{% static 'js/tabs.js' %}"></script>
     <script src="{% static 'js/leads.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script>
+        function toggleAllCheckboxes(source) {
+            const checkboxes = document.querySelectorAll('input[name="selected_leads"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = source.checked;
+            });
+        }
+    </script>
 </body>
 
 </html>

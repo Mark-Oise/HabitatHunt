@@ -55,13 +55,18 @@ def leads(request):
 
 @require_http_methods(["POST"])
 def bulk_delete_leads(request):
-    selected_leads = request.POST.getlist('selected_leads')
+    delete_all = request.GET.get('delete_all') == 'true'
     
-    # Delete only leads that belong to the current user
-    Lead.objects.filter(
-        id__in=selected_leads,
-        user=request.user
-    ).delete()
+    if delete_all:
+        # Delete all leads for the current user
+        Lead.objects.filter(user=request.user).delete()
+    else:
+        # Delete selected leads
+        selected_leads = request.POST.getlist('selected_leads')
+        Lead.objects.filter(
+            id__in=selected_leads,
+            user=request.user
+        ).delete()
     
     # Get updated leads with proper ordering
     leads = Lead.objects.filter(user=request.user).prefetch_related('activity').order_by('-created_at')
