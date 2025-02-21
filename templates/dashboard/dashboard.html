@@ -24,7 +24,7 @@
                     performance.
                 </p>
 
-                <div class="grid gap-4 grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 mt-6">
+                <div class="grid gap-4 grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 mt-6">
                     <!-- Total Leads Widget -->
                     <div
                         class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-900">
@@ -32,9 +32,12 @@
                             <div>
                                 <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Total Leads</h5>
                                 <div class="mt-4">
-                                    <span class="text-3xl font-semibold dark:text-gray-100">2,853</span>
-                                    <div class="text-sm text-green-500 mt-1">+12% <span class="text-gray-400">from last
-                                            month</span></div>
+                                    <span class="text-3xl font-semibold dark:text-gray-100">{{ total_leads }}</span>
+                                    <div
+                                        class="text-sm {% if lead_growth >= 0 %}text-green-500{% else %}text-red-500{% endif %} mt-1">
+                                        {% if lead_growth >= 0 %}+{% endif %}{{ lead_growth }}%
+                                        <span class="text-gray-400">from last month</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="text-gray-400">
@@ -54,9 +57,13 @@
                             <div>
                                 <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Positive Sentiment</h5>
                                 <div class="mt-4">
-                                    <span class="text-3xl font-semibold dark:text-gray-200">76%</span>
-                                    <div class="text-sm text-green-500 mt-1">+8% <span class="text-gray-400">from last
-                                            month</span></div>
+                                    <span class="text-3xl font-semibold dark:text-gray-200">
+                                        {{ avg_sentiment|floatformat:0 }}%</span>
+                                    <div
+                                        class="text-sm {% if sentiment_growth >= 0 %}text-green-500{% else %}text-red-500{% endif %} mt-1">
+                                        {% if sentiment_growth >= 0 %}+{% endif %}{{ sentiment_growth }}%
+                                        <span class="text-gray-400">from last month</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="text-gray-400">
@@ -73,11 +80,15 @@
                         class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-900">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Engagement Rate</h5>
+                                <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Engagement Score</h5>
                                 <div class="mt-4">
-                                    <span class="text-3xl font-semibold dark:text-gray-200">24.3%</span>
-                                    <div class="text-sm text-red-500 mt-1">-8% <span class="text-gray-400">from last
-                                            month</span></div>
+                                    <span class="text-3xl font-semibold dark:text-gray-200">
+                                        {{ avg_engagement|floatformat:0 }}%</span>
+                                    <div
+                                        class="text-sm {% if engagement_growth >= 0 %}text-green-500{% else %}text-red-500{% endif %} mt-1">
+                                        {% if engagement_growth >= 0 %}+{% endif %}{{ engagement_growth }}%
+                                        <span class="text-gray-400">from last month</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="text-gray-400">
