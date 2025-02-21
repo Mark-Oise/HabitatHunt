@@ -25,7 +25,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('apps.dashboard.urls')),
     path('leads/', include('apps.leads.urls')),
-
+    path('listings/', include('apps.listings.urls')),
 ]
     
 
