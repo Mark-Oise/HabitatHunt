@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'apps.dashboard',
     'apps.leads',
     'apps.listings',
+    'apps.hashtags',
     'compressor',
     'allauth',
     'allauth.account',
