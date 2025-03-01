@@ -3,7 +3,7 @@
 {% include "dashboard/components/navigation/navbar.html" %}
 <div class="flex pt-16 overflow-hidden">
     {% include "dashboard/components/navigation/sidebar.html" %}
-    <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
+
     <div id="main-content" class="relative w-full h-full overflow-y-auto lg:ml-64">
         <main>
             <div class="px-4 pt-6">
@@ -122,7 +122,7 @@
                         </div>
 
                         <div
-                            class="flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4 border-t dark:border-gray-700">
+                            class="flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4">
                             <div class="w-full md:w-1/2">
                                 <form class="flex items-center">
                                     <label for="simple-search" class="sr-only">Search</label>
