@@ -22,7 +22,7 @@ def leads(request):
             leads = Lead.objects.filter(user=request.user).prefetch_related('activity').order_by('-created_at')
             
             # Return the entire table contents
-            return render(request, 'dashboard/components/leads/lead_items.html', {
+            return render(request, 'leads/components/lead_items.html', {
                 'leads': leads,
                 'platform_choices': PLATFORM_CHOICES,
                 'status_choices': Lead.STATUS_CHOICES,
@@ -50,7 +50,7 @@ def leads(request):
         'status_choices': Lead.STATUS_CHOICES,  # Make sure this matches the model's attribute name
     }
         
-    return render(request, 'dashboard/leads.html', context)
+    return render(request, 'leads/leads.html', context)
 
 
 @require_http_methods(["POST"])
@@ -90,7 +90,7 @@ def bulk_delete_leads(request):
         'status_choices': Lead.STATUS_CHOICES,
     }
     
-    return render(request, 'dashboard/components/leads/lead_container.html', context)
+    return render(request, 'leads/components/lead_container.html', context)
 
 
 def delete_lead(request, lead_id):
@@ -114,7 +114,7 @@ def delete_lead(request, lead_id):
             leads = paginator.page(paginator.num_pages)
         
         # Return the entire container with updated counts
-        return render(request, 'dashboard/components/leads/lead_container.html', {
+        return render(request, 'leads/components/lead_container.html', {
             'leads': leads,
             'total_leads': total_leads,
             'platform_choices': PLATFORM_CHOICES,

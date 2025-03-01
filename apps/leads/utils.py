@@ -22,7 +22,7 @@ def search_leads(request):
             # Q(email__icontains=search_query)
         )
 
-    return render(request, 'dashboard/components/leads/lead_items.html', {
+    return render(request, 'leads/components/lead_items.html', {
         'leads': leads,
         'search_query': search_query
     })
@@ -80,7 +80,7 @@ def filter_leads(request):
         'status_choices': Lead.STATUS_CHOICES,
     }
     
-    return render(request, 'dashboard/components/leads/lead_items.html', context)
+    return render(request, 'leads/components/lead_items.html', context)
 
 
 def export_leads_csv(request):
@@ -127,7 +127,7 @@ def add_note(request, lead_id):
             note.author = request.user
             note.save()
             # Return just the new note template
-            return render(request, 'dashboard/components/leads/note_item.html', {'note': note})
+            return render(request, 'leads/components/note_item.html', {'note': note})
     return HttpResponse(status=400)
 
 
