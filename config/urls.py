@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('apps.dashboard.urls')),
     path('leads/', include('apps.leads.urls')),
     path('listings/', include('apps.listings.urls')),
+    path('hashtags/', include('apps.hashtags.urls')),
 ]
     
 
