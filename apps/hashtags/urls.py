@@ -4,5 +4,5 @@ from . import views
 app_name = 'hashtags'
 
 urlpatterns = [
-    path('hashtags/', views.hashtags, name='hashtags'),
+    path('', views.hashtags, name='hashtags'),
 ]

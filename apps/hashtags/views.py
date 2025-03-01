@@ -4,8 +4,11 @@ from .models import Hashtag
 
 # Create your views here.
 def hashtags(request):
+    # Initialize form variable outside the POST condition
+    form = HashtagForm()
+    
     if request.method == 'POST':
-        form = HashtagForm()
+        form = HashtagForm(request.POST)
         if form.is_valid():
             form.save()
 
@@ -15,6 +18,5 @@ def hashtags(request):
         'hashtags': hashtags,
         'form': form,
     }
-
 
     return render(request, 'hashtags/hashtags.html', context)

@@ -1,0 +1,559 @@
+{% extends "dashboard/base.html" %}
+{% load lead_filters %}
+
+{% block content %}
+{% include "dashboard/components/navigation/navbar.html" %}
+<div class="flex pt-16 overflow-hidden">
+
+    {% include "dashboard/components/navigation/sidebar.html" %}
+
+    <div id="main-content" class="relative w-full h-full overflow-y-auto lg:ml-64">
+        <main>
+            <div class="px-4 pt-6">
+                <div class="flex flex-col md:flex-row justify-between items-start gap-4 md:items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold dark:text-gray-200">Hashtags</h1>
+                        <p class="text-gray-600 mt-2 text-md dark:text-gray-100">Specify hashtags for tracking leads
+                            across social media platforms.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+
+
+
+                        <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+                            <button type="button"
+                                class="w-full sm:w-auto text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                <svg class="w-4 h-4 text-white dark:text-white me-2" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M5 12h14m-7 7V5"></path>
+                                </svg>
+                                Add Hashtag
+                            </button>
+
+                            <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                                <button type="button"
+                                    class="w-full sm:w-auto flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                    <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5">
+                                        </path>
+                                    </svg>
+                                    Import
+                                </button>
+                                <a href="/leads/export-csv/"
+                                    class="w-full sm:w-auto flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-download mr-2 w-4 h-4 mr-2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" x2="12" y1="15" y2="3"></line>
+                                    </svg>
+                                    Export as CSV
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid gap-4 grid-cols-2 lg:grid-cols-3 mt-6">
+                    <!-- Total Leads Widget -->
+                    <div
+                        class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-900 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-green-200 dark:hover:border-green-800">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Total Hashtags</h5>
+                                <div class="mt-4">
+                                    <span class="text-3xl font-semibold dark:text-gray-100">
+                                        10
+                                    </span>
+                                    <div class="text-sm text-red-500 mt-1">
+                                        %
+                                        <span class="text-gray-400">from last month</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-hash w-8 h-8">
+                                    <line x1="4" x2="20" y1="9" y2="9" />
+                                    <line x1="4" x2="20" y1="15" y2="15" />
+                                    <line x1="10" x2="8" y1="3" y2="21" />
+                                    <line x1="16" x2="14" y1="3" y2="21" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Positive Sentiment Widget -->
+                    <div
+                        class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-900 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-green-200 dark:hover:border-green-800">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Total Leads</h5>
+                                <div class="mt-4">
+                                    <span class="text-3xl font-semibold dark:text-gray-200">
+                                        20</span>
+                                    <div class="text-sm text-red-500 mt-1">
+                                        %
+                                        <span class="text-gray-400">from last month</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-gray-400">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Engagement Rate Widget -->
+                    <div
+                        class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-900 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-green-200 dark:hover:border-green-800">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Total Impressions</h5>
+                                <div class="mt-4">
+                                    <span class="text-3xl font-semibold dark:text-gray-200">
+                                        400</span>
+                                    <div class="text-sm text-red-500 mt-1">
+                                        %
+                                        <span class="text-gray-400">from last month</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-gray-400">
+                                <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2"
+                                        d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
+                                    <path stroke="currentColor" stroke-width="2"
+                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div
+                    class="mt-4 flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between py-4">
+                    <div class="w-full md:w-1/2">
+                        <form class="flex items-center">
+                            <label for="simple-search" class="sr-only">Search</label>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
+                                    </svg>
+                                </div>
+                                <input type="text" hx-get="{% url 'leads:search_leads' %}"
+                                    hx-trigger="input changed delay:100ms, search" hx-target="#hashtag-listing"
+                                    id="lead-search-input" placeholder="Search Hashtags" name="search"
+                                    value="{{ search_query }}"
+                                    class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                            </div>
+                        </form>
+                    </div>
+                    <div
+                        class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+
+                        <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
+                            class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                            type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                                class="h-4 w-4 mr-1.5 -ml-1 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Filter options
+                            <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path clip-rule="evenodd" fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                            </svg>
+                        </button>
+
+                        <div class="flex items-center space-x-3 w-full md:w-auto">
+                            <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
+                                class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                                type="button">
+                                Actions
+                                <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path clip-rule="evenodd" fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                                </svg>
+                            </button>
+                            <div id="actionsDropdown"
+                                class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="actionsDropdownButton">
+                                    <li>
+                                        <button type="button" hx-post="{% url 'leads:bulk_delete_leads' %}"
+                                            hx-target="#lead-container" hx-include="[name='selected_leads']:checked"
+                                            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                                            hx-confirm="Are you sure you want to delete the selected leads? This action cannot be undone."
+                                            class="block w-full py-2 px-4 text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            Delete Selected Leads
+                                        </button>
+                                    </li>
+                                </ul>
+                                <div class="py-1">
+                                    <button type="button" hx-post="{% url 'leads:bulk_delete_leads' %}?delete_all=true"
+                                        hx-target="#lead-container" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                                        hx-confirm="Are you sure you want to delete ALL leads? This action cannot be undone."
+                                        class="block w-full py-2 px-4 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                        Delete All
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4 mt-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
+                    <div
+                        class="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center">
+                                <span
+                                    class="bg-purple-100 text-purple-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-blue-400 border border-purple-400">
+
+                                    <svg class="w-4 h-4 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path fill="currentColor" fill-rule="evenodd"
+                                            d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    Instagram
+                                </span>
+                            </div>
+                            <button id="dropdownButton" data-dropdown-toggle="dropdown"
+                                class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+                                type="button">
+                                <span class="sr-only">Open dropdown</span>
+                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="currentColor" viewBox="0 0 16 3">
+                                    <path
+                                        d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">#HouseHunting</h3>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Leads Generated</p>
+                                <p class="text-xl font-bold text-gray-900 dark:text-white">145</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Impressions</p>
+                                <p class="text-xl font-bold text-gray-900 dark:text-white">2,300</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center">
+
+                                <svg class="w-4 h-4 text-gray-500 mr-1" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z" />
+                                </svg>
+
+                                <span class="text-sm text-gray-500">Added Mar 1, 2025</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="flex h-2 w-2 rounded-full bg-green-500 mr-2"></span>
+                                <span class="text-sm text-gray-500">Active</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+        <footer
+            class="p-4 my-6 mx-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 xl:p-8 dark:bg-gray-900">
+            <ul class="flex flex-wrap items-center mb-6 space-y-1 md:mb-0">
+                <li><a href="#"
+                        class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Terms
+                        and conditions</a></li>
+                <li><a href="#"
+                        class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Privacy
+                        Policy</a></li>
+                <li><a href="#"
+                        class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Licensing</a>
+                </li>
+                <li><a href="#"
+                        class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Cookie
+                        Policy</a></li>
+                <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline dark:text-gray-400">Contact</a>
+                </li>
+            </ul>
+            <div class="flex space-x-6 sm:justify-center">
+                <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </footer>
+        <p class="my-10 text-sm text-center text-gray-500">
+            &copy; 2025 <a href="" class="hover:underline" target="_blank">HabitatHunt</a>. All
+            rights reserved.
+        </p>
+
+    </div>
+
+</div>
+
+{% include 'leads/components/drawers/read_drawer.html' %}
+{% include 'leads/components/drawers/delete_modal.html' %}
+{% include 'leads/components/drawers/edit_lead_drawer.html' %}
+
+<div id="filterDropdown" class="z-20 hidden px-3 pt-1 bg-white rounded-lg shadow w-90 dark:bg-gray-700 right-0">
+    <div class="flex items-center justify-between pt-2 mb-2">
+        <h6 class="text-sm font-medium text-black dark:text-white">Filters</h6>
+        <div class="flex items-center space-x-3">
+            <a hx-get="{% url 'leads:filter_leads' %}" hx-target="#leads-listing" onclick="clearAllFilters()"
+                class="flex items-center text-sm font-medium text-primary-600 dark:text-primary-500 hover:underline">Clear
+                all</a>
+        </div>
+    </div>
+
+    <div id="accordion-flush" data-accordion="collapse" data-active-classes="text-black dark:text-white"
+        data-inactive-classes="text-gray-500 dark:text-gray-400">
+        <form hx-get="{% url 'leads:filter_leads' %}" hx-target="#leads-listing" hx-trigger="change">
+
+            <!-- Source -->
+            <h2 id="source-heading">
+                <button type="button"
+                    class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    data-accordion-target="#source-body" aria-expanded="true" aria-controls="source-body">
+                    <span>Source</span>
+                    <svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0"
+                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="source-body" class="hidden" aria-labelledby="source-heading">
+                <div class="py-2 font-light border-b border-gray-200 dark:border-gray-600">
+                    <ul class="space-y-2">
+                        {% for value, label in platform_choices %}
+                        <li class="flex items-center">
+                            <input id="platform-{{ value }}" name="source" type="checkbox" value="{{ value }}"
+                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-green-600 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <label for="platform-{{ value }}"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                {{ label }}
+                                {% with count=leads|filter_by_platform:value|length %}
+                                ({{ count }})
+                                {% endwith %}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Category -->
+            <h2 id="category-heading">
+                <button type="button"
+                    class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    data-accordion-target="#category-body" aria-expanded="true" aria-controls="category-body">
+                    <span>Lead Category</span>
+                    <svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0"
+                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="category-body" class="hidden" aria-labelledby="category-heading">
+                <div class="py-2 font-light border-b border-gray-200 dark:border-gray-600">
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <input id="hot" name="category" type="checkbox" value="hot"
+                                class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-green-600 focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-green-600" />
+                            <label for="hot"
+                                class="ml-2 flex items-center text-sm font-medium text-gray-900 dark:text-gray-300">
+                                <div class="mr-2 h-3.5 w-3.5 rounded-full bg-red-600"></div>
+                                Hot Leads
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="warm" name="category" type="checkbox" value="warm"
+                                class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-green-600 focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-green-600" />
+                            <label for="warm"
+                                class="ml-2 flex items-center text-sm font-medium text-gray-900 dark:text-gray-300">
+                                <div class="mr-2 h-3.5 w-3.5 rounded-full bg-amber-500"></div>
+                                Warm Leads
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="cold" name="category" type="checkbox" value="cold"
+                                class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-green-600 focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-green-600" />
+                            <label for="cold"
+                                class="ml-2 flex items-center text-sm font-medium text-gray-900 dark:text-gray-300">
+                                <div class="mr-2 h-3.5 w-3.5 rounded-full bg-blue-600"></div>
+                                Cold Leads
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <h2 id="status-heading">
+                <button type="button"
+                    class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    data-accordion-target="#status-body" aria-expanded="true" aria-controls="status-body">
+                    <span>Status</span>
+                    <svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0"
+                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="status-body" class="hidden" aria-labelledby="status-heading">
+                <div class="py-2 font-light border-b border-gray-200 dark:border-gray-600">
+                    <ul class="space-y-2">
+                        {% for value, label in status_choices %}
+                        <li class="flex items-center">
+                            <input id="status-{{ value }}" name="status" type="checkbox" value="{{ value }}"
+                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-green-600 focus:ring-green-500 dark:focus:ring-green-500 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <label for="status-{{ value }}"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                {{ label }}
+                                {% with count=leads|filter_by_status:value|length %}
+                                ({{ count }})
+                                {% endwith %}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sentiment Score -->
+            <h2 id="sentiment-score-heading">
+                <button type="button"
+                    class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    data-accordion-target="#sentiment-score-body" aria-expanded="true"
+                    aria-controls="sentiment-score-body">
+                    <span>Sentiment Score</span>
+                    <svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0"
+                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                </button>
+            </h2>
+            <div id="sentiment-score-body" class="hidden" aria-labelledby="sentiment-score-heading">
+                <div
+                    class="col-span-2 py-2 flex items-center justify-between space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
+                    <input type="number" name="sentiment_min" min="0" max="1" step="0.1"
+                        hx-get="{% url 'leads:filter_leads' %}" hx-target="#leads-listing"
+                        hx-trigger="change, input delay:500ms"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-green-500 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
+                        placeholder="Min" />
+
+                    <div class="shrink-0 text-sm font-medium dark:text-gray-300">to</div>
+
+                    <input type="number" name="sentiment_max" min="0" max="1" step="0.1"
+                        hx-get="{% url 'leads:filter_leads' %}" hx-target="#leads-listing"
+                        hx-trigger="change, input delay:500ms"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-green-500 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
+                        placeholder="Max" />
+                </div>
+            </div>
+            <!-- Engagement Score -->
+            <h2 id="engagement-score-heading">
+                <button type="button"
+                    class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    data-accordion-target="#engagement-score-body" aria-expanded="true"
+                    aria-controls="engagement-score-body">
+                    <span>Engagement Score</span>
+                    <svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0"
+                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                </button>
+            </h2>
+            <div id="engagement-score-body" class="hidden" aria-labelledby="engagement-score-heading">
+                <div
+                    class="col-span-2 py-2 flex items-center justify-between space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
+                    <input type="number" name="engagement_min" min="0" hx-get="{% url 'leads:filter_leads' %}"
+                        hx-target="#leads-listing" hx-trigger="change, input delay:500ms"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-green-500 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
+                        placeholder="Min" />
+
+                    <div class="shrink-0 text-sm font-medium dark:text-gray-300">to</div>
+
+                    <input type="number" name="engagement_max" min="0" max="100" hx-get="{% url 'leads:filter_leads' %}"
+                        hx-target="#leads-listing" hx-trigger="change, input delay:500ms"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-green-500 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
+                        placeholder="Max" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
