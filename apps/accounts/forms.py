@@ -1,5 +1,6 @@
 from allauth.account.forms import SignupForm
 from django import forms
+from .models import RealtorPreference
 
 
 class CustomSignupForm(SignupForm):
@@ -10,3 +11,14 @@ class CustomSignupForm(SignupForm):
         user.name = self.cleaned_data['name']
         user.save()
         return user
+    
+
+class RealtorPreferenceForm(forms.ModelForm):
+    class Meta:
+        model = RealtorPreference
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.user_id:
+            self.fields['hashtags'].queryset = self.fields['hashtags'].queryset.filter(user=self.instance.user)
