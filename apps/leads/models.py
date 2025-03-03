@@ -1,16 +1,12 @@
 from django.db import models
 from django.conf import settings
-
+from apps.platforms.models import Platform
 # Create your models here.
 
-PLATFORM_CHOICES = [
-    ('facebook', 'Facebook'),
-    ('instagram', 'Instagram'),
-]
 
 class RawComment(models.Model):
     username = models.CharField(max_length=255)
-    platform = models.CharField(max_length=20, choices=PLATFORM_CHOICES, default='other')
+    platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
     text = models.TextField()
     likes = models.IntegerField(default=0)
     replies = models.IntegerField(default=0)
@@ -52,7 +48,7 @@ class Lead(models.Model):
     engagement_score = models.FloatField(default=0.0)
     
     # Classification
-    source = models.CharField(max_length=20, choices=PLATFORM_CHOICES, default='other')
+    source = models.ForeignKey(Platform, on_delete=models.SET_NULL, null=True, related_name='leads')
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='cold')
 
     # Metadata

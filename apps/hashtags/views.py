@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import HashtagForm
 from .models import Hashtag
-from .models import PLATFORM_CHOICES
+from apps.platforms.models import Platform
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 
@@ -37,7 +37,7 @@ def hashtags(request):
         return render(request, 'hashtags/components/hashtag_items.html', {
                 'hashtags': paginated_hashtags,
                 'form': form, 
-                'platform_choices': PLATFORM_CHOICES,})
+                'platforms': Platform.objects.filter(is_active=True)})
 
     form = HashtagForm()
     paginated_hashtags = get_paginated_hashtags(request)
@@ -45,7 +45,7 @@ def hashtags(request):
     context = {
         'hashtags': paginated_hashtags,
         'form': form,
-        'platform_choices': PLATFORM_CHOICES,
+        'platforms': Platform.objects.filter(is_active=True),
     }
 
     return render(request, 'hashtags/hashtags.html', context)

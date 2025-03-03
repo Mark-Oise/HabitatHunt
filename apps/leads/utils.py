@@ -1,4 +1,5 @@
-from .models import Lead, PLATFORM_CHOICES, Note
+from .models import Lead, Note
+from apps.platforms.models import Platform
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -35,7 +36,7 @@ def filter_leads(request):
     # Handle source filtering
     sources = request.GET.getlist('source')
     if sources:
-        leads = leads.filter(source__in=sources)
+        leads = leads.filter(source__id__in=sources)
     
     # Handle category filtering
     categories = request.GET.getlist('category')
@@ -75,7 +76,7 @@ def filter_leads(request):
     
     context = {
         'leads': leads,
-        'platform_choices': PLATFORM_CHOICES,
+        'platforms': Platform.objects.filter(is_active=True),  # Add platforms to context
         'category_choices': Lead.CATEGORY_CHOICES,
         'status_choices': Lead.STATUS_CHOICES,
     }

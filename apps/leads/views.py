@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import Lead, PLATFORM_CHOICES
+from .models import Lead
+from apps.platforms.models import Platform
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import redirect
 from .forms import AddLeadForm, UpdateLeadForm
@@ -24,7 +25,7 @@ def leads(request):
             # Return the entire table contents
             return render(request, 'leads/components/lead_items.html', {
                 'leads': leads,
-                'platform_choices': PLATFORM_CHOICES,
+                'platforms': Platform.objects.filter(is_active=True),
                 'status_choices': Lead.STATUS_CHOICES,
             })
         
@@ -46,7 +47,7 @@ def leads(request):
     context = {
         'leads': leads,
         'total_leads': total_leads,
-        'platform_choices': PLATFORM_CHOICES,
+        'platforms': Platform.objects.filter(is_active=True),
         'status_choices': Lead.STATUS_CHOICES,  # Make sure this matches the model's attribute name
     }
         

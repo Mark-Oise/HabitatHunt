@@ -4,7 +4,6 @@ from django.shortcuts import render
 
 
 
-
 def search_hashtags(request):
     search_query = request.GET.get('search', '').strip()
     hashtags = Hashtag.objects.filter(user=request.user)
@@ -12,7 +11,7 @@ def search_hashtags(request):
     if search_query:
         hashtags = hashtags.filter(
             Q(name__icontains=search_query) |
-            Q(platform__icontains=search_query) 
+            Q(platform__name__icontains=search_query) 
         )
 
     return render(request, 'hashtags/components/hashtag_items.html', {
