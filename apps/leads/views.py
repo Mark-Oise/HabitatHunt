@@ -87,7 +87,7 @@ def bulk_delete_leads(request):
     context = {
         'leads': leads,
         'total_leads': total_leads,
-        'platform_choices': PLATFORM_CHOICES,
+        'platforms': Platform.objects.filter(is_active=True),
         'status_choices': Lead.STATUS_CHOICES,
     }
     
@@ -118,7 +118,7 @@ def delete_lead(request, lead_id):
         return render(request, 'leads/components/lead_container.html', {
             'leads': leads,
             'total_leads': total_leads,
-            'platform_choices': PLATFORM_CHOICES,
+            'platforms': Platform.objects.filter(is_active=True),
             'status_choices': Lead.STATUS_CHOICES,
         })
 
