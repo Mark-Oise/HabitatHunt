@@ -1,0 +1,15 @@
+<div id="email-field">
+    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+    <input type="email" name="email" id="email" placeholder="name@company.com"
+        hx-post="{% url 'accounts:validate_email' %}" hx-trigger="blur, keyup[key=='Enter']" hx-target="#email-field"
+        hx-select="#email-field" hx-swap="outerHTML"
+        class="bg-gray-50 border {% if email_exists %}border-red-500{% else %}border-gray-300{% endif %} text-gray-900 sm:text-sm rounded-lg {% if email_exists %}focus:ring-red-500 focus:border-red-600{% else %}focus:ring-green-500 focus:border-green-600{% endif %} block w-full p-2.5"
+        required value="{{ email }}">
+    <div id="email-validation">
+        {% if email_exists %}
+        <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+            This email is already registered.
+        </p>
+        {% endif %}
+    </div>
+</div>
