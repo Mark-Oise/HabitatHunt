@@ -2,6 +2,7 @@ from celery import shared_task
 import openai
 from .models import RawComment, Lead
 
+
 @shared_task
 def clean_scraped_data():
     # Remove duplicate and spam comments
@@ -14,6 +15,8 @@ def clean_scraped_data():
             comment.delete()
 
     print('Data cleaned successfully')
+
+
 
 def calculate_sentiment_score(text):
     """Convert OpenAI's 0-1 score to 0-100 scale"""
@@ -36,6 +39,7 @@ def calculate_engagement_score(comment):
     likes_score = min(comment.likes * 0.5, 60)  # Max 60 points from likes
     replies_score = min(comment.replies * 2, 40)  # Max 40 points from replies
     return min(likes_score + replies_score, 100)  # Cap at 100
+
 
 @shared_task
 def process_leads():

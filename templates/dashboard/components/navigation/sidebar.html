@@ -52,7 +52,7 @@
 
             </li>
             <li>
-                <button type="button"
+                <a href="{% url 'targets:targets' %}"
                     class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
 
                     <svg class="flex-shrink-0 w-6 h-6 {% if request.resolver_match.url_name == 'engagements' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
@@ -64,9 +64,9 @@
                     </svg>
 
 
-                    <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Engagements</span>
+                    <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Manage Targets</span>
 
-                </button>
+                </a>
 
             </li>
             <li>

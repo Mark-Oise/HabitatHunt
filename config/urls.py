@@ -28,6 +28,7 @@ urlpatterns = [
     path('leads/', include('apps.leads.urls')),
     path('listings/', include('apps.listings.urls')),
     path('hashtags/', include('apps.hashtags.urls')),
+    path('targets/', include('apps.targets.urls')),
 ]
     
 
