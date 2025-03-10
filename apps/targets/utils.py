@@ -51,3 +51,6 @@ def filter_targets(request):
     }
     
     return render(request, 'targets/components/target_items.html', context)
+
+
+
