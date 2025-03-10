@@ -40,6 +40,9 @@ def targets(request):
                 'targets': paginated_targets,
                 'form': form, 
                 'platforms': Platform.objects.filter(is_active=True)})
+    
+
+    total_targets = Target.objects.filter(user=request.user).count()
 
     form = TargetForm()
     paginated_targets = get_paginated_targets(request)
@@ -48,6 +51,7 @@ def targets(request):
         'targets': paginated_targets,
         'form': form,
         'platforms': Platform.objects.filter(is_active=True),
+        'total_targets': total_targets
     }
 
     return render(request, 'targets/targets.html', context)
