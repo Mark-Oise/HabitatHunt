@@ -201,8 +201,8 @@
                                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                                     aria-labelledby="actionsDropdownButton">
                                     <li>
-                                        <button type="button" hx-post="{% url 'leads:bulk_delete_leads' %}"
-                                            hx-target="#lead-container" hx-include="[name='selected_leads']:checked"
+                                        <button type="button" hx-post="{% url 'targets:bulk_delete_targets' %}"
+                                            hx-target="#targets-list" hx-include="[name='selected_targets']:checked"
                                             hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                                             hx-confirm="Are you sure you want to delete the selected leads? This action cannot be undone."
                                             class="block w-full py-2 px-4 text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
@@ -211,8 +211,9 @@
                                     </li>
                                 </ul>
                                 <div class="py-1">
-                                    <button type="button" hx-post="{% url 'leads:bulk_delete_leads' %}?delete_all=true"
-                                        hx-target="#lead-container" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                                    <button type="button"
+                                        hx-post="{% url 'targets:bulk_delete_targets' %}?delete_all=true"
+                                        hx-target="#targets-list" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                                         hx-confirm="Are you sure you want to delete ALL leads? This action cannot be undone."
                                         class="block w-full py-2 px-4 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                         Delete All Targets

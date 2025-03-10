@@ -57,6 +57,34 @@ def targets(request):
     return render(request, 'targets/targets.html', context)
 
 
+
+
+def bulk_delete_targets(request):
+    delete_all = request.GET.get('delete_all') == 'true'
+    
+    if delete_all:
+        # Delete all targets for the current user
+        Target.objects.filter(user=request.user).delete()
+    else:
+        # Delete selected targets
+        selected_targets = request.POST.getlist('selected_targets')
+        Target.objects.filter(
+            id__in=selected_targets,
+            user=request.user
+        ).delete()
+
+    targets = Target.objects.filter(user=request.user).order_by('-created_at')
+
+    # Get updated hashtags list with pagination
+    paginated_targets = get_paginated_targets(request)
+
+    return render(request, 'targets/components/target_items.html', {
+            'targets': paginated_targets,
+        })
+
+
+
+
 def delete_target(request, target_id):
     if request.method == 'POST':
         target = get_object_or_404(Target, id=target_id, user=request.user)
