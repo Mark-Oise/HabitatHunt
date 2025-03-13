@@ -1,4 +1,8 @@
 /* static/css/input.css */
+@import "tailwindcss";
+
+/* Preline UI */
+@import "../node_modules/preline/variants.css";
 
 @tailwind base;
 @tailwind components;

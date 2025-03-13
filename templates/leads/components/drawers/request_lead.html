@@ -30,9 +30,16 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Platform</label>
                         <p class="text-gray-600 mb-2 text-sm dark:text-gray-100">Select the platforms to scrape leads
                             from</p>
-                        <select id="category"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option selected="">Select category</option>
+                        <select multiple="" id="category" data-hs-select='{
+                                "placeholder": "Select platforms...",
+                                "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+                                "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-gray-50 border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-green-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600",
+                                "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
+                                "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
+                                "optionSelectedClasses": "bg-blue-600 text-blue-600",
+                                "searchable": true
+                              }' class="hidden">
+                            <option value="">Select category</option>
                             <option value="TV">TV/Monitors</option>
                             <option value="PC">PC</option>
                             <option value="GA">Gaming/Console</option>
@@ -45,9 +52,16 @@
                             accounts to scrape
                             leads
                             from</p>
-                        <select id="category"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option selected="">Select category</option>
+                        <select multiple="" id="category" data-hs-select='{
+                                "placeholder": "Select target pages...",
+                                "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+                                "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-gray-50 border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-green-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600",
+                                "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
+                                "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
+                                "optionSelectedClasses": "bg-blue-600 text-white",
+                                "searchable": true
+                              }' class="hidden">
+                            <option value="">Select category</option>
                             <option value="TV">TV/Monitors</option>
                             <option value="PC">PC</option>
                             <option value="GA">Gaming/Console</option>
@@ -95,7 +109,7 @@
 
                         <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch"
                             data-dropdown-placement="bottom"
-                            class="mt-4 inline-flex items-center justify-between bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="mt-4 inline-flex items-center justify-between bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-600 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             type="button">
                             Add Hashtags
                             <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -155,61 +169,71 @@
 
                     </div>
 
-                    <div class="sm:col-span-2">
-                        <label for="weight"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Engagement Threshold:
-                            50%
-                        </label>
-                        <input id="default-range" type="range" value="50"
-                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-                        <p class="text-gray-600 text-sm dark:text-gray-100 mb-2">Prioritize leads with higher engagement
-                            (likes, comments, shares)</p>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="weight"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location Keywords
-                        </label>
-                        <input type="text" id="location" value="Ontario"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="E.g Ontario, Alberta, Quebec" required />
-
-
-                    </div>
-
-                    <div class="sm:col-span-2">
-                        <label for="weight" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Request
-                            Frequency
-                        </label>
-                        <div class="flex items-center mb-2">
-                            <input checked id="default-radio-2" type="radio" value="" name="default-radio"
-                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="default-radio-2"
-                                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">One-time
-                                request</label>
-                        </div>
-                        <div class="flex items-center mb-2">
-                            <input id="default-radio-1" type="radio" value="" name="default-radio"
-                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="default-radio-1"
-                                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Recurring request
+                    <div class="sm:col-span-2 flex flex-col sm:flex-row gap-4">
+                        <div class="flex-1">
+                            <label for="weight"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Engagement
+                                Threshold:
+                                50%
                             </label>
+                            <input id="default-range" type="range" value="50"
+                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                            <p class="text-gray-600 text-sm dark:text-gray-100 mb-2">Prioritize leads with higher
+                                engagement
+                                (likes, comments, shares)</p>
                         </div>
-
-
-
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat
-                            Every
-                        </label>
-                        <div class="flex items-center gap-2">
-                            <input type="number" min="1" max="30" value="7"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <span class="text-sm font-medium text-gray-900 dark:text-white">days</span>
+                        <div class="flex-1">
+                            <label for="weight"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location Keywords
+                            </label>
+                            <input type="text" id="location" value="Ontario"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="E.g Ontario, Alberta, Quebec" required />
                         </div>
-                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">How often to repeat this lead request
-                            (1-30 days)</p>
                     </div>
+
+                    <div class="sm:col-span-2 flex flex-col sm:flex-row gap-4">
+                        <div class="flex-1" id="request-frequency">
+                            <label for="weight"
+                                class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Request
+                                Frequency
+                            </label>
+                            <div class="flex items-center mb-2">
+                                <input checked id="default-radio-2" type="radio" value="" name="default-radio"
+                                    class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-2"
+                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">One-time
+                                    request</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input id="default-radio-1" type="radio" value="" name="default-radio"
+                                    class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-1"
+                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Recurring request
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex-1" id="repeat-frequency">
+                            <label for="weight"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat
+                                Every
+                            </label>
+                            <div class="flex items-center gap-2">
+                                <input type="number" min="1" max="30" value="7"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">days</span>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">How often to repeat this lead
+                                request
+                                (1-30 days)</p>
+                        </div>
+                    </div>
+
+
+
+
+
+
 
 
 
