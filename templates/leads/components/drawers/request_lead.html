@@ -24,13 +24,16 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form action="#">
+            <form method="POST" action="{% url 'leads:leads' %}">
+                {% csrf_token %}
+                <input type="hidden" name="request_lead_form" value="1">
+
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
-                    <div><label for="category"
+                    <div><label for="platform"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Platform</label>
                         <p class="text-gray-600 mb-2 text-sm dark:text-gray-100">Select the platforms to scrape leads
                             from</p>
-                        <select multiple="" id="category" data-hs-select='{
+                        <select multiple="" id="platforms" name="platforms" data-hs-select='{
                                 "placeholder": "Select platforms...",
                                 "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
                                 "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-gray-50 border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-green-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600",
@@ -40,19 +43,18 @@
                                 "searchable": true
                               }' class="hidden">
                             <option value="">Select category</option>
-                            <option value="TV">TV/Monitors</option>
-                            <option value="PC">PC</option>
-                            <option value="GA">Gaming/Console</option>
-                            <option value="PH">Phones</option>
+                            {% for platform in platforms %}
+                            <option value="{{ platform.id }}">{{ platform.display_name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
-                    <div><label for="category"
+                    <div><label for="pages"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pages</label>
                         <p class="text-gray-600 mb-2 text-sm dark:text-gray-100">Select the pages or
                             accounts to scrape
                             leads
                             from</p>
-                        <select multiple="" id="category" data-hs-select='{
+                        <select multiple="" id="targets" name="targets" data-hs-select='{
                                 "placeholder": "Select target pages...",
                                 "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
                                 "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-gray-50 border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-green-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600",
@@ -62,54 +64,31 @@
                                 "searchable": true
                               }' class="hidden">
                             <option value="">Select category</option>
-                            <option value="TV">TV/Monitors</option>
-                            <option value="PC">PC</option>
-                            <option value="GA">Gaming/Console</option>
-                            <option value="PH">Phones</option>
+                            {% for target in targets %}
+                            <option value="{{ target.id }}">{{ target.username }} ({{ target.platform.display_name }})
+                            </option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="sm:col-span-2">
-                        <label for=" brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="hashtags" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Hashtags</label>
                         <p class="text-gray-600 text-sm dark:text-gray-100 mb-2">Select hashtags to filter potential
                             leads
                         </p>
-                        <div class="">
-                            <span id="badge-dismiss-dark"
-                                class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-gray-800 bg-gray-100 rounded-sm dark:bg-gray-700 dark:text-gray-300">
-                                #RealEstate
-                                <button type="button"
-                                    class="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-xs hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
-                                    data-dismiss-target="#badge-dismiss-dark" aria-label="Remove">
-                                    <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                    </svg>
-                                    <span class="sr-only">Remove badge</span>
-                                </button>
-                            </span>
-
-                            <span id="badge-dismiss-dark"
-                                class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-gray-800 bg-gray-100 rounded-sm dark:bg-gray-700 dark:text-gray-300">
-                                #JewishState
-                                <button type="button"
-                                    class="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-xs hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
-                                    data-dismiss-target="#badge-dismiss-dark" aria-label="Remove">
-                                    <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                    </svg>
-                                    <span class="sr-only">Remove badge</span>
-                                </button>
-                            </span>
+                        <div id="selected-hashtags-container" class="">
+                            <!-- Selected hashtags will appear here as badges -->
                         </div>
 
+                        <select multiple="" id="hashtags" name="hashtags" class="hidden">
+                            {% for hashtag in hashtags %}
+                            <option value="{{ hashtag.id }}">{{ hashtag.name }}</option>
+                            {% endfor %}
+                        </select>
 
                         <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch"
                             data-dropdown-placement="bottom"
-                            class="mt-4 inline-flex items-center justify-between bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-600 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="mt-2 inline-flex items-center justify-between bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-600 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             type="button">
                             Add Hashtags
                             <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -139,56 +118,47 @@
                                 </div>
                             </div>
                             <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownSearchButton">
+                                aria-labelledby="dropdownSearchButton" id="hashtag-dropdown-list">
+                                {% for hashtag in hashtags %}
                                 <li>
                                     <div
                                         class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
-                                        <input id="checkbox-item-11" type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                        <label for="checkbox-item-11"
-                                            class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300">Bonnie
-                                            Green</label>
+                                        <input id="hashtag-item-{{ hashtag.id }}" type="checkbox"
+                                            value="{{ hashtag.id }}" data-name="{{ hashtag.name }}"
+                                            class="hashtag-checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                        <label for="hashtag-item-{{ hashtag.id }}"
+                                            class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300">#
+                                            {{ hashtag.name }}</label>
                                     </div>
                                 </li>
-
+                                {% endfor %}
                             </ul>
                             <a href="#"
                                 class="flex items-center p-3 text-sm font-medium text-green-600 border-t border-gray-200 rounded-b-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-red-500 hover:underline">
-
                                 <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2"
                                         d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
-
                                 Manage Hashtags
                             </a>
                         </div>
-
-
                     </div>
 
                     <div class="sm:col-span-2 flex flex-col sm:flex-row gap-4">
                         <div class="flex-1">
-                            <label for="weight"
+                            <label for="engagement_threshold"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Engagement
                                 Threshold:
-                                50%
+                                <span id="threshold-value">50</span>%
                             </label>
-                            <input id="default-range" type="range" value="50"
+                            <input id="engagement_threshold" name="engagement_threshold" type="range" min="0" max="100"
+                                value="50"
                                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                             <p class="text-gray-600 text-sm dark:text-gray-100 mb-2">Prioritize leads with higher
                                 engagement
                                 (likes, comments, shares)</p>
-                        </div>
-                        <div class="flex-1">
-                            <label for="weight"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location Keywords
-                            </label>
-                            <input type="text" id="location" value="Ontario"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="E.g Ontario, Alberta, Quebec" required />
                         </div>
                     </div>
 
@@ -199,16 +169,16 @@
                                 Frequency
                             </label>
                             <div class="flex items-center mb-2">
-                                <input checked id="default-radio-2" type="radio" value="" name="default-radio"
+                                <input checked id="frequency-one-time" type="radio" value="one-time" name="frequency"
                                     class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="default-radio-2"
+                                <label for="frequency-one-time"
                                     class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">One-time
                                     request</label>
                             </div>
                             <div class="flex items-center mb-2">
-                                <input id="default-radio-1" type="radio" value="" name="default-radio"
+                                <input id="frequency-recurring" type="radio" value="recurring" name="frequency"
                                     class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="default-radio-1"
+                                <label for="frequency-recurring"
                                     class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Recurring request
                                 </label>
                             </div>
@@ -219,7 +189,7 @@
                                 Every
                             </label>
                             <div class="flex items-center gap-2">
-                                <input type="number" min="1" max="30" value="7"
+                                <input type="number" id="repeat_days" name="repeat_days" min="1" max="30" value="7"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <span class="text-sm font-medium text-gray-900 dark:text-white">days</span>
                             </div>
@@ -228,17 +198,7 @@
                                 (1-30 days)</p>
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
                 </div>
-
 
                 <div class="items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
                     <button type="submit"
@@ -261,3 +221,110 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Update the engagement threshold display when slider changes
+    document.getElementById('engagement_threshold').addEventListener('input', function () {
+        document.getElementById('threshold-value').textContent = this.value;
+    });
+
+    // Handle hashtag selection
+    document.querySelectorAll('.hashtag-checkbox').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            const hashtagId = this.value;
+            const hashtagName = this.dataset.name;
+            const selectElement = document.getElementById('hashtags');
+            const container = document.getElementById('selected-hashtags-container');
+
+            if (this.checked) {
+                // Make sure the option is selected in the hidden select
+                for (let i = 0; i < selectElement.options.length; i++) {
+                    if (selectElement.options[i].value === hashtagId) {
+                        selectElement.options[i].selected = true;
+                        break;
+                    }
+                }
+
+                // Add a badge for the selected hashtag
+                const badge = document.createElement('span');
+                badge.id = `badge-${hashtagId}`;
+                badge.className = 'inline-flex items-center px-2 py-1 me-2 mb-2 text-sm font-medium text-gray-800 bg-gray-100 rounded-sm dark:bg-gray-700 dark:text-gray-300';
+                badge.innerHTML = `
+                    #${hashtagName}
+                    <button type="button" data-id="${hashtagId}"
+                        class="remove-hashtag inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-xs hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300">
+                        <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Remove hashtag</span>
+                    </button>
+                `;
+                container.appendChild(badge);
+
+                // Add event listener to remove button
+                badge.querySelector('.remove-hashtag').addEventListener('click', function () {
+                    const hashtagId = this.dataset.id;
+                    container.removeChild(badge);
+
+                    // Uncheck the checkbox
+                    document.getElementById(`hashtag-item-${hashtagId}`).checked = false;
+
+                    // Deselect in the hidden select
+                    for (let i = 0; i < selectElement.options.length; i++) {
+                        if (selectElement.options[i].value === hashtagId) {
+                            selectElement.options[i].selected = false;
+                            break;
+                        }
+                    }
+                });
+            } else {
+                // Remove the badge
+                const badge = document.getElementById(`badge-${hashtagId}`);
+                if (badge) {
+                    container.removeChild(badge);
+                }
+
+                // Deselect in the hidden select
+                for (let i = 0; i < selectElement.options.length; i++) {
+                    if (selectElement.options[i].value === hashtagId) {
+                        selectElement.options[i].selected = false;
+                        break;
+                    }
+                }
+            }
+        });
+    });
+
+    // Show/hide repeat frequency based on frequency selection
+    document.getElementById('frequency-recurring').addEventListener('change', function () {
+        if (this.checked) {
+            document.getElementById('repeat-frequency').style.display = 'block';
+        }
+    });
+
+    document.getElementById('frequency-one-time').addEventListener('change', function () {
+        if (this.checked) {
+            document.getElementById('repeat-frequency').style.display = 'none';
+        }
+    });
+
+    // Initialize with correct visibility
+    if (document.getElementById('frequency-one-time').checked) {
+        document.getElementById('repeat-frequency').style.display = 'none';
+    }
+
+    // Filter hashtags when searching
+    document.getElementById('input-group-search').addEventListener('input', function () {
+        const searchText = this.value.toLowerCase();
+        document.querySelectorAll('#hashtag-dropdown-list li').forEach(function (item) {
+            const hashtag = item.querySelector('label').textContent.toLowerCase();
+            if (hashtag.includes(searchText)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+</script>
