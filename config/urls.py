@@ -29,6 +29,7 @@ urlpatterns = [
     path('listings/', include('apps.listings.urls')),
     path('hashtags/', include('apps.hashtags.urls')),
     path('targets/', include('apps.targets.urls')),
+    path('settings/', include('apps.settings.urls')),
 ]
     
 

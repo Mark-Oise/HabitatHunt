@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'apps.hashtags',
     'apps.platforms',
     'apps.targets',
+    'apps.settings',
     'compressor',
     'allauth',
     'allauth.account',
