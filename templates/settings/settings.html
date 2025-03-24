@@ -1,1 +1,552 @@
-Hi
+{% extends "dashboard/base.html" %}
+{% load target_filters %}
+
+{% block content %}
+{% include "dashboard/components/navigation/navbar.html" %}
+<div class="flex pt-16 overflow-hidden">
+
+    {% include "dashboard/components/navigation/sidebar.html" %}
+
+    <div id="main-content" class="relative w-full h-full overflow-y-auto lg:ml-64">
+        <main>
+            <div class="px-4 pt-6" id="hashtag-container">
+                <div class="flex flex-col md:flex-row justify-between items-start gap-4 md:items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold dark:text-gray-200">Your Settings</h1>
+                        <p class="text-gray-600 mt-2 text-md dark:text-gray-100">Manage your personal information,
+                            account settings, and lead preferences.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="w-full mt-4">
+                    <div class="relative right-0">
+                        <ul class="relative mb-4 flex flex-wrap px-1.5 py-1.5 list-none rounded-md bg-gray-100 dark:bg-gray-800"
+                            data-tabs="tabs" role="list">
+                            <li class="z-30 flex-auto text-center">
+                                <a class="z-30 flex items-center justify-center w-full px-0 py-2 text-sm mb-0 transition-all ease-in-out border-0 rounded-md cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white"
+                                    data-tab-target="" role="tab" aria-selected="true" aria-controls="overview">
+                                    Overview
+                                </a>
+                            </li>
+                            <li class="z-30 flex-auto text-center">
+                                <a class="z-30 flex items-center justify-center w-full px-0 py-2 mb-0 text-sm transition-all ease-in-out border-0 rounded-lg cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white"
+                                    data-tab-target="" role="tab" aria-selected="false"
+                                    aria-controls="activity-{{ lead.id }}">
+                                    Account
+                                </a>
+                            </li>
+                            <li class="z-30 flex-auto text-center">
+                                <a class="z-30 flex items-center justify-center w-full px-0 py-2 text-sm mb-0 transition-all ease-in-out border-0 rounded-lg cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white"
+                                    data-tab-target="" role="tab" aria-selected="false"
+                                    aria-controls="notes-{{ lead.id }}">
+                                    Lead Preference
+                                </a>
+                            </li>
+                            <li class="z-30 flex-auto text-center">
+                                <a class="z-30 flex items-center justify-center w-full px-0 py-2 text-sm mb-0 transition-all ease-in-out border-0 rounded-lg cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white"
+                                    data-tab-target="" role="tab" aria-selected="false"
+                                    aria-controls="notes-{{ lead.id }}">
+                                    Subscription
+                                </a>
+                            </li>
+                            <li class="z-30 flex-auto text-center">
+                                <a class="z-30 flex items-center justify-center w-full px-0 py-2 text-sm mb-0 transition-all ease-in-out border-0 rounded-lg cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white"
+                                    data-tab-target="" role="tab" aria-selected="false"
+                                    aria-controls="notes-{{ lead.id }}">
+                                    Integration
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div data-tab-content="">
+                            <div class="mb-4" id="overview" role="tabpanel">
+
+                                <div id="profile-overview"
+                                    class="p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+                                    <h3 class="text-xl font-bold mb-1 dark:text-white">Profile Overview</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 mb-4">Your personal information and
+                                        subscription summary.</p>
+
+                                    <div class="flex items-start gap-5">
+                                        <div
+                                            class="items-center sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
+                                            <img class="mb-4 rounded-lg w-28 h-28 sm:mb-0 xl:mb-4 2xl:mb-0"
+                                                src="https://flowbite-admin-dashboard.vercel.app/images/users/bonnie-green-2x.png"
+                                                alt="Jese picture">
+                                            <div>
+                                                <div class="flex items-center space-x-4">
+                                                    <button
+                                                        class="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700 dark:text-white">
+                                                        Edit Profile
+                                                    </button>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow">
+                                            <h4 class="text-lg font-bold dark:text-white">Admin User</h4>
+                                            <p class="text-gray-600 dark:text-gray-400">Premium Member</p>
+
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                                                <div>
+                                                    <p class="text-gray-500 text-sm mb-1">Email</p>
+                                                    <p class="text-gray-900 dark:text-white">
+                                                        {{ user.email }}</p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-gray-500 text-sm mb-1">Phone</p>
+                                                    <p class="text-gray-900 dark:text-white">
+                                                        (555) 123-4567</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-6 border-gray-200 dark:border-gray-700">
+
+                                    <h3 class="text-xl font-bold mb-4 dark:text-white">Current Subscription</h3>
+                                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                                        <div class="flex justify-between items-center mb-4">
+                                            <div>
+                                                <h4 class="text-lg font-semibold dark:text-white">Premium Plan</h4>
+                                                <p class="text-gray-600 dark:text-gray-400">Billed annually</p>
+                                            </div>
+                                            <span
+                                                class="bg-black text-white text-xs font-medium px-3 py-1 rounded-full dark:bg-gray-700">Active</span>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                            <div>
+                                                <h5 class="font-medium dark:text-white">Lead Generation</h5>
+                                                <p class="text-gray-600 dark:text-gray-400">Unlimited leads</p>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium dark:text-white">Analytics</h5>
+                                                <p class="text-gray-600 dark:text-gray-400">Advanced insights</p>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium dark:text-white">Support</h5>
+                                                <p class="text-gray-600 dark:text-gray-400">Priority support</p>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <button
+                                                class="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700 dark:text-white">
+                                                Manage Subscription
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div id="activity-{{ lead.id }}" role="tabpanel"
+                                class="hidden opacity-0 mb-4 block w-full p-6 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+
+                                <div class="">
+                                    <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">Personal
+                                        Information</h3>
+                                    <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">Update your
+                                        personal details and profile picture.</p>
+
+                                    <div class="flex flex-col md:flex-row gap-8">
+                                        <!-- Profile Picture Column -->
+                                        <div class="flex-shrink-0 flex flex-col items-start mb-6 md:mb-0">
+                                            <img class="rounded-lg w-28 h-28 mb-4"
+                                                src="https://flowbite-admin-dashboard.vercel.app/images/users/bonnie-green-2x.png"
+                                                alt="Profile picture">
+                                            <button
+                                                class="w-28 px-4 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700 dark:text-white flex justify-center">
+                                                <svg class="w-4 h-4 mr-1" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"
+                                                        d="M10 12.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"
+                                                        d="M17 3h-2l-2-2H7L5 3H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z" />
+                                                </svg>
+                                                Change
+                                            </button>
+                                        </div>
+
+                                        <!-- Form Column -->
+                                        <form action="#" class="flex-1">
+                                            <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 sm:gap-6">
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="first-name"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First
+                                                        Name</label>
+                                                    <input type="text" name="first-name" id="first-name"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="Bonnie" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="last-name"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last
+                                                        Name</label>
+                                                    <input type="text" name="last-name" id="last-name"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="Green" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="country"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country</label>
+                                                    <input type="text" name="country" id="country"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="United States" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="city"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City</label>
+                                                    <input type="text" name="city" id="city"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="e.g. San Francisco" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="address"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
+                                                    <input type="text" name="address" id="address"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="e.g. California" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="email"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                                    <input type="email" name="email" id="email"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="example@company.com" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="phone-number"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone
+                                                        Number</label>
+                                                    <input type="number" name="phone-number" id="phone-number"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="e.g. +(12)3456 789" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="birthday"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Birthday</label>
+                                                    <input type="number" name="birthday" id="birthday"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="15/08/1990" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="organization"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Organization</label>
+                                                    <input type="text" name="organization" id="organization"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="Company Name" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="role"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+                                                    <input type="text" name="role" id="role"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="React Developer" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="department"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
+                                                    <input type="text" name="department" id="department"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="Development" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-span-3">
+                                                    <label for="zip-code"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zip/postal
+                                                        code</label>
+                                                    <input type="number" name="zip-code" id="zip-code"
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        placeholder="123456" required="">
+                                                </div>
+                                                <div class="col-span-1 sm:col-full">
+                                                    <button
+                                                        class="text-white bg-green-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                                        type="submit">Save all</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div
+                                    class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                                    <h3 class="mb-4 text-xl font-semibold dark:text-white">Password information</h3>
+                                    <form action="#">
+                                        <div class="grid grid-cols-6 gap-6">
+                                            <div class="col-span-6 sm:col-span-3">
+                                                <label for="current-password"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current
+                                                    password</label>
+                                                <input type="text" name="current-password" id="current-password"
+                                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    placeholder="••••••••" required="">
+                                            </div>
+                                            <div class="col-span-6 sm:col-span-3">
+                                                <label for="password"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New
+                                                    password</label>
+                                                <input data-popover-target="popover-password"
+                                                    data-popover-placement="bottom" type="password" id="password"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="••••••••" required="">
+                                                <div data-popover="" id="popover-password" role="tooltip"
+                                                    class="absolute z-10 invisible inline-block text-sm font-light text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400"
+                                                    style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(81.5px, 3209px, 0px);"
+                                                    data-popper-placement="bottom">
+                                                    <div class="p-3 space-y-2">
+                                                        <h3 class="font-semibold text-gray-900 dark:text-white">Must
+                                                            have at least 6 characters</h3>
+                                                        <div class="grid grid-cols-4 gap-2">
+                                                            <div class="h-1 bg-orange-300 dark:bg-orange-400"></div>
+                                                            <div class="h-1 bg-orange-300 dark:bg-orange-400"></div>
+                                                            <div class="h-1 bg-gray-200 dark:bg-gray-600"></div>
+                                                            <div class="h-1 bg-gray-200 dark:bg-gray-600"></div>
+                                                        </div>
+                                                        <p>It’s better to have:</p>
+                                                        <ul>
+                                                            <li class="flex items-center mb-1">
+                                                                <svg class="w-4 h-4 mr-2 text-green-400 dark:text-green-500"
+                                                                    aria-hidden="true" fill="currentColor"
+                                                                    viewBox="0 0 20 20"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                                        clip-rule="evenodd"></path>
+                                                                </svg>
+                                                                Upper &amp; lower case letters
+                                                            </li>
+                                                            <li class="flex items-center mb-1">
+                                                                <svg class="w-4 h-4 mr-2 text-gray-300 dark:text-gray-400"
+                                                                    aria-hidden="true" fill="currentColor"
+                                                                    viewBox="0 0 20 20"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                        clip-rule="evenodd"></path>
+                                                                </svg>
+                                                                A symbol (#$&amp;)
+                                                            </li>
+                                                            <li class="flex items-center">
+                                                                <svg class="w-4 h-4 mr-2 text-gray-300 dark:text-gray-400"
+                                                                    aria-hidden="true" fill="currentColor"
+                                                                    viewBox="0 0 20 20"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                        clip-rule="evenodd"></path>
+                                                                </svg>
+                                                                A longer password (min. 12 chars.)
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div data-popper-arrow=""
+                                                        style="position: absolute; left: 0px; transform: translate3d(139px, 0px, 0px);">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-span-6 sm:col-span-3">
+                                                <label for="confirm-password"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm
+                                                    password</label>
+                                                <input type="text" name="confirm-password" id="confirm-password"
+                                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    placeholder="••••••••" required="">
+                                            </div>
+                                            <div class="col-span-6 sm:col-full">
+                                                <button
+                                                    class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                                    type="submit">Save all</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div id="notes-{{ lead.id }}" role="tabpanel"
+                                class="hidden opacity-0 mb-4 block w-full p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+
+                                <h5 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">Notes</h5>
+                                <p class="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">Add notes and
+                                    reminders about
+                                    this lead</p>
+
+                                <div>
+                                    <form hx-post="" hx-target="#notes-list-{{ lead.id }}" hx-swap="afterbegin"
+                                        hx-on::after-request="this.reset()" hx-trigger="submit" class="space-y-2"
+                                        hx-preserve="true">
+                                        {% csrf_token %}
+                                        <textarea name="note_text" rows="4"
+                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                                            placeholder="Add notes..."></textarea>
+
+                                        <button type="submit"
+                                            class="mt-2 text-white bg-green-600 hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                            <svg class="w-5 h-5 me-2 text-white dark:text-white" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                                viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                            Add Note
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div class="border-t border-gray-200 gap-4 mt-6">
+                                    <div id="notes-list-{{ lead.id }}">
+                                        {% if lead.notes.all %}
+                                        {% for note in lead.notes.all %}
+                                        {% include 'dashboard/components/leads/note_item.html' with note=note %}
+                                        {% endfor %}
+                                        {% else %}
+                                        <div class="flex p-4 mt-2 mb-4 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
+                                            role="alert">
+                                            <svg class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                                            </svg>
+                                            <span class="sr-only">Info</span>
+                                            <div>
+                                                No notes have been added yet. Add your first note above.
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </main>
+        <footer
+            class="p-4 my-6 mx-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 xl:p-8 dark:bg-gray-900">
+            <ul class="flex flex-wrap items-center mb-6 space-y-1 md:mb-0">
+                <li><a href="#"
+                        class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Terms
+                        and conditions</a></li>
+                <li><a href="#"
+                        class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Privacy
+                        Policy</a></li>
+                <li><a href="#"
+                        class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Licensing</a>
+                </li>
+                <li><a href="#"
+                        class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Cookie
+                        Policy</a></li>
+                <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline dark:text-gray-400">Contact</a>
+                </li>
+            </ul>
+            <div class="flex space-x-6 sm:justify-center">
+                <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </footer>
+        <p class="my-10 text-sm text-center text-gray-500">
+            &copy; 2025 <a href="" class="hover:underline" target="_blank">HabitatHunt</a>. All
+            rights reserved.
+        </p>
+
+    </div>
+
+</div>
+
+{% include 'targets/components/modals/add_target.html' %}
+
+<div id="filterDropdown" class="z-20 hidden px-3 pt-1 bg-white rounded-lg shadow w-90 dark:bg-gray-700 right-0">
+    <div class="flex items-center justify-between pt-2 mb-2">
+        <h6 class="text-sm font-medium text-black dark:text-white">Filters</h6>
+        <div class="flex items-center space-x-3">
+            <a hx-get="{% url 'targets:filter_targets' %}" hx-target="#targets-list" onclick="clearAllFilters()"
+                class="flex items-center text-sm font-medium text-primary-600 dark:text-primary-500 hover:underline">Clear
+                all</a>
+        </div>
+    </div>
+
+    <div id="accordion-flush" data-accordion="collapse" data-active-classes="text-black dark:text-white"
+        data-inactive-classes="text-gray-500 dark:text-gray-400">
+        <form hx-get="{% url 'targets:filter_targets' %}" hx-target="#targets-list" hx-trigger="change">
+
+            <!-- Source -->
+            <h2 id="source-heading">
+                <button type="button"
+                    class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    data-accordion-target="#source-body" aria-expanded="true" aria-controls="source-body">
+                    <span>Platform</span>
+                    <svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0"
+                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="source-body" class="hidden" aria-labelledby="source-heading">
+                <div class="py-2 font-light border-b border-gray-200 dark:border-gray-600">
+                    <ul class="space-y-2">
+                        {% for platform in platforms %}
+                        <li class="flex items-center">
+                            <input id="platform-{{ platform.id }}" name="platform" type="checkbox"
+                                value="{{ platform.id }}"
+                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-green-600 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <label for="platform-{{ platform.id }}"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                {{ platform.name }}
+                                {% with count=targets|filter_by_platform:platform.id|length %}
+                                ({{ count }})
+                                {% endwith %}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
