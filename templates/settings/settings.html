@@ -147,7 +147,7 @@
 
                             <div class="mb-4 hidden" id="activity-{{ lead.id }}" role="tabpanel">
                                 <div
-                                    class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+                                    class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
                                     <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                                         Personal
                                         Information</h3>
@@ -383,10 +383,13 @@
                                                     notifications for important updates.</p>
                                             </div>
                                             <label class="relative inline-flex items-center cursor-pointer">
+
+
                                                 <input type="checkbox" value="" class="sr-only peer" checked>
                                                 <div
-                                                    class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 dark:peer-focus:ring-primary-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-black">
+                                                    class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 dark:peer-checked:bg-green-600">
                                                 </div>
+
                                             </label>
                                         </div>
 
@@ -450,7 +453,7 @@
                                             <label class="relative inline-flex items-center cursor-pointer">
                                                 <input type="checkbox" value="" class="sr-only peer" checked>
                                                 <div
-                                                    class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 dark:peer-focus:ring-primary-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-black">
+                                                    class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 dark:peer-checked:bg-green-600">
                                                 </div>
                                             </label>
                                         </div>
@@ -458,7 +461,7 @@
 
                                     <div class="mt-6">
                                         <button
-                                            class="px-5 py-2.5 text-sm font-medium text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 rounded-lg dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Save
+                                            class="px-5 py-2.5 text-sm font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-gray-300 rounded-lg dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Save
                                             Preferences</button>
                                     </div>
                                 </div>
@@ -562,8 +565,9 @@
                                         Pages/Accounts</h4>
                                     <p class="text-sm text-gray-700 dark:text-gray-400 mb-4">Enter target accounts for
                                         lead scraping, separated by commas.</p>
-                                    <input type="text" value="@realestate_daily, @luxuryhomes_worldwide"
+                                    <input type="text" rows="4" value="@realestate_daily, @luxuryhomes_worldwide"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-black dark:focus:border-black">
+
                                 </div>
 
                                 <!-- Default Location Keywords -->
@@ -587,11 +591,6 @@
                                     <div class="relative w-full">
                                         <input id="default-range" type="range" value="50"
                                             class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-
-
-
-
-
                                     </div>
                                     <div class="flex justify-between mt-2 text-sm text-gray-700 dark:text-gray-400">
                                         <span>Lower quality, more leads</span>
@@ -601,7 +600,7 @@
 
                                 <!-- Save Button -->
                                 <button type="button"
-                                    class="text-white bg-gray-900 hover:bg-black focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                     Save Preferences
                                 </button>
                             </div>
