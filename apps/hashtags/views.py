@@ -39,11 +39,14 @@ def hashtags(request):
                 'form': form, 
                 'platforms': Platform.objects.filter(is_active=True)})
 
+
+    total_hashtags = Hashtag.objects.filter(user=request.user).count()
     form = HashtagForm()
     paginated_hashtags = get_paginated_hashtags(request)
 
     context = {
         'hashtags': paginated_hashtags,
+        'total_hashtags': total_hashtags,
         'form': form,
         'platforms': Platform.objects.filter(is_active=True),
     }

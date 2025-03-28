@@ -35,7 +35,7 @@
                                 Add Hashtag
                             </button>
 
-                            <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                            <!-- <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                                 <button type="button"
                                     class="w-full sm:w-auto flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                                     <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -57,7 +57,7 @@
                                     </svg>
                                     Export as CSV
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -71,11 +71,10 @@
                                 <h5 class="text-gray-500 text-sm font-bold dark:text-gray-200">Total Hashtags</h5>
                                 <div class="mt-4">
                                     <span class="text-3xl font-semibold dark:text-gray-100">
-                                        10
+                                        {{ total_hashtags }}
                                     </span>
                                     <div class="text-sm text-red-500 mt-1">
-                                        %
-                                        <span class="text-gray-400">from last month</span>
+                                        <span class="text-gray-400">{{ total_hashtags }} active hashtags </span>
                                     </div>
                                 </div>
                             </div>
