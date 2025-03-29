@@ -33,7 +33,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'habitathunt.onrender.com'
+    'habitathunt.onrender.com',
+    '13.60.74.228',
 ]
 
 
