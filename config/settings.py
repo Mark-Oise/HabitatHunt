@@ -207,7 +207,9 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 
-
+# Add these settings
+SOCIALACCOUNT_AUTO_SIGNUP = True
+# Skip the intermediate page completely
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -216,7 +218,9 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
+            'prompt': 'select_account',
         },
+        'VERIFIED_EMAIL': True,
         'CLIENT_ID': env('GOOGLE_CLIENT_ID'),
         'SECRET': env('GOOGLE_CLIENT_SECRET'),
     }
