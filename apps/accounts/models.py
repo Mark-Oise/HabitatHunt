@@ -38,7 +38,7 @@ class Realtor(models.Model):
     specialization = models.CharField(max_length=255, blank=True, null=True)
 
     # Social and Profile
-    social_media_links = models.JSONField(default=dict)
+    social_media_links = models.JSONField(default=dict, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     profile_image = models.ImageField(upload_to='images/', blank=True, null=True)
 

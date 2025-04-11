@@ -1,21 +1,13 @@
 from django import forms
-from apps.accounts.models import Realtor
-
+from apps.accounts.models import Realtor, User
+from allauth.account.forms import ChangePasswordForm
 
 class RealtorSettingsForm(forms.ModelForm):
     name = forms.CharField(max_length=255, required=True)
-    company_name = forms.CharField(max_length=255, required=True)
-    company_address = forms.CharField(max_length=255, required=True)
-    phone = forms.CharField(max_length=20, required=True)
-    years_in_business = forms.IntegerField(required=True)
-    license_number = forms.CharField(max_length=20, required=True)
-    license_state = forms.CharField(max_length=2, required=True)
-    specialization = forms.CharField(max_length=255, required=True)
 
     class Meta:
         model = Realtor
         fields = [
-            'name',
             'company_name',
             'company_address',
             'phone',
@@ -24,3 +16,32 @@ class RealtorSettingsForm(forms.ModelForm):
             'license_state',
             'specialization'
         ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.user:
+            self.fields['name'].initial = self.instance.user.name
+
+    def save(self, commit=True):
+        realtor = super().save(commit=False)
+        if commit:
+            # Save the realtor instance
+            realtor.save()
+            # Update the associated user's name
+            realtor.user.name = self.cleaned_data['name']
+            realtor.user.save()
+        return realtor
+
+class CustomChangePasswordForm(ChangePasswordForm):
+    old_password = forms.CharField(
+        label="Current Password",
+        widget=forms.PasswordInput()
+    )
+    new_password1 = forms.CharField(
+        label="New Password",
+        widget=forms.PasswordInput()
+    )
+    new_password2 = forms.CharField(
+        label="Confirm New Password",
+        widget=forms.PasswordInput()
+    )
