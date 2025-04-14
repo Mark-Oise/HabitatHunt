@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import RealtorSettingsForm, CustomChangePasswordForm
-from apps.accounts.models import Realtor
+from .forms import RealtorSettingsForm, CustomChangePasswordForm, UserNotificationSettings
+from apps.accounts.models import Realtor, UserNotificationPreference
 from django.contrib.auth import update_session_auth_hash
 
 
@@ -13,6 +13,10 @@ def settings(request):
     realtor_settings = Realtor.objects.get(user=request.user)
     realtor_settings_form = RealtorSettingsForm(instance=realtor_settings)
     password_change_form = CustomChangePasswordForm(user=request.user)
+    
+    # Get or create notification preferences
+    notification_preferences, created = UserNotificationPreference.objects.get_or_create(user=request.user)
+    notification_settings_form = UserNotificationSettings(instance=notification_preferences)
 
     if request.method == 'POST':
         if 'realtor_settings_form' in request.POST:
@@ -37,9 +41,19 @@ def settings(request):
             else:
                 messages.error(request, 'Please correct the errors below.')
 
+        elif 'notification_settings_form' in request.POST:
+            notification_settings_form = UserNotificationSettings(request.POST, instance=notification_preferences)
+            if notification_settings_form.is_valid():
+                notification_settings_form.save()
+                messages.success(request, 'Notification preferences updated successfully.')
+                return redirect('settings:settings')
+            else:
+                messages.error(request, 'Please correct the errors below.')
+
     context = {
         'realtor_settings_form': realtor_settings_form,
         'password_change_form': password_change_form,
+        'notification_settings_form': notification_settings_form,
         'realtor': realtor_settings,
         'user': request.user,
     }
