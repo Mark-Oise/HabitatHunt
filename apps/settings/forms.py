@@ -1,5 +1,5 @@
 from django import forms
-from apps.accounts.models import Realtor, User
+from apps.accounts.models import Realtor, User, UserNotificationPreference
 from allauth.account.forms import ChangePasswordForm
 
 class RealtorSettingsForm(forms.ModelForm):
@@ -31,6 +31,19 @@ class RealtorSettingsForm(forms.ModelForm):
             realtor.user.name = self.cleaned_data['name']
             realtor.user.save()
         return realtor
+    
+
+class UserNotificationSettings(forms.ModelForm):
+    class Meta:
+        model = UserNotificationPreference
+        fields = [
+            'email_notifications_enabled',
+            'new_leads_email',
+            'account_updates_email',
+            'marketing_emails',
+            'in_app_notifications',
+        ]
+
 
 
 class CustomChangePasswordForm(ChangePasswordForm):
