@@ -75,3 +75,30 @@ class RealtorPreference(models.Model):
 
     def __str__(self):
         return f"{self.user.name}'s Preferences"
+    
+
+
+class UserNotificationPreference(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='notification_preferences')
+    
+    # Email Notifications
+    email_notifications_enabled = models.BooleanField(default=True, 
+        help_text="Receive email notifications for important updates")
+    new_leads_email = models.BooleanField(default=True,
+        help_text="Get email notifications when new leads are generated")
+    account_updates_email = models.BooleanField(default=True,
+        help_text="Get email notifications about important account changes")
+    marketing_emails = models.BooleanField(default=True,
+        help_text="Receive promotional emails and special offers")
+
+    # In-App Notifications
+    in_app_notifications = models.BooleanField(default=True,
+        help_text="Receive notifications within the HabitatHunt dashboard")
+    
+    class Meta:
+        verbose_name = "User Notification Preference"
+        verbose_name_plural = "User Notification Preferences"
+
+    def __str__(self):
+        return f"{self.user.email}'s Notification Preferences"
+    
