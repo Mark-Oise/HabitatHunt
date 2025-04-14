@@ -32,16 +32,17 @@ class RealtorSettingsForm(forms.ModelForm):
             realtor.user.save()
         return realtor
 
+
 class CustomChangePasswordForm(ChangePasswordForm):
-    old_password = forms.CharField(
+    oldpassword = forms.CharField(
         label="Current Password",
         widget=forms.PasswordInput()
     )
-    new_password1 = forms.CharField(
+    password1 = forms.CharField(
         label="New Password",
         widget=forms.PasswordInput()
     )
-    new_password2 = forms.CharField(
+    password2 = forms.CharField(
         label="Confirm New Password",
         widget=forms.PasswordInput()
     )
