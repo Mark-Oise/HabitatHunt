@@ -220,8 +220,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'prompt': 'select_account',
         },
         'VERIFIED_EMAIL': True,
-        'CLIENT_ID': env('GOOGLE_CLIENT_ID'),
-        'SECRET': env('GOOGLE_CLIENT_SECRET'),
+        'CLIENT_ID': '366281293728-vk2l9torgtp65p9p2p9e66titbqv82jf.apps.googleusercontent.com',
+        'SECRET': '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',
     }
 }
 
