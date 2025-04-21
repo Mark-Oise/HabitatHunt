@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-s74uw5q)=0j0-r)akx9p!-m6dn^kgtb3%j30npc%qv9ef1h9_g
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '13.60.74.228',
+    '13.48.190.5',
     'localhost',
     '127.0.0.1',
     'habitathunt.onrender.com',
