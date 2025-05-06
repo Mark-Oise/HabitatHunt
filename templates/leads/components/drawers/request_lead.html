@@ -101,6 +101,7 @@
                         <!-- Dropdown menu -->
                         <div id="dropdownSearch"
                             class="z-10 hidden bg-white rounded-lg shadow-sm w-60 dark:bg-gray-700">
+                            {% if hashtags %}
                             <div class="p-3">
                                 <label for="input-group-search" class="sr-only">Search</label>
                                 <div class="relative">
@@ -117,8 +118,10 @@
                                         placeholder="Search Hashtags">
                                 </div>
                             </div>
+                            {% endif %}
                             <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
                                 aria-labelledby="dropdownSearchButton" id="hashtag-dropdown-list">
+                                {% if hashtags %}
                                 {% for hashtag in hashtags %}
                                 <li>
                                     <div
@@ -127,11 +130,21 @@
                                             value="{{ hashtag.id }}" data-name="{{ hashtag.name }}"
                                             class="hashtag-checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label for="hashtag-item-{{ hashtag.id }}"
-                                            class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300">#
-                                            {{ hashtag.name }}</label>
+                                            class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300">
+                                            #{{hashtag.name }}</label>
                                     </div>
                                 </li>
                                 {% endfor %}
+                                {% else %}
+                                <div class="flex items-center p-4 mb-4 mt-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800"
+                                    role="alert">
+
+                                    <div>
+                                        <span class="font-medium">No hashtags found!</span> Click the "Manage Hashtags"
+                                        button below to add some hashtags to target and get started.
+                                    </div>
+                                </div>
+                                {% endif %}
                             </ul>
                             <a href="{% url 'hashtags:hashtags' %}"
                                 class="flex items-center p-3 text-sm font-medium text-green-600 border-t border-gray-200 rounded-b-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-red-500 hover:underline">
