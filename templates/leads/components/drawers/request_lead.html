@@ -183,12 +183,18 @@
                         </h2>
                         <div id="accordion-open-body-2" class="hidden" aria-labelledby="accordion-open-heading-2">
                             <div class="p-5 border-x border-b rounded-b-lg border-gray-200 dark:border-gray-700 dark:bg-gray-900 -mt-px">
-                                <p class="mb-2 text-gray-500 dark:text-gray-400">Flowbite is an open-source library of
-                                    interactive components built on top of Tailwind CSS including buttons, dropdowns,
-                                    modals, navbars, and more.</p>
-                                <p class="text-gray-500 dark:text-gray-400">Check out this guide to learn how to <a href="/docs/getting-started/introduction/" class="text-blue-600 dark:text-blue-500 hover:underline">get started</a> and
-                                    start
-                                    developing websites even faster with components on top of Tailwind CSS.</p>
+                                <div class="sm:col-span-2 flex flex-col sm:flex-row gap-4">
+                                    <div class="flex-1">
+                                        <label for="engagement_threshold" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Engagement
+                                            Threshold:
+                                            <span id="threshold-value">50</span>%
+                                        </label>
+                                        <input id="engagement_threshold" name="engagement_threshold" type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                                        <p class="text-gray-600 text-sm dark:text-gray-100 mb-2">Prioritize leads with higher
+                                            engagement
+                                            (likes, comments, shares)</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -225,7 +231,7 @@
                                             Every
                                         </label>
                                         <div class="flex items-center gap-2">
-                                            <input type="number" id="repeat_days" name="repeat_days" min="1" max="30" value="7" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            <input type="number" id="repeat_days" name="repeat_days" min="1" max="30" value="7" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                                             <span class="text-sm font-medium text-gray-900 dark:text-white">days</span>
                                         </div>
                                         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">How often to repeat this lead
