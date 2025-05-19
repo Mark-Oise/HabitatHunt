@@ -210,48 +210,35 @@
                         </h2>
                         <div id="accordion-open-body-3" class="hidden" aria-labelledby="accordion-open-heading-3">
                             <div class="p-5 border-x border-b rounded-b-lg border-gray-200 dark:border-gray-700 dark:bg-gray-900 -mt-px">
-                                <div class="mb-4">
-                                    <div class="flex justify-between items-center">
-                                        <h3 class="text-base font-medium text-gray-900 dark:text-white">Platforms</h3>
-                                        <div class="flex items-center">
-                                            <input type="checkbox" id="useDefaults" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="useDefaults" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Using
-                                                defaults</label>
+                                <div class="sm:col-span-2 flex flex-col sm:flex-row gap-4">
+                                    <div class="flex-1" id="request-frequency">
+                                        <label for="frequency" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Request
+                                            Frequency
+                                        </label>
+                                        <div class="flex items-center mb-2">
+                                            <input checked id="frequency-one-time" type="radio" value="one-time" name="frequency" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="frequency-one-time" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">One-time
+                                                request</label>
                                         </div>
+                                        <div class="flex items-center mb-2">
+                                            <input id="frequency-recurring" type="radio" value="recurring" name="frequency" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="frequency-recurring" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Recurring request
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1" id="repeat-frequency">
+                                        <label for="repeat_days" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat
+                                            Every
+                                        </label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="number" id="repeat_days" name="repeat_days" min="1" max="30" value="7" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            <span class="text-sm font-medium text-gray-900 dark:text-white">days</span>
+                                        </div>
+                                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">How often to repeat this lead
+                                            request
+                                            (1-30 days)</p>
                                     </div>
                                 </div>
-
-                                <div class="grid grid-cols-2 gap-6">
-                                    <div>
-                                        <div class="flex items-center mb-3">
-                                            <input checked id="instagram" type="checkbox" value="instagram" name="platforms[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="instagram" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Instagram</label>
-                                        </div>
-                                        <div class="flex items-center mb-3">
-                                            <input checked id="facebook" type="checkbox" value="facebook" name="platforms[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="facebook" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Facebook</label>
-                                        </div>
-                                        <div class="flex items-center mb-3">
-                                            <input id="tiktok" type="checkbox" value="tiktok" name="platforms[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="tiktok" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">TikTok</label>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex items-center mb-3">
-                                            <input checked id="twitter" type="checkbox" value="twitter" name="platforms[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="twitter" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Twitter</label>
-                                        </div>
-                                        <div class="flex items-center mb-3">
-                                            <input id="linkedin" type="checkbox" value="linkedin" name="platforms[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="linkedin" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">LinkedIn</label>
-                                        </div>
-                                        <div class="flex items-center mb-3">
-                                            <input id="pinterest" type="checkbox" value="pinterest" name="platforms[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="pinterest" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pinterest</label>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
