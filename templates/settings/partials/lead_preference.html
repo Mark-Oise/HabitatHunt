@@ -7,7 +7,7 @@
             </h3>
             <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">Select the social media platforms you want to use by default for lead generation campaigns.</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
                 <!-- Platform Cards-->
                 <div class="p-4 border border-gray-200 rounded-lg dark:border-gray-700">
                     <div class="flex items-center justify-between">
@@ -34,7 +34,7 @@
         </div>
 
         <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
-            <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center justify-between">
                 <div class="flex items-center justify-between w-full">
                     <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Default Hashtags
@@ -56,8 +56,9 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-                <input type="search" class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search hashtags...">
+                <input type="search" class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search hashtags...">
             </div>
+
 
             <!-- Action Buttons -->
             <div class="flex gap-4 mb-4">
@@ -81,62 +82,23 @@
 
             <!-- Hashtag List -->
             <div class="rounded-lg border border-gray-200 dark:border-gray-700 p-2 max-h-64 overflow-y-auto">
+                {% if hashtags %}
+                {% for hashtag in hashtags %}
                 <div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
                     <div class="flex items-center">
-                        <input checked type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#realestate</label>
+                        <input type="checkbox" id="hashtag-{{ hashtag.id }}" value="{{ hashtag.id }}" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="hashtag-{{ hashtag.id }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#{{ hashtag.name }}</label>
                     </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Default</span>
+                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+                        {{ hashtag.platform.name }}
+                    </span>
                 </div>
-                <div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
-                    <div class="flex items-center">
-                        <input checked type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#realestate</label>
-                    </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Default</span>
+                {% endfor %}
+                {% else %}
+                <div class="p-4 text-sm text-gray-500 dark:text-gray-400 text-center">
+                    No hashtags found. Add some using the manage button below.
                 </div>
-                <div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
-                    <div class="flex items-center">
-                        <input checked type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#realestate</label>
-                    </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Default</span>
-                </div>
-                <div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
-                    <div class="flex items-center">
-                        <input checked type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#realestate</label>
-                    </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Default</span>
-                </div>
-                <div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
-                    <div class="flex items-center">
-                        <input checked type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#realestate</label>
-                    </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Default</span>
-                </div>
-                <div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
-                    <div class="flex items-center">
-                        <input checked type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#realestate</label>
-                    </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Default</span>
-                </div>
-                <div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
-                    <div class="flex items-center">
-                        <input checked type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#realestate</label>
-                    </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Default</span>
-                </div>
-                <div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
-                    <div class="flex items-center">
-                        <input checked type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#realestate</label>
-                    </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Default</span>
-                </div>
+                {% endif %}
             </div>
 
             <!-- Manage All Hashtags Button -->

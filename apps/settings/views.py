@@ -18,6 +18,9 @@ def settings(request):
     notification_preferences, created = UserNotificationPreference.objects.get_or_create(user=request.user)
     notification_settings_form = UserNotificationSettings(instance=notification_preferences)
 
+    # Add this before the context
+    user_hashtags = request.user.hashtags.all()
+
     if request.method == 'POST':
         if 'realtor_settings_form' in request.POST:
             realtor_settings_form = RealtorSettingsForm(request.POST, instance=realtor_settings)
@@ -56,5 +59,6 @@ def settings(request):
         'notification_settings_form': notification_settings_form,
         'realtor': realtor_settings,
         'user': request.user,
+        'hashtags': user_hashtags,  # Add hashtags to context
     }
     return render(request, 'settings/settings.html', context)
