@@ -3,20 +3,39 @@
         <!-- Modal content -->
         <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
             <!-- Modal header -->
-            <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-                <div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Request New Leads</h3>
-                    <p class="text-gray-600 text-sm dark:text-gray-100">Configure your lead generation parameters to
-                        find potential clients.
+            <div class="pb-4 mb-4 rounded-t border-b border-gray-200 sm:mb-5 dark:border-gray-600">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Request New Leads</h3>
+                        <p class="text-gray-600 text-sm dark:text-gray-100">
+                            Configure your lead generation parameters to find potential clients.
+                        </p>
+                    </div>
+
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-4 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="requestLeadModal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
                 </div>
 
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="requestLeadModal">
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
+
             </div>
+
+            <div id="checkbox" class="flex items-center justify-between mt-4 mb-6">
+                <div>
+                    <p class="text-base font-medium text-gray-900 dark:text-white">Use my saved defaults</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" name="email_notifications_enabled" {% if notification_settings_form.email_notifications_enabled.value %} checked {% endif %} class="sr-only peer">
+                    <div class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 dark:peer-checked:bg-green-600">
+                    </div>
+                </label>
+            </div>
+
+
+
             <!-- Modal body -->
             <form method="POST" action="{% url 'leads:leads' %}">
                 {% csrf_token %}
