@@ -56,7 +56,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-                <input type="search" class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search hashtags...">
+                <input type="text" id="search-hashtags" hx-get="{% url 'settings:search_hashtags' %}" hx-trigger="input changed delay:100ms, search" hx-target="#hashtag-list" name="search" value="{{ search_query }}" class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search hashtags...">
             </div>
 
 
@@ -81,24 +81,8 @@
             </div>
 
             <!-- Hashtag List -->
-            <div class="rounded-lg border border-gray-200 dark:border-gray-700 p-2 max-h-64 overflow-y-auto">
-                {% if hashtags %}
-                {% for hashtag in hashtags %}
-                <div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
-                    <div class="flex items-center">
-                        <input type="checkbox" id="hashtag-{{ hashtag.id }}" value="{{ hashtag.id }}" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="hashtag-{{ hashtag.id }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#{{ hashtag.name }}</label>
-                    </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
-                        {{ hashtag.platform.name }}
-                    </span>
-                </div>
-                {% endfor %}
-                {% else %}
-                <div class="p-4 text-sm text-gray-500 dark:text-gray-400 text-center">
-                    No hashtags found. Add some using the manage button below.
-                </div>
-                {% endif %}
+            <div id="hashtag-list" class="rounded-lg border border-gray-200 dark:border-gray-700 p-2 max-h-64 overflow-y-auto">
+                {% include 'settings/partials/hashtag_items.html' %}
             </div>
 
             <!-- Manage All Hashtags Button -->
