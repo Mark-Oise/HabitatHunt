@@ -10,7 +10,7 @@
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
                 <!-- Platform Cards-->
                 {% for platform in platforms %}
-                <div class="p-4 border border-gray-200 rounded-lg dark:border-gray-700">
+                <div class="p-4 border border-gray-300 rounded-lg dark:border-gray-700">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
                             <div class="p-2 bg-gray-100 rounded-lg mr-3 dark:bg-gray-700">
@@ -104,6 +104,71 @@
                 </div>
             </a>
         </div>
+
+        <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between w-full">
+                    <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Default Target Pages
+                    </h3>
+                    {% if targets %}
+                    <span id="target-count" class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+                        <span id="target-selected-count">0</span> selected
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
+                Select default target pages/accounts for your lead generation efforts.
+            </p>
+
+
+            {% if targets %}
+            <div class="relative mb-4">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                </div>
+                <input type="text" id="search-pages" hx-get="{% url 'settings:search_targets' %}" hx-trigger="input changed delay:100ms, search" hx-target="#target-list" name="search" value="{{ search_query }}" class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search target pages...">
+            </div>
+
+
+            <div class="flex gap-4 mb-4">
+                <button type="button" class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                    <span class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Select All
+                    </span>
+                </button>
+                <button type="button" class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                    <span class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        Clear All
+                    </span>
+                </button>
+            </div>
+            {% endif %}
+
+
+            <div id="target-list" class="rounded-lg border border-gray-200 dark:border-gray-700 p-2 max-h-64 overflow-y-auto">
+                {% include 'settings/partials/target_items.html' %}
+            </div>
+
+            <a href="{% url 'targets:targets' %}" target="_blank" rel="noopener noreferrer" class="w-full mt-4 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 block text-center">
+                <div class="flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Manage All Target Pages
+                </div>
+            </a>
+        </div>
     </div>
 
 
@@ -137,4 +202,20 @@
 
     // Initial count update
     updateHashtagCount();
+</script>
+
+<script>
+    // Function to update the hashtag count
+    function updateTargetCount() {
+        const checkedTargets = document.querySelectorAll('#target-list input[type="checkbox"]:checked').length;
+        document.getElementById('target-selected-count').textContent = checkedTargets;
+    }
+
+    // Add event listeners to all hashtag checkboxes
+    document.querySelectorAll('#target-list input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updateTargetCount);
+    });
+
+    // Initial count update
+    updateTargetCount();
 </script>
