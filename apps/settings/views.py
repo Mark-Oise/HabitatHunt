@@ -3,6 +3,7 @@ from django.contrib import messages
 from .forms import RealtorSettingsForm, CustomChangePasswordForm, UserNotificationSettings
 from apps.accounts.models import Realtor, UserNotificationPreference
 from django.contrib.auth import update_session_auth_hash
+from apps.platforms.models import Platform
 
 
 
@@ -20,6 +21,7 @@ def settings(request):
 
     # Add this before the context
     user_hashtags = request.user.hashtags.all()
+    platforms = Platform.objects.filter(is_active=True)
 
     if request.method == 'POST':
         if 'realtor_settings_form' in request.POST:
@@ -60,5 +62,6 @@ def settings(request):
         'realtor': realtor_settings,
         'user': request.user,
         'hashtags': user_hashtags,  # Add hashtags to context
+        'platforms': platforms,  # Add platforms to context
     }
     return render(request, 'settings/settings.html', context)
