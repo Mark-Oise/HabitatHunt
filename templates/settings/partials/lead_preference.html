@@ -177,7 +177,26 @@
             <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">Set the minimum engagement level required for a lead to be considered valid.</p>
 
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
-
+                <div>
+                    <div class="flex justify-between mb-1 mt-2">
+                        <span class="text-base font-semibold text-gray-900 dark:text-white">Engagement Score</span>
+                        <span class="text-3xl font-semibold text-gray-900 dark:text-white">80%</span>
+                    </div>
+                    <div class="w-full mb-2">
+                        <input id="steps-range" type="range" min="0" max="5" value="2.5" step="0.5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+                        <span>Low (0%)</span>
+                        <span>Medium (50%)</span>
+                        <span>High (100%)</span>
+                    </div>
+                    <div class="mt-8 bg-gray-100 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-medium">Current threshold: 80%</span><br>
+                            Leads with engagement scores below this threshold will be filtered out automatically.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
