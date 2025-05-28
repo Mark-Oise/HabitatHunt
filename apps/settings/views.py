@@ -5,6 +5,8 @@ from apps.accounts.models import Realtor, UserNotificationPreference
 from django.contrib.auth import update_session_auth_hash
 from apps.platforms.models import Platform
 from apps.targets.models import Target
+from apps.leads.models import LeadPreference
+from apps.leads.forms import LeadPreferenceForm
 
 
 
@@ -18,6 +20,10 @@ def settings(request):
     # Get or create notification preferences
     notification_preferences, created = UserNotificationPreference.objects.get_or_create(user=request.user)
     notification_settings_form = UserNotificationSettings(instance=notification_preferences)
+
+    # Get or create lead preferences
+    lead_preference, created = LeadPreference.objects.get_or_create(user=request.user)
+    lead_preference_form = LeadPreferenceForm(user=request.user, instance=lead_preference)
 
     # Add this before the context
     user_hashtags = request.user.hashtags.all()
@@ -56,6 +62,19 @@ def settings(request):
             else:
                 messages.error(request, 'Please correct the errors below.')
 
+        elif 'lead_preference_form' in request.POST:
+            lead_preference_form = LeadPreferenceForm(
+                user=request.user, 
+                data=request.POST, 
+                instance=lead_preference
+            )
+            if lead_preference_form.is_valid():
+                lead_preference_form.save()
+                messages.success(request, 'Lead generation preferences saved successfully.')
+                return redirect('settings:settings')
+            else:
+                messages.error(request, 'Please correct the errors below.')
+
     context = {
         'realtor_settings_form': realtor_settings_form,
         'password_change_form': password_change_form,
@@ -65,5 +84,7 @@ def settings(request):
         'hashtags': user_hashtags, 
         'platforms': platforms,  
         'targets': targets,
+        'lead_preference_form': lead_preference_form,
+        'lead_preference': lead_preference,
     }
     return render(request, 'settings/settings.html', context)
