@@ -3,6 +3,7 @@ from .models import Note, Lead
 from apps.platforms.models import Platform
 from apps.targets.models import Target
 from apps.hashtags.models import Hashtag
+from apps.leads.models import LeadPreference
 
 
 class RequestLeadForm(forms.Form):
@@ -61,9 +62,6 @@ class RequestLeadForm(forms.Form):
 
 
 
-
-
-
 class UpdateLeadForm(forms.ModelForm):
     class Meta:
         model = Lead
@@ -79,3 +77,20 @@ class AddNoteForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = ['note_text']
+
+
+
+class LeadPreferenceForm(forms.ModelForm):
+    """
+    Form for setting default lead generation preferences.
+    """
+    class Meta:
+        model = LeadPreference
+        exclude = ['user', 'created_at', 'updated_at']
+        
+    def __init__(self, user=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if user:
+            # Filter related fields by user
+            self.fields['hashtags'].queryset = Hashtag.objects.filter(user=user)
+            self.fields['targets'].queryset = Target.objects.filter(user=user)
