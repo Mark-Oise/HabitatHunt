@@ -5,263 +5,260 @@
         </h3>
         <p class="text-sm text-gray-700 dark:text-gray-400">Configure default settings for your lead generation campaigns to streamline your workflow.</p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
-            <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Default Platforms
-            </h3>
-            <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">Select the social media platforms you want to use by default for lead generation campaigns.</p>
+    <form method="post" action="{% url 'settings:settings' %}">
+        {% csrf_token %}
+        <input type="hidden" name="lead_preference_form" value="1">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+                <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    Default Platforms
+                </h3>
+                <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">Select the social media platforms you want to use by default for lead generation campaigns.</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
-                <!-- Platform Cards-->
-                {% for platform in platforms %}
-                <div class="p-4 border border-gray-300 rounded-lg dark:border-gray-700">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <div class="p-2 bg-gray-100 rounded-lg mr-3 dark:bg-gray-700">
-                                {% if platform.name.lower == 'facebook' %}
-                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd" d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" clip-rule="evenodd" />
-                                </svg>
-                                {% elif platform.name.lower == 'instagram' %}
-                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path fill="currentColor" fill-rule="evenodd" d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z" clip-rule="evenodd" />
-                                </svg>
-                                {% endif %}
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
+                    <!-- Platform Cards-->
+                    {% for platform in platforms %}
+                    <div class="p-4 border border-gray-300 rounded-lg dark:border-gray-700">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-gray-100 rounded-lg mr-3 dark:bg-gray-700">
+                                    {% if platform.name.lower == 'facebook' %}
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd" d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" clip-rule="evenodd" />
+                                    </svg>
+                                    {% elif platform.name.lower == 'instagram' %}
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path fill="currentColor" fill-rule="evenodd" d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z" clip-rule="evenodd" />
+                                    </svg>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900 dark:text-white">{{ platform.display_name }}</h4>
+                                </div>
                             </div>
-                            <div>
-                                <h4 class="font-medium text-gray-900 dark:text-white">{{ platform.display_name }}</h4>
-                            </div>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" value="{{ platform.id }}" name="platform_{{ platform.id }}" class="sr-only peer">
-                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                        </label>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center justify-between w-full">
-                    <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Default Hashtags
-                    </h3>
-                    {% if hashtags %}
-                    <span id="hashtag-count" class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
-                        <span id="selected-count">0</span> selected
-                    </span>
-                    {% endif %}
-                </div>
-            </div>
-
-            <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
-                Select default hashtags for your lead generation campaigns.
-            </p>
-
-            <!-- Search Bar -->
-            {% if hashtags %}
-            <div class="relative mb-4">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
-                <input type="text" id="search-hashtags" hx-get="{% url 'settings:search_hashtags' %}" hx-trigger="input changed delay:100ms, search" hx-target="#hashtag-list" name="search" value="{{ search_query }}" class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search hashtags...">
-            </div>
-
-
-            <!-- Action Buttons -->
-            <div class="flex gap-4 mb-4">
-                <button type="button" class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                    <span class="flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Select All
-                    </span>
-                </button>
-                <button type="button" class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                    <span class="flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        Clear All
-                    </span>
-                </button>
-            </div>
-            {% endif %}
-
-            <!-- Hashtag List -->
-            <div id="hashtag-list" class="rounded-lg border border-gray-200 dark:border-gray-700 p-2 max-h-64 overflow-y-auto">
-                {% include 'settings/partials/hashtag_items.html' %}
-            </div>
-
-            <!-- Manage All Hashtags Button -->
-            <a href="{% url 'hashtags:hashtags' %}" target="_blank" rel="noopener noreferrer" class="w-full mt-4 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 block text-center">
-                <div class="flex items-center justify-center gap-2">
-                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    Manage All Hashtags
-                </div>
-            </a>
-        </div>
-
-        <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center justify-between w-full">
-                    <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Default Target Pages
-                    </h3>
-                    {% if targets %}
-                    <span id="target-count" class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
-                        <span id="target-selected-count">0</span> selected
-                    </span>
-                    {% endif %}
-                </div>
-            </div>
-
-            <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
-                Select default target pages/accounts for your lead generation efforts.
-            </p>
-
-
-            {% if targets %}
-            <div class="relative mb-4">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
-                <input type="text" id="search-pages" hx-get="{% url 'settings:search_targets' %}" hx-trigger="input changed delay:100ms, search" hx-target="#target-list" name="search" value="{{ search_query }}" class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search target pages...">
-            </div>
-
-
-            <div class="flex gap-4 mb-4">
-                <button type="button" class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                    <span class="flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Select All
-                    </span>
-                </button>
-                <button type="button" class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                    <span class="flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        Clear All
-                    </span>
-                </button>
-            </div>
-            {% endif %}
-
-
-            <div id="target-list" class="rounded-lg border border-gray-200 dark:border-gray-700 p-2 max-h-64 overflow-y-auto">
-                {% include 'settings/partials/target_items.html' %}
-            </div>
-
-            <a href="{% url 'targets:targets' %}" target="_blank" rel="noopener noreferrer" class="w-full mt-4 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 block text-center">
-                <div class="flex items-center justify-center gap-2">
-                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    Manage All Target Pages
-                </div>
-            </a>
-        </div>
-
-        <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
-            <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Default Engagement Threshold
-            </h3>
-            <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">Set the minimum engagement level required for a lead to be considered valid.</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
-                <div>
-                    <div class="flex justify-between mb-1 mt-2">
-                        <span class="text-base font-semibold text-gray-900 dark:text-white">Engagement Score</span>
-                        <span class="text-3xl font-semibold text-gray-900 dark:text-white">80%</span>
-                    </div>
-                    <div class="w-full mb-2">
-                        <input id="steps-range" type="range" min="0" max="5" value="2.5" step="0.5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
-                        <span>Low (0%)</span>
-                        <span>Medium (50%)</span>
-                        <span>High (100%)</span>
-                    </div>
-                    <div class="mt-8 bg-gray-100 p-4 rounded-lg">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">
-                            <span class="font-medium">Current threshold: 80%</span><br>
-                            Leads with engagement scores below this threshold will be filtered out automatically.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
-            <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Campaign Scheduling
-            </h3>
-            <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">Configure default scheduling options for your lead generation campaigns.</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
-                <div class="flex items-center ps-4 border border-gray-300 rounded-sm dark:border-gray-700">
-                    <input id="one-time-radio" type="radio" value="one-time" name="campaign-type" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <div class="flex items-center py-4 ms-2">
-                        <svg class="w-5 h-5 text-gray-500 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <label for="one-time-radio" class="text-sm font-medium text-gray-900 dark:text-gray-300">One Time Campaign</label>
-                    </div>
-                </div>
-                <div class="flex items-center ps-4 border border-gray-300 rounded-sm dark:border-gray-700">
-                    <input id="recurring-radio" type="radio" value="recurring" name="campaign-type" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <div class="flex items-center py-4 ms-2">
-                        <svg class="w-5 h-5 text-gray-500 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16M8 14h8m-4-7V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
-                        </svg>
-                        <label for="recurring-radio" class="text-sm font-medium text-gray-900 dark:text-gray-300">Recurring Campaign</label>
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="repeat-frequency" class="hidden w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-gray-900 dark:border-gray-700" style="border-left-width: 4px; border-left-color: #212121;">
-                <div class="flex items-start">
-                    <div class="">
-                        <div class="flex-1" id="repeat-frequency" style="display: block;">
-                            <label for="repeat_days" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat
-                                Every (Days)
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="{{ platform.id }}" name="platform_{{ platform.id }}" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
                             </label>
-                            <div class="flex items-center gap-2">
-                                <input type="number" id="repeat_days" name="repeat_days" min="1" max="30" value="7" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                                <span class="text-sm font-medium text-gray-900 dark:text-white">days</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between w-full">
+                        <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Default Hashtags
+                        </h3>
+                        {% if hashtags %}
+                        <span id="hashtag-count" class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+                            <span id="selected-count">0</span> selected
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
+                    Select default hashtags for your lead generation campaigns.
+                </p>
+
+                <!-- Search Bar -->
+                {% if hashtags %}
+                <div class="relative mb-4">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input type="text" id="search-hashtags" hx-get="{% url 'settings:search_hashtags' %}" hx-trigger="input changed delay:100ms, search" hx-target="#hashtag-list" name="search" value="{{ search_query }}" class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search hashtags...">
+                </div>
+
+
+                <!-- Action Buttons -->
+                <div class="flex gap-4 mb-4">
+                    <button type="button" class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                        <span class="flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Select All
+                        </span>
+                    </button>
+                    <button type="button" class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                        <span class="flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            Clear All
+                        </span>
+                    </button>
+                </div>
+                {% endif %}
+
+                <!-- Hashtag List -->
+                <div id="hashtag-list" class="rounded-lg border border-gray-200 dark:border-gray-700 p-2 max-h-64 overflow-y-auto">
+                    {% include 'settings/partials/hashtag_items.html' %}
+                </div>
+
+                <!-- Manage All Hashtags Button -->
+                <a href="{% url 'hashtags:hashtags' %}" target="_blank" rel="noopener noreferrer" class="w-full mt-4 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 block text-center">
+                    <div class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Manage All Hashtags
+                    </div>
+                </a>
+            </div>
+
+            <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between w-full">
+                        <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Default Target Pages
+                        </h3>
+                        {% if targets %}
+                        <span id="target-count" class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+                            <span id="target-selected-count">0</span> selected
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
+                    Select default target pages/accounts for your lead generation efforts.
+                </p>
+
+
+                {% if targets %}
+                <div class="relative mb-4">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input type="text" id="search-pages" hx-get="{% url 'settings:search_targets' %}" hx-trigger="input changed delay:100ms, search" hx-target="#target-list" name="search" value="{{ search_query }}" class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search target pages...">
+                </div>
+
+
+                <div class="flex gap-4 mb-4">
+                    <button type="button" class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                        <span class="flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Select All
+                        </span>
+                    </button>
+                    <button type="button" class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                        <span class="flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            Clear All
+                        </span>
+                    </button>
+                </div>
+                {% endif %}
+
+
+                <div id="target-list" class="rounded-lg border border-gray-200 dark:border-gray-700 p-2 max-h-64 overflow-y-auto">
+                    {% include 'settings/partials/target_items.html' %}
+                </div>
+
+                <a href="{% url 'targets:targets' %}" target="_blank" rel="noopener noreferrer" class="w-full mt-4 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 block text-center">
+                    <div class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Manage All Target Pages
+                    </div>
+                </a>
+            </div>
+
+            <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+                <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    Default Engagement Threshold
+                </h3>
+                <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">Set the minimum engagement level required for a lead to be considered valid.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
+                    <div>
+                        <div class="flex justify-between mb-1 mt-2">
+                            <span class="text-base font-semibold text-gray-900 dark:text-white">Engagement Score</span>
+                            <span class="text-3xl font-semibold text-gray-900 dark:text-white">80%</span>
+                        </div>
+                        <div class="w-full mb-2">
+                            <input id="steps-range" type="range" min="0" max="5" value="2.5" step="0.5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                        </div>
+                        <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+                            <span>Low (0%)</span>
+                            <span>Medium (50%)</span>
+                            <span>High (100%)</span>
+                        </div>
+                        <div class="mt-8 bg-gray-100 p-4 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                <span class="font-medium">Current threshold: 80%</span><br>
+                                Leads with engagement scores below this threshold will be filtered out automatically.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+                <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    Campaign Scheduling
+                </h3>
+                <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">Configure default scheduling options for your lead generation campaigns.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
+                    <div class="flex items-center ps-4 border border-gray-300 rounded-sm dark:border-gray-700">
+                        <input id="one-time-radio" type="radio" value="one-time" name="campaign-type" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <div class="flex items-center py-4 ms-2">
+                            <svg class="w-5 h-5 text-gray-500 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <label for="one-time-radio" class="text-sm font-medium text-gray-900 dark:text-gray-300">One Time Campaign</label>
+                        </div>
+                    </div>
+                    <div class="flex items-center ps-4 border border-gray-300 rounded-sm dark:border-gray-700">
+                        <input id="recurring-radio" type="radio" value="recurring" name="campaign-type" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <div class="flex items-center py-4 ms-2">
+                            <svg class="w-5 h-5 text-gray-500 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16M8 14h8m-4-7V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
+                            </svg>
+                            <label for="recurring-radio" class="text-sm font-medium text-gray-900 dark:text-gray-300">Recurring Campaign</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="repeat-frequency" class="hidden w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-gray-900 dark:border-gray-700" style="border-left-width: 4px; border-left-color: #212121;">
+                    <div class="flex items-start">
+                        <div class="">
+                            <div class="flex-1" id="repeat-frequency" style="display: block;">
+                                <label for="repeat_days" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat
+                                    Every (Days)
+                                </label>
+                                <div class="flex items-center gap-2">
+                                    <input type="number" id="repeat_days" name="repeat_days" min="1" max="30" value="7" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                                    <span class="text-sm font-medium text-gray-900 dark:text-white">days</span>
+                                </div>
+                                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Campaign will automatically repeat every 7 days</p>
                             </div>
-                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Campaign will automatically repeat every 7 days</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-
-
-
-    <!-- Save Button -->
-    <div class="flex py-2">
-        <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-            Save Preferences
-        </button>
-    </div>
+        <div class="flex py-2">
+            <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                Save Preferences
+            </button>
+        </div>
+    </form>
 </div>
 
 <script>
