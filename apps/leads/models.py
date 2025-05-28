@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from apps.platforms.models import Platform
+from apps.targets.models import Target
+from apps.hashtags.models import Hashtag
 # Create your models here.
 
 
@@ -99,6 +101,33 @@ class Lead(models.Model):
     def get_activity_timeline(self):
         """Get activity timeline ordered by most recent first"""
         return self.activity.all().order_by('-created_at')
+
+
+
+class LeadPreference(models.Model):
+    """
+    Stores user's default preferences for lead generation.
+    """
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='lead_preferences')
+    platforms = models.ManyToManyField(Platform)
+    hashtags = models.ManyToManyField(Hashtag)
+    targets = models.ManyToManyField(Target)
+    engagement_threshold = models.IntegerField(default=50)
+    default_frequency = models.CharField(
+        max_length=20, 
+        choices=[('one-time', 'One-time request'), ('recurring', 'Recurring request')],
+        default='one-time'
+    )
+    repeat_days = models.IntegerField(default=7)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Lead Preference"
+        verbose_name_plural = "Lead Preferences"
+
+    def __str__(self):
+        return f"{self.user.username}'s Lead Preferences"
 
 
 class ActivityTimeline(models.Model):

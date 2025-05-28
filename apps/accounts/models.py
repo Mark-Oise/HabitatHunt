@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
 from apps.hashtags.models import Hashtag
 from apps.platforms.models import Platform
-
+from apps.targets.models import Target
 
 # Create your models here.
 
@@ -65,13 +65,20 @@ class Realtor(models.Model):
 class RealtorPreference(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='preferences')
-    target_pages = models.JSONField(default=list, help_text="List of target Instagram or Facebook pages")
-    location_keywords = models.JSONField(default=list, blank=True, help_text="Location keywords")
+    targets = models.ManyToManyField(Target, blank=True, related_name='preferences')
     platforms = models.ManyToManyField(Platform, blank=True, related_name='realtor_preferences')
     min_engagement_score = models.IntegerField(default=0)
     hashtags = models.ManyToManyField(Hashtag, blank=True, related_name='preferences')
+    engagement_threshold = models.IntegerField(default=50)
+    default_frequency = models.CharField(
+        max_length=20, 
+        choices=[('one-time', 'One-time request'), ('recurring', 'Recurring request')],
+        default='one-time'
+    )
+    repeat_days = models.IntegerField(default=7)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+ 
 
     def __str__(self):
         return f"{self.user.name}'s Preferences"
