@@ -21,8 +21,8 @@ def settings(request):
     notification_preferences, created = UserNotificationPreference.objects.get_or_create(user=request.user)
     notification_settings_form = UserNotificationSettings(instance=notification_preferences)
 
-    # Get or create lead preferences
-    lead_preference, created = LeadPreference.objects.get_or_create(user=request.user)
+    # Get lead preferences (should already exist from signals)
+    lead_preference = LeadPreference.objects.get(user=request.user)
     lead_preference_form = LeadPreferenceForm(user=request.user, instance=lead_preference)
 
     # Add this before the context

@@ -109,9 +109,9 @@ class LeadPreference(models.Model):
     Stores user's default preferences for lead generation.
     """
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='lead_preferences')
-    platforms = models.ManyToManyField(Platform)
-    hashtags = models.ManyToManyField(Hashtag)
-    targets = models.ManyToManyField(Target)
+    platforms = models.ManyToManyField(Platform, blank=True)
+    hashtags = models.ManyToManyField(Hashtag, blank=True)
+    targets = models.ManyToManyField(Target, blank=True)
     engagement_threshold = models.IntegerField(default=50)
     default_frequency = models.CharField(
         max_length=20, 
@@ -127,7 +127,8 @@ class LeadPreference(models.Model):
         verbose_name_plural = "Lead Preferences"
 
     def __str__(self):
-        return f"{self.user.username}'s Lead Preferences"
+        return f"{self.user.email}'s Lead Preferences"
+
 
 
 class ActivityTimeline(models.Model):
