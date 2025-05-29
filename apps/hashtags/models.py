@@ -9,7 +9,6 @@ class Hashtag(models.Model):
     Stores hashtags that users want to track.
     """
     name = models.CharField(max_length=100, unique=True)
-    platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='hashtags')
     created_at = models.DateTimeField(auto_now_add=True)
 
