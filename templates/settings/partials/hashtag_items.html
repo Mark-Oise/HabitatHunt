@@ -7,11 +7,11 @@
                name="hashtags" 
                value="{{ hashtag.id }}" 
                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-               {% if hashtag in lead_preference.hashtags.all %}checked{% endif %}>
+               {% if all_selected or hashtag in lead_preference.hashtags.all and not none_selected %}checked{% endif %}>
         <label for="hashtag-{{ hashtag.id }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">#{{ hashtag.name }}</label>
     </div>
     <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
-        {% if hashtag in lead_preference.hashtags.all %}Selected{% else %}Available{% endif %}
+        {% if all_selected or hashtag in lead_preference.hashtags.all and not none_selected %}Selected{% else %}Available{% endif %}
     </span>
 </div>
 {% endfor %}
@@ -20,3 +20,12 @@
     No hashtags found. Add some using the manage button below.
 </div>
 {% endif %}
+
+<script>
+    // Update the hashtag count after HTMX request completes
+    document.body.addEventListener('htmx:afterSwap', function(evt) {
+        if (evt.detail.target.id === 'hashtag-list') {
+            updateHashtagCount();
+        }
+    });
+</script>
