@@ -96,7 +96,7 @@
                             class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                         <span class="flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L17.94 6M18 18 6.06 6"/>
                             </svg>  
                             Clear All
                         </span>
@@ -222,7 +222,8 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
                     <div class="flex items-center ps-4 border border-gray-300 rounded-sm dark:border-gray-700">
-                        <input id="one-time-radio" type="radio" value="one-time" name="campaign-type" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <input id="one-time-radio" type="radio" value="one-time" name="default_frequency" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            {% if lead_preference.default_frequency == 'one-time' %}checked{% endif %}>
                         <div class="flex items-center py-4 ms-2">
                             <svg class="w-5 h-5 text-gray-500 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -231,7 +232,8 @@
                         </div>
                     </div>
                     <div class="flex items-center ps-4 border border-gray-300 rounded-sm dark:border-gray-700">
-                        <input id="recurring-radio" type="radio" value="recurring" name="campaign-type" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <input id="recurring-radio" type="radio" value="recurring" name="default_frequency" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            {% if lead_preference.default_frequency == 'recurring' %}checked{% endif %}>
                         <div class="flex items-center py-4 ms-2">
                             <svg class="w-5 h-5 text-gray-500 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16M8 14h8m-4-7V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
@@ -242,18 +244,18 @@
                 </div>
 
 
-                <div id="repeat-frequency" class="hidden w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-gray-900 dark:border-gray-700" style="border-left-width: 4px; border-left-color: #212121;">
+                <div id="repeat-frequency" class="{% if lead_preference.default_frequency != 'recurring' %}hidden{% endif %} w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-gray-900 dark:border-gray-700" style="border-left-width: 4px; border-left-color: #212121;">
                     <div class="flex items-start">
                         <div class="">
-                            <div class="flex-1" id="repeat-frequency" style="display: block;">
+                            <div class="flex-1" style="display: block;">
                                 <label for="repeat_days" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat
                                     Every (Days)
                                 </label>
                                 <div class="flex items-center gap-2">
-                                    <input type="number" id="repeat_days" name="repeat_days" min="1" max="30" value="7" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                                    <input type="number" id="repeat_days" name="repeat_days" min="1" max="30" value="{{ lead_preference.repeat_days|default:7 }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                                     <span class="text-sm font-medium text-gray-900 dark:text-white">days</span>
                                 </div>
-                                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Campaign will automatically repeat every 7 days</p>
+                                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Campaign will automatically repeat every {{ lead_preference.repeat_days|default:7 }} days</p>
                             </div>
                         </div>
                     </div>
@@ -261,7 +263,7 @@
             </div>
         </div>
         <div class="flex py-2">
-            <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            <button type="submit" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Save Preferences
             </button>
         </div>
@@ -302,7 +304,7 @@
 
 <script>
     // Add event listeners to radio buttons
-    document.querySelectorAll('input[name="campaign-type"]').forEach(radio => {
+    document.querySelectorAll('input[name="default_frequency"]').forEach(radio => {
         radio.addEventListener('change', function () {
             const repeatFrequencyDiv = document.getElementById('repeat-frequency');
             if (this.value === 'recurring') {
@@ -311,6 +313,18 @@
                 repeatFrequencyDiv.classList.add('hidden');
             }
         });
+    });
+
+    // Initialize the repeat frequency div visibility
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const repeatFrequencyDiv = document.getElementById('repeat-frequency');
+        const recurringRadio = document.getElementById('recurring-radio');
+        
+        if (recurringRadio.checked) {
+            repeatFrequencyDiv.classList.remove('hidden');
+        } else {
+            repeatFrequencyDiv.classList.add('hidden');
+        }
     });
 </script>
 
