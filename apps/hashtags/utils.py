@@ -12,8 +12,7 @@ def search_hashtags(request):
 
     if search_query:
         hashtags = hashtags.filter(
-            Q(name__icontains=search_query) |
-            Q(platform__name__icontains=search_query) 
+            Q(name__icontains=search_query)
         )
 
     return render(request, 'hashtags/components/hashtag_items.html', {
