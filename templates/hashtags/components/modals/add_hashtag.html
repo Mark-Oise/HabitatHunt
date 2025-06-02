@@ -32,18 +32,6 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Type Hashtag" required="">
                     </div>
-                    <div>
-                        <label for="platform"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Platform</label>
-                        <select id="platform" name="platform"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option selected="">Select platform</option>
-                            {% for platform in platforms %}
-                            <option value="{{ platform.id }}">{{ platform.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
                 </div>
                 <button type="submit" data-modal-toggle="addHashtagModal"
                     class="text-white inline-flex items-center bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
