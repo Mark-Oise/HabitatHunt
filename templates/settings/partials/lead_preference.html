@@ -124,6 +124,79 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center justify-between w-full">
                         <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Target Locations
+                        </h3>
+                        {% if hashtags %}
+                        <span id="hashtag-count" class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+                            <span id="selected-count">0</span> selected
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
+                    Select target locations for your lead generation campaigns.
+                </p>
+
+                
+                
+                
+                <div class="w-full mt-4">
+                    <div class="relative right-0">
+                        <ul class="relative mb-4 flex flex-col sm:flex-row flex-wrap px-1.5 py-1.5 list-none rounded-md bg-gray-100 dark:bg-gray-800 gap-2 sm:gap-0" role="list">
+                            <li class="z-20 flex-auto">
+                                <a class="z-20 flex items-center justify-center w-full px-2 py-2 text-sm mb-0 transition-all ease-in-out border-0 rounded-md cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white" 
+                                   data-location-tab="provinces" 
+                                   aria-selected="true">
+                                    Provinces
+                                </a>
+                            </li>
+                            <li class="z-20 flex-auto">
+                                <a class="z-20 flex items-center justify-center w-full px-2 py-2 mb-0 text-sm transition-all ease-in-out border-0 rounded-md cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white" 
+                                   data-location-tab="cities" 
+                                   aria-selected="false">
+                                    Cities
+                                </a>
+                            </li>
+                            <li class="z-20 flex-auto">
+                                <a class="z-20 flex items-center justify-center w-full px-2 py-2 mb-0 text-sm transition-all ease-in-out border-0 rounded-md cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white" 
+                                   data-location-tab="custom" 
+                                   aria-selected="false">
+                                    Custom Locations
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div>
+                            <div id="provinces" data-location-content="provinces" class="w-full">
+                                {% include 'settings/partials/provinces.html' %}
+                            </div>
+                            <div id="cities" data-location-content="cities" class="w-full hidden">
+                                {% include 'settings/partials/cities.html' %}
+                            </div>
+                            <div id="custom" data-location-content="custom" class="w-full hidden">
+                                {% include 'settings/partials/custom_locations.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+
+                <!-- Manage All Hashtags Button -->
+                <a href="{% url 'hashtags:hashtags' %}" target="_blank" rel="noopener noreferrer" class="w-full mt-4 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 block text-center">
+                    <div class="flex items-center justify-center gap-2">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-icon lucide-map w-4 h-4"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>
+                        Manage All Locations
+                    </div>
+                </a>
+            </div>
+
+            <div class="mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between w-full">
+                        <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                             Default Target Pages
                         </h3>
                         {% if targets %}
@@ -335,4 +408,34 @@
         document.getElementById('engagement-value').textContent = value + '%';
         document.getElementById('threshold-display').textContent = value;
     });
+</script>
+
+<script>
+// Simple location tabs handler
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all location tab buttons
+    const locationTabs = document.querySelectorAll('[data-location-tab]');
+    
+    // Add click handler to each tab
+    locationTabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get the tab's target content id
+            const targetId = this.getAttribute('data-location-tab');
+            
+            // Hide all content panels
+            document.querySelectorAll('[data-location-content]').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Show the target content
+            document.querySelector(`[data-location-content="${targetId}"]`).classList.remove('hidden');
+            
+            // Update tab states
+            locationTabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+            this.setAttribute('aria-selected', 'true');
+        });
+    });
+});
 </script>
