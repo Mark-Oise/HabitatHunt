@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'apps.platforms',
     'apps.targets',
     'apps.settings',
+    'apps.locations',
     'compressor',
     'allauth',
     'allauth.account',

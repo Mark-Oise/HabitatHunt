@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 # Create your models here.
 
 
@@ -35,7 +35,7 @@ class City(models.Model):
 
 
 class CustomLocation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     location_text = models.CharField(
         max_length=360,  
         help_text="Enter area name and postal code (e.g. Downtown Toronto, M5V 3A8)"

@@ -30,6 +30,7 @@ urlpatterns = [
     path('hashtags/', include('apps.hashtags.urls')),
     path('targets/', include('apps.targets.urls')),
     path('settings/', include('apps.settings.urls')),
+    path('locations/', include('apps.locations.urls')),
 ]
     
 
