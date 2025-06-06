@@ -25,14 +25,14 @@
                     <div class="relative right-0">
                         <ul class="relative mb-4 flex flex-col sm:flex-row flex-wrap px-1.5 py-1.5 list-none rounded-md bg-gray-100 dark:bg-gray-800 gap-2 sm:gap-0" role="list">
                             <li class="z-20 flex-auto">
-                                <a class="z-20 flex items-center justify-center w-full px-2 py-2 text-sm mb-0 transition-all ease-in-out border-0 rounded-md cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white" data-location-tab="provinces" aria-selected="true">
+                                <a class="z-20 flex items-center justify-center w-full px-2 py-2 text-sm mb-0 transition-all ease-in-out border-0 rounded-md cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white" data-location-tab="custom" aria-selected="true">
                                     Custom Locations
                                 </a>
                             </li>
 
                             <li class="z-20 flex-auto">
-                                <a class="z-20 flex items-center justify-center w-full px-2 py-2 mb-0 text-sm transition-all ease-in-out border-0 rounded-md cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white" data-location-tab="cities" aria-selected="false">
-                                    Provinces and Territories
+                                <a class="z-20 flex items-center justify-center w-full px-2 py-2 mb-0 text-sm transition-all ease-in-out border-0 rounded-md cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white aria-selected:bg-white dark:aria-selected:bg-gray-700 aria-selected:text-gray-900 dark:aria-selected:text-white" data-location-tab="provinces" aria-selected="false">
+                                    Provinces & Territories
                                 </a>
                             </li>
                             <li class="z-20 flex-auto">
@@ -43,14 +43,14 @@
                         </ul>
 
                         <div>
-                            <div id="provinces" data-location-content="provinces" class="w-full">
+                            <div id="custom" data-location-content="custom" class="w-full">
+                                {% include 'locations/partials/custom_locations.html' %}
+                            </div>
+                            <div id="provinces" data-location-content="provinces" class="w-full hidden">
                                 {% include 'locations/partials/provinces.html' %}
                             </div>
                             <div id="cities" data-location-content="cities" class="w-full hidden">
-                                {% include 'settings/partials/cities.html' %}
-                            </div>
-                            <div id="custom" data-location-content="custom" class="w-full hidden">
-                                {% include 'settings/partials/custom_locations.html' %}
+                                {% include 'locations/partials/cities.html' %}
                             </div>
                         </div>
                     </div>
@@ -108,82 +108,34 @@
 
 </div>
 
-{% include 'hashtags/components/modals/add_hashtag.html' %}
+<script>
+    // Simple location tabs handler
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get all location tab buttons
+        const locationTabs = document.querySelectorAll('[data-location-tab]');
 
-<div id="filterDropdown" class="z-20 hidden px-3 pt-1 bg-white rounded-lg shadow w-90 dark:bg-gray-700 right-0">
-    <div class="flex items-center justify-between pt-2 mb-2">
-        <h6 class="text-sm font-medium text-black dark:text-white">Filters</h6>
-        <div class="flex items-center space-x-3">
-            <a hx-get="{% url 'hashtags:filter_hashtags' %}" hx-target="#hashtag-list" onclick="clearAllFilters()" class="flex items-center text-sm font-medium text-primary-600 dark:text-primary-500 hover:underline">Clear
-                all</a>
-        </div>
-    </div>
+        // Add click handler to each tab
+        locationTabs.forEach(tab => {
+            tab.addEventListener('click', function (e) {
+                e.preventDefault();
 
-    <div id="accordion-flush" data-accordion="collapse" data-active-classes="text-black dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
-        <form hx-get="{% url 'hashtags:filter_hashtags' %}" hx-target="#hashtag-list" hx-trigger="change">
+                // Get the tab's target content id
+                const targetId = this.getAttribute('data-location-tab');
 
-            <!-- Source -->
-            <h2 id="source-heading">
-                <button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#source-body" aria-expanded="true" aria-controls="source-body">
-                    <span>Source</span>
-                    <svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                    </svg>
-                </button>
-            </h2>
+                // Hide all content panels
+                document.querySelectorAll('[data-location-content]').forEach(content => {
+                    content.classList.add('hidden');
+                });
 
-            <div id="source-body" class="hidden" aria-labelledby="source-heading">
-                <div class="py-2 font-light border-b border-gray-200 dark:border-gray-600">
-                    <ul class="space-y-2">
-                        {% for platform in platforms %}
-                        <li class="flex items-center">
-                            <input id="platform-{{ platform.id }}" name="platform" type="checkbox" value="{{ platform.id }}" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-green-600 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                            <label for="platform-{{ platform.id }}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                {{ platform.name }}
-                                {% with count=targets|filter_by_platform:platform.id|length %}
-                                ({{ count }})
-                                {% endwith %}
-                            </label>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+                // Show the target content
+                document.querySelector(`[data-location-content="${targetId}"]`).classList.remove('hidden');
 
-
-            <!-- Status -->
-            <h2 id="status-heading">
-                <button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#status-body" aria-expanded="true" aria-controls="status-body">
-                    <span>Status</span>
-                    <svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                    </svg>
-                </button>
-            </h2>
-
-            <div id="status-body" class="hidden" aria-labelledby="status-heading">
-                <div class="py-2 font-light border-b border-gray-200 dark:border-gray-600">
-                    <ul class="space-y-2">
-                        {% for value, label in status_choices %}
-                        <li class="flex items-center">
-                            <input id="status-{{ value }}" name="status" type="checkbox" value="{{ value }}" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-green-600 focus:ring-green-500 dark:focus:ring-green-500 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                            <label for="status-{{ value }}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                {{ label }}
-                                {% with count=leads|filter_by_status:value|length %}
-                                ({{ count }})
-                                {% endwith %}
-                            </label>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-
-
-
-        </form>
-    </div>
-</div>
-
+                // Update tab states
+                locationTabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+                this.setAttribute('aria-selected', 'true');
+            });
+        });
+    });
+</script>
 
 {% endblock %}
