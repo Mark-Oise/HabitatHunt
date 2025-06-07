@@ -15,13 +15,32 @@ class Country(models.Model):
     
 
 class Province(models.Model):
+    REGION_TYPES = [
+        ('PROVINCE', 'Province'),
+        ('STATE', 'State'),
+        ('TERRITORY', 'Territory'),
+        ('OTHER', 'Other'),
+    ]
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    abbreviation = models.CharField(max_length=2)  # e.g. 'ON' for Ontario
+    code = models.CharField(
+        max_length=10,
+        help_text="Official abbreviation (e.g., ON, CA, NY)"
+    )
+    region_type = models.CharField(
+        max_length=10,
+        choices=REGION_TYPES,
+        default='PROVINCE'
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        unique_together = ['country', 'code']
+        verbose_name_plural = "Provinces/States"
+
     def __str__(self):
-        return self.name
+        return f"{self.name}, {self.country.iso_code}"
     
 
 class City(models.Model):
