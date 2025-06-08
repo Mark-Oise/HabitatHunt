@@ -5,3 +5,6 @@ class CustomLocationForm(forms.ModelForm):
     class Meta:
         model = CustomLocation
         fields = ['location_text']
+
+
+        
