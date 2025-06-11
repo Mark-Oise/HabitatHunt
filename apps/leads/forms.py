@@ -4,6 +4,7 @@ from apps.platforms.models import Platform
 from apps.targets.models import Target
 from apps.hashtags.models import Hashtag
 from apps.leads.models import LeadPreference
+from apps.locations.models import CustomLocation, City, Province
 
 
 class RequestLeadForm(forms.Form):
@@ -94,3 +95,8 @@ class LeadPreferenceForm(forms.ModelForm):
             # Filter related fields by user
             self.fields['hashtags'].queryset = Hashtag.objects.filter(user=user)
             self.fields['targets'].queryset = Target.objects.filter(user=user)
+
+            # Add location filters
+            self.fields['custom_locations'].queryset = CustomLocation.objects.filter(user=user)
+            self.fields['cities'].queryset = City.objects.all()
+            self.fields['provinces'].queryset = Province.objects.all()
