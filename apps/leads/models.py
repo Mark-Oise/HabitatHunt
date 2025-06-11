@@ -3,6 +3,7 @@ from django.conf import settings
 from apps.platforms.models import Platform
 from apps.targets.models import Target
 from apps.hashtags.models import Hashtag
+from apps.locations.models import CustomLocation, City, Province
 # Create your models here.
 
 
@@ -112,6 +113,9 @@ class LeadPreference(models.Model):
     platforms = models.ManyToManyField(Platform, blank=True)
     hashtags = models.ManyToManyField(Hashtag, blank=True)
     targets = models.ManyToManyField(Target, blank=True)
+    custom_locations = models.ManyToManyField(CustomLocation, blank=True)
+    cities = models.ManyToManyField(City, blank=True)
+    provinces = models.ManyToManyField(Province, blank=True)
     engagement_threshold = models.IntegerField(default=50)
     default_frequency = models.CharField(
         max_length=20, 
