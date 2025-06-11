@@ -7,6 +7,7 @@ from apps.platforms.models import Platform
 from apps.targets.models import Target
 from apps.leads.models import LeadPreference
 from apps.leads.forms import LeadPreferenceForm
+from apps.locations.models import City, Province, CustomLocation
 
 
 
@@ -29,6 +30,9 @@ def settings(request):
     user_hashtags = request.user.hashtags.all()
     platforms = Platform.objects.filter(is_active=True)
     targets = Target.objects.filter(user=request.user)
+    cities = City.objects.all()
+    provinces = Province.objects.all()
+    custom_locations = CustomLocation.objects.filter(user=request.user)
 
     if request.method == 'POST':
         if 'realtor_settings_form' in request.POST:
@@ -86,5 +90,8 @@ def settings(request):
         'targets': targets,
         'lead_preference_form': lead_preference_form,
         'lead_preference': lead_preference,
+        'cities': cities,
+        'provinces': provinces,
+        'custom_locations': custom_locations,
     }
     return render(request, 'settings/settings.html', context)
