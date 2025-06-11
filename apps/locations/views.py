@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Province, CustomLocation  # Add this import
+from .models import Province, CustomLocation, City  # Add this import
 from .forms import CustomLocationForm
 from django.shortcuts import redirect
 
@@ -7,11 +7,13 @@ from django.shortcuts import redirect
 def locations(request):
     provinces = Province.objects.all().select_related('country')  # Get all provinces with country data
     custom_locations = CustomLocation.objects.filter(user=request.user)
+    cities = City.objects.all()
     custom_locations_count = custom_locations.count()
     context = {
         'provinces': provinces,
         'custom_locations': custom_locations,
-        'custom_locations_count': custom_locations_count
+        'custom_locations_count': custom_locations_count,
+        'cities': cities
     }
     return render(request, 'locations/locations.html', context)
 
