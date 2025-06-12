@@ -54,12 +54,35 @@ class RequestLeadForm(forms.Form):
         widget=forms.NumberInput(attrs={'min': '1', 'max': '30'})
     )
     
+    # Add new location fields
+    custom_locations = forms.ModelMultipleChoiceField(
+        queryset=CustomLocation.objects.all(),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'class': 'hidden'})
+    )
+    
+    cities = forms.ModelMultipleChoiceField(
+        queryset=City.objects.all(),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'class': 'hidden'})
+    )
+    
+    provinces = forms.ModelMultipleChoiceField(
+        queryset=Province.objects.all(),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'class': 'hidden'})
+    )
+    
     def __init__(self, user=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if user:
-            # Filter targets and hashtags by user
+            # Update existing querysets
             self.fields['targets'].queryset = Target.objects.filter(user=user)
             self.fields['hashtags'].queryset = Hashtag.objects.filter(user=user)
+            # Add location querysets
+            self.fields['custom_locations'].queryset = CustomLocation.objects.filter(user=user)
+            self.fields['cities'].queryset = City.objects.all()
+            self.fields['provinces'].queryset = Province.objects.all()
 
 
 

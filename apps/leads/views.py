@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import RequestLeadForm
 from apps.targets.models import Target
 from apps.hashtags.models import Hashtag
+from apps.locations.models import CustomLocation, City, Province
 
 
 def get_paginated_leads(request):
@@ -28,6 +29,30 @@ def get_paginated_leads(request):
         return paginator.page(1)
     except EmptyPage:
         return paginator.page(paginator.num_pages)
+
+
+def get_lead_context(user):
+    """Helper function to get common lead form context"""
+    # Get user preferences
+    preferences = user.lead_preferences
+    
+    # Get all available data with efficient queries
+    all_custom_locations = CustomLocation.objects.filter(user=user)
+    all_cities = City.objects.all().select_related('province')
+    all_provinces = Province.objects.all()
+    
+    return {
+        'preferences': preferences,
+        'platforms': Platform.objects.filter(is_active=True),
+        'hashtags': Hashtag.objects.filter(user=user),
+        'targets': Target.objects.filter(user=user),
+        'custom_locations': all_custom_locations,
+        'cities': all_cities,
+        'provinces': all_provinces,
+        'custom_locations_count': preferences.custom_locations.count(),
+        'cities_count': preferences.cities.count(),
+        'provinces_count': preferences.provinces.count(),
+    }
 
 
 # Create your views here.
@@ -62,18 +87,16 @@ def leads(request):
     leads = get_paginated_leads(request)
     total_leads = Lead.objects.filter(user=request.user).count()
     
-    # Create request lead form
-    request_lead_form = RequestLeadForm(request.user)
+    # Get form context
+    context = get_lead_context(request.user)
     
-    context = {
+    # Add leads-specific context
+    context.update({
         'leads': leads,
         'total_leads': total_leads,
-        'platforms': Platform.objects.filter(is_active=True),
         'status_choices': Lead.STATUS_CHOICES,
-        'request_lead_form': request_lead_form,
-        'targets': Target.objects.filter(user=request.user),
-        'hashtags': Hashtag.objects.filter(user=request.user),
-    }
+        'request_lead_form': RequestLeadForm(request.user),
+    })
         
     return render(request, 'leads/leads.html', context)
 
@@ -121,3 +144,12 @@ def delete_lead(request, lead_id):
             'platforms': Platform.objects.filter(is_active=True),
             'status_choices': Lead.STATUS_CHOICES,
         })
+
+
+@login_required
+def get_lead_preferences(request):
+    try:
+        context = get_lead_context(request.user)
+        return render(request, 'leads/components/form_preference_fields.html', context)
+    except AttributeError:
+        return HttpResponse(status=400)

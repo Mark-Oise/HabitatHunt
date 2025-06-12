@@ -23,4 +23,6 @@ urlpatterns = [
     path('leads/<int:lead_id>/notes/add/', utils.add_note, name='add_note'),
     path('notes/<int:note_id>/delete/', utils.delete_note, name='delete_note'),
 
+    path('preferences/', views.get_lead_preferences, name='get_lead_preferences'),
+
 ]
