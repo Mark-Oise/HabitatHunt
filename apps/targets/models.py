@@ -45,6 +45,7 @@ class TargetScrapeLog(models.Model):
     """
     target = models.ForeignKey(Target, on_delete=models.CASCADE, related_name='scrape_logs')
     comments_scraped = models.IntegerField(default=0)
+    posts_scraped = models.IntegerField(default=0)
     leads_generated = models.IntegerField(default=0)
     error_message = models.TextField(blank=True)
     status = models.CharField(
@@ -55,7 +56,15 @@ class TargetScrapeLog(models.Model):
             ('partial', 'Partial Success')
         ]
     )
+    scrape_duration = models.DurationField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['target', '-created_at']),
+            models.Index(fields=['status']),
+        ]
+
+    def __str__(self):
+        return f"{self.target.username} - {self.get_status_display()} ({self.created_at})"

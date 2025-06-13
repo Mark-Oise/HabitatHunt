@@ -66,3 +66,53 @@ class CustomLocation(models.Model):
     def __str__(self):
         return f"{self.location_text} ({self.user.username})"
 
+
+class LocationScrapeLog(models.Model):
+    """
+    Logs location-based filtering activity during lead generation
+    """
+    LOCATION_TYPE_CHOICES = [
+        ('custom', 'Custom Location'),
+        ('city', 'City'),
+        ('province', 'Province/State'),
+    ]
+    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    location_type = models.CharField(max_length=20, choices=LOCATION_TYPE_CHOICES)
+    location_name = models.CharField(max_length=255)  # Store the actual location name
+    
+    # Metrics
+    total_leads_before_filter = models.IntegerField(default=0)
+    leads_matched = models.IntegerField(default=0)
+    leads_filtered_out = models.IntegerField(default=0)
+    
+    # Status tracking
+    status = models.CharField(
+        max_length=20,
+        choices=[
+            ('success', 'Success'),
+            ('failed', 'Failed'),
+            ('no_data', 'No Location Data Available')
+        ],
+        default='success'
+    )
+    error_message = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['user', '-created_at']),
+            models.Index(fields=['location_type']),
+        ]
+
+    def __str__(self):
+        return f"{self.location_name} ({self.get_location_type_display()}) - {self.leads_matched} matches"
+
+    @property
+    def filter_efficiency(self):
+        """Calculate what percentage of leads matched the location filter"""
+        if self.total_leads_before_filter == 0:
+            return 0
+        return (self.leads_matched / self.total_leads_before_filter) * 100
+

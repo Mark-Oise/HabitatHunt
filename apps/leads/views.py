@@ -13,22 +13,10 @@ from .forms import RequestLeadForm
 from apps.targets.models import Target
 from apps.hashtags.models import Hashtag
 from apps.locations.models import CustomLocation, City, Province
+from django.contrib import messages
+from .tasks import process_lead_generation_request
 
 
-def get_paginated_leads(request):
-    # Query leads with ordering
-    leads = Lead.objects.filter(user=request.user).prefetch_related('activity').order_by('-created_at')
-    
-    # Handle pagination
-    page = request.GET.get('page', 1)
-    paginator = Paginator(leads, 10)  # Show 10 leads per page
-    
-    try:
-        return paginator.page(page)
-    except PageNotAnInteger:
-        return paginator.page(1)
-    except EmptyPage:
-        return paginator.page(paginator.num_pages)
 
 
 def get_lead_context(user):
@@ -55,6 +43,23 @@ def get_lead_context(user):
     }
 
 
+
+def get_paginated_leads(request):
+    # Query leads with ordering
+    leads = Lead.objects.filter(user=request.user).prefetch_related('activity').order_by('-created_at')
+    
+    # Handle pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(leads, 10)  # Show 10 leads per page
+    
+    try:
+        return paginator.page(page)
+    except PageNotAnInteger:
+        return paginator.page(1)
+    except EmptyPage:
+        return paginator.page(paginator.num_pages)
+
+
 # Create your views here.
 
 
@@ -64,8 +69,20 @@ def leads(request):
         if 'request_lead_form' in request.POST:
             form = RequestLeadForm(request.user, request.POST)
             if form.is_valid():
-                # Process the form data
-                # In a real implementation, you would pass this to a task queue
+                # Process the form data and queue the task
+                success = process_lead_request(form.cleaned_data, request.user)
+                
+                if success:
+                    messages.success(
+                        request, 
+                        'Lead generation request submitted successfully! You will be notified when it completes.'
+                    )
+                else:
+                    messages.error(
+                        request,
+                        'There was an error submitting your lead generation request. Please try again.'
+                    )
+                
                 return redirect('leads:leads')
         else:
             # Handle lead update form
@@ -86,11 +103,11 @@ def leads(request):
     # Get lead data
     leads = get_paginated_leads(request)
     total_leads = Lead.objects.filter(user=request.user).count()
-    
-    # Get form context
+
     context = get_lead_context(request.user)
     
-    # Add leads-specific context
+    
+    
     context.update({
         'leads': leads,
         'total_leads': total_leads,
@@ -153,3 +170,39 @@ def get_lead_preferences(request):
         return render(request, 'leads/components/form_preference_fields.html', context)
     except AttributeError:
         return HttpResponse(status=400)
+
+def process_lead_request(form_data, user):
+    """
+    Process the lead generation request by queuing a Celery task
+    """
+    try:
+        # Prepare the form data for the task
+        # Convert QuerySets to lists of IDs for serialization
+        task_data = {
+            'platforms': [p.id for p in form_data['platforms']],
+            'targets': [t.id for t in form_data['targets']],
+            'hashtags': [h.id for h in form_data['hashtags']],
+            'custom_locations': [cl.id for cl in form_data['custom_locations']],
+            'cities': [c.id for c in form_data['cities']],
+            'provinces': [p.id for p in form_data['provinces']],
+            'engagement_threshold': form_data['engagement_threshold'],
+            'frequency': form_data['frequency'],
+            'repeat_days': form_data.get('repeat_days', 7),
+        }
+        
+        # Queue the task
+        task = process_lead_generation_request.delay(task_data, user.id)
+        
+        # Optional: Track the task status
+        # TaskStatus.objects.create(
+        #     user=user,
+        #     task_id=task.id,
+        #     task_type='lead_generation',
+        #     status='pending'
+        # )
+        
+        return True
+        
+    except Exception as e:
+        print(f"Error queuing lead generation task: {e}")
+        return False

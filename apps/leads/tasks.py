@@ -1,72 +1,186 @@
 from celery import shared_task
-import openai
-from .models import RawComment, Lead
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+from datetime import timedelta
+from .services import LeadGenerationService
+from .models import LeadPreference
+from apps.targets.models import TargetScrapeLog
+from apps.hashtags.models import HashtagScrapeLog
+from apps.locations.models import LocationScrapeLog
+from apps.platforms.models import Platform
+from apps.targets.models import Target
+from apps.hashtags.models import Hashtag
+from apps.locations.models import CustomLocation, City, Province
+import logging
 
+User = get_user_model()
+logger = logging.getLogger(__name__)
 
-@shared_task
-def clean_scraped_data():
-    # Remove duplicate and spam comments
-    unique_comments = {}
-    for comment in RawComment.objects.all():
-        key = (comment.text.lower(), comment.platform)
-        if key not in unique_comments:
-            unique_comments[key] = comment
-        else:
-            comment.delete()
-
-    print('Data cleaned successfully')
-
-
-
-def calculate_sentiment_score(text):
-    """Convert OpenAI's 0-1 score to 0-100 scale"""
+@shared_task(bind=True)
+def process_lead_generation_request(self, task_data, user_id):
+    """
+    Background task for processing lead generation requests
+    """
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": "Analyze the sentiment and return a score between 0 and 1, where 0 is very negative and 1 is very positive."},
-                {"role": "user", "content": text}
-            ],
-            max_tokens=5
+        user = User.objects.get(id=user_id)
+        service = LeadGenerationService()
+        
+        # Update task status
+        self.update_state(
+            state='PROGRESS',
+            meta={'status': 'Starting lead generation...', 'progress': 10}
         )
-        score = float(response.choices[0].message.content.strip())
-        return score * 100  # Convert to 0-100 scale
-    except:
-        return 50  # Return neutral score if analysis fails
+        
+        # Convert IDs back to objects
+        form_data = deserialize_task_data(task_data)
+        
+        self.update_state(
+            state='PROGRESS',
+            meta={'status': 'Processing targets and hashtags...', 'progress': 30}
+        )
+        
+        # Process the request
+        result = service.process_lead_request(form_data, user)
+        
+        self.update_state(
+            state='PROGRESS',
+            meta={'status': 'Saving leads...', 'progress': 80}
+        )
+        
+        # Handle recurring requests
+        if task_data['frequency'] == 'recurring':
+            save_or_update_recurring_preference(task_data, user)
+        
+        logger.info(f"Lead generation completed for user {user.id}: {result}")
+        
+        self.update_state(
+            state='SUCCESS',
+            meta={
+                'status': 'Lead generation completed!',
+                'progress': 100,
+                'results': result
+            }
+        )
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Lead generation failed for user {user_id}: {str(e)}")
+        
+        self.update_state(
+            state='FAILURE',
+            meta={'status': f'Error: {str(e)}', 'progress': 0}
+        )
+        raise
 
-def calculate_engagement_score(comment):
-    """Calculate engagement score based on likes and replies"""
-    likes_score = min(comment.likes * 0.5, 60)  # Max 60 points from likes
-    replies_score = min(comment.replies * 2, 40)  # Max 40 points from replies
-    return min(likes_score + replies_score, 100)  # Cap at 100
+def deserialize_task_data(task_data):
+    """
+    Convert serialized IDs back to Django objects
+    """
+    return {
+        'platforms': Platform.objects.filter(id__in=task_data['platforms']),
+        'targets': Target.objects.filter(id__in=task_data['targets']),
+        'hashtags': Hashtag.objects.filter(id__in=task_data['hashtags']),
+        'custom_locations': CustomLocation.objects.filter(id__in=task_data['custom_locations']),
+        'cities': City.objects.filter(id__in=task_data['cities']),
+        'provinces': Province.objects.filter(id__in=task_data['provinces']),
+        'engagement_threshold': task_data['engagement_threshold'],
+        'frequency': task_data['frequency'],
+        'repeat_days': task_data['repeat_days'],
+    }
 
+def save_or_update_recurring_preference(task_data, user):
+    """
+    Save or update user's recurring lead generation preferences
+    """
+    try:
+        # Get or create lead preference
+        preference, created = LeadPreference.objects.get_or_create(
+            user=user,
+            defaults={
+                'engagement_threshold': task_data['engagement_threshold'],
+                'default_frequency': 'recurring',
+                'repeat_days': task_data['repeat_days']
+            }
+        )
+        
+        if not created:
+            # Update existing preference
+            preference.engagement_threshold = task_data['engagement_threshold']
+            preference.default_frequency = 'recurring'
+            preference.repeat_days = task_data['repeat_days']
+            preference.save()
+        
+        # Update many-to-many relationships
+        preference.platforms.set(Platform.objects.filter(id__in=task_data['platforms']))
+        preference.targets.set(Target.objects.filter(id__in=task_data['targets']))
+        preference.hashtags.set(Hashtag.objects.filter(id__in=task_data['hashtags']))
+        preference.custom_locations.set(CustomLocation.objects.filter(id__in=task_data['custom_locations']))
+        preference.cities.set(City.objects.filter(id__in=task_data['cities']))
+        preference.provinces.set(Province.objects.filter(id__in=task_data['provinces']))
+        
+        logger.info(f"Saved recurring preferences for user {user.id}")
+        
+    except Exception as e:
+        logger.error(f"Error saving recurring preferences for user {user.id}: {e}")
 
 @shared_task
-def process_leads():
-    # Process scraped comments and qualify potential leads
-    for comment in RawComment.objects.filter(processed=False):
-        # Calculate scores
-        sentiment_score = calculate_sentiment_score(comment.text)
-        engagement_score = calculate_engagement_score(comment)
+def process_recurring_requests():
+    """
+    Process all recurring lead generation requests that are due
+    """
+    # Get all users with recurring preferences
+    recurring_prefs = LeadPreference.objects.filter(
+        default_frequency='recurring'
+    )
+    
+    for pref in recurring_prefs:
+        # Check if it's time to run (based on repeat_days)
+        last_run = pref.updated_at
+        next_run = last_run + timedelta(days=pref.repeat_days)
         
-        # Determine category
-        category = (
-            'hot' if sentiment_score >= 80 and engagement_score >= 50
-            else 'warm' if sentiment_score >= 50 and engagement_score >= 30
-            else 'cold'
-        )
+        if timezone.now() >= next_run:
+            # Prepare form data from preferences
+            form_data = {
+                'platforms': list(pref.platforms.all()),
+                'targets': list(pref.targets.all()),
+                'hashtags': list(pref.hashtags.all()),
+                'custom_locations': list(pref.custom_locations.all()),
+                'cities': list(pref.cities.all()),
+                'provinces': list(pref.provinces.all()),
+                'engagement_threshold': pref.engagement_threshold,
+            }
+            
+            # Queue the lead generation task
+            process_lead_generation_request.delay(form_data, pref.user.id)
+            
+            # Update the preference timestamp
+            pref.updated_at = timezone.now()
+            pref.save()
 
-        # Save as a Lead
-        Lead.objects.create(
-            username=comment.username,
-            text=comment.text,
-            platform=comment.platform,
-            sentiment_score=sentiment_score,
-            engagement_score=engagement_score,
-            category=category,
-            source=comment.platform
-        )
-        
-        # Mark as processed
-        comment.processed = True
-        comment.save()
+@shared_task
+def cleanup_old_scrape_logs():
+    """
+    Clean up old scrape logs from all sources (older than 30 days)
+    """
+    cutoff_date = timezone.now() - timedelta(days=30)
+    
+    # Clean up target logs
+    target_deleted = TargetScrapeLog.objects.filter(
+        created_at__lt=cutoff_date
+    ).delete()[0]
+    
+    # Clean up hashtag logs
+    hashtag_deleted = HashtagScrapeLog.objects.filter(
+        created_at__lt=cutoff_date
+    ).delete()[0]
+    
+    # Clean up location logs
+    location_deleted = LocationScrapeLog.objects.filter(
+        created_at__lt=cutoff_date
+    ).delete()[0]
+    
+    total_deleted = target_deleted + hashtag_deleted + location_deleted
+    
+    logger.info(f"Cleaned up {total_deleted} old scrape logs (Targets: {target_deleted}, Hashtags: {hashtag_deleted}, Locations: {location_deleted})")
+    return f"Cleaned up {total_deleted} old scrape logs"
