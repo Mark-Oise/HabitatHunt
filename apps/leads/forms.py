@@ -11,7 +11,8 @@ class RequestLeadForm(forms.Form):
     platforms = forms.ModelMultipleChoiceField(
         queryset=Platform.objects.filter(is_active=True),
         required=True,
-        widget=forms.SelectMultiple(attrs={'class': 'hidden'})
+        widget=forms.SelectMultiple(attrs={'class': 'hidden'}),
+        to_field_name='id'
     )
     
     targets = forms.ModelMultipleChoiceField(
@@ -83,6 +84,15 @@ class RequestLeadForm(forms.Form):
             self.fields['custom_locations'].queryset = CustomLocation.objects.filter(user=user)
             self.fields['cities'].queryset = City.objects.all()
             self.fields['provinces'].queryset = Province.objects.all()
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # Handle array-style form fields
+        for field in ['platforms[]', 'cities[]', 'provinces[]', 'custom_locations[]']:
+            if field in self.data:
+                base_field = field.replace('[]', '')
+                cleaned_data[base_field] = self.data.getlist(field)
+        return cleaned_data
 
 
 

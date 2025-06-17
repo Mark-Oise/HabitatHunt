@@ -82,8 +82,11 @@ def leads(request):
                         request,
                         'There was an error submitting your lead generation request. Please try again.'
                     )
-                
-                return redirect('leads:leads')
+            else:
+                # Add this to debug form errors
+                messages.error(request, f'Form validation failed: {form.errors}')
+            
+            return redirect('leads:leads')
         else:
             # Handle lead update form
             lead = get_object_or_404(Lead, id=request.POST.get('lead_id'), user=request.user)
@@ -170,6 +173,7 @@ def get_lead_preferences(request):
         return render(request, 'leads/components/form_preference_fields.html', context)
     except AttributeError:
         return HttpResponse(status=400)
+    
 
 def process_lead_request(form_data, user):
     """
