@@ -165,7 +165,7 @@
                             <div id="cities" data-location-content="cities" class="w-full hidden">
                                 {% include 'settings/partials/cities.html' %}
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -271,7 +271,7 @@
                             <span>Medium (50%)</span>
                             <span>High (100%)</span>
                         </div>
-                        <div class="mt-8 bg-gray-100 p-4 rounded-lg">
+                        <div class="mt-8 bg-gray-100 p-4 rounded-lg dark:bg-gray-800">
                             <p class="text-sm text-gray-600 dark:text-gray-400">
                                 <span class="font-medium">Current threshold: <span id="threshold-display">{{ lead_preference.engagement_threshold|default:50 }}</span>%</span><br>
                                 Leads with engagement scores below this threshold will be filtered out automatically.

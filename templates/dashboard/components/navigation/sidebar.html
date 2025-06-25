@@ -1,6 +1,4 @@
-<aside id="logo-sidebar"
-    class="fixed top-0 left-0 z-40 w-64 h-screen pt-4 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-    aria-label="Sidebar">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-4 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <div class="flex items-center justify-between ps-2.5 mb-5">
             <a href="https://flowbite.com/" class="flex items-center">
@@ -16,41 +14,28 @@
                     <label for="mobile-search" class="sr-only">Search</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                    clip-rule="evenodd"></path>
+                            <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                             </svg>
                         </div>
-                        <input type="text" name="email" id="mobile-search"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Search">
+                        <input type="text" name="email" id="mobile-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search">
                     </div>
                 </form>
             </li>
             <li>
-                <a href="{% url 'dashboard:dashboard' %}"
-                    class="flex items-center p-2 text-base text-gray-900 rounded-lg {% if request.resolver_match.url_name == 'dashboard' %}bg-gray-100 dark:bg-gray-700{% endif %} hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg {% if request.resolver_match.url_name == 'dashboard' %}bg-gray-100 dark:bg-gray-700{% endif %} hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
 
-                    <svg class="w-6 h-6 {% if request.resolver_match.url_name == 'dashboard' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5" />
+                    <svg class="w-6 h-6 {% if request.resolver_match.url_name == 'dashboard' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5" />
                     </svg>
 
                     <span class="ml-3" sidebar-toggle-item>Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'leads:leads' %}"
-                    class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group {% if request.resolver_match.url_name == 'leads' %}bg-gray-100 dark:bg-gray-700{% endif %} hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
-                    <svg class="flex-shrink-0 w-6 h-6 {% if request.resolver_match.url_name == 'leads' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                            d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <a href="{% url 'leads:leads' %}" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group {% if request.resolver_match.url_name == 'leads' %}bg-gray-100 dark:bg-gray-700{% endif %} hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                    <svg class="flex-shrink-0 w-6 h-6 {% if request.resolver_match.url_name == 'leads' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     </svg>
 
 
@@ -60,26 +45,21 @@
 
             </li>
             <li>
-                <a href="{% url 'locations:locations' %}"
-                    class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group {% if request.resolver_match.url_name == 'locations' %}bg-gray-100 dark:bg-gray-700{% endif %} hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
-                   
-                    <svg class="flex-shrink-0 w-6 h-6 {% if request.resolver_match.url_name == 'hashtags' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
-                      </svg>
-                      
+                <a href="{% url 'locations:locations' %}" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group {% if request.resolver_match.url_name == 'locations' %}bg-gray-100 dark:bg-gray-700{% endif %} hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+
+                    <svg class="flex-shrink-0 w-6 h-6 {% if request.resolver_match.url_name == 'locations' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z" />
+                    </svg>
+
 
                     <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Manage Locations</span>
 
                 </a>
             </li>
             <li>
-                <a href="{% url 'hashtags:hashtags' %}"
-                    class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group {% if request.resolver_match.url_name == 'hashtags' %}bg-gray-100 dark:bg-gray-700{% endif %} hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
-                    <svg class="flex-shrink-0 w-6 h-6 {% if request.resolver_match.url_name == 'hashtags' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-hash">
+                <a href="{% url 'hashtags:hashtags' %}" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group {% if request.resolver_match.url_name == 'hashtags' %}bg-gray-100 dark:bg-gray-700{% endif %} hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                    <svg class="flex-shrink-0 w-6 h-6 {% if request.resolver_match.url_name == 'hashtags' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hash">
                         <line x1="4" x2="20" y1="9" y2="9" />
                         <line x1="4" x2="20" y1="15" y2="15" />
                         <line x1="10" x2="8" y1="3" y2="21" />
@@ -91,13 +71,10 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'targets:targets' %}"
-                    class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group {% if request.resolver_match.url_name == 'targets' %}bg-gray-100 dark:bg-gray-700{% endif %} hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                <a href="{% url 'targets:targets' %}" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group {% if request.resolver_match.url_name == 'targets' %}bg-gray-100 dark:bg-gray-700{% endif %} hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
 
 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-target w-6 h-6 {% if request.resolver_match.url_name == 'targets' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target w-6 h-6 {% if request.resolver_match.url_name == 'targets' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %}">
                         <circle cx="12" cy="12" r="10"></circle>
                         <circle cx="12" cy="12" r="6"></circle>
                         <circle cx="12" cy="12" r="2"></circle>
@@ -109,15 +86,12 @@
                 </a>
 
             </li>
-            
-            
+
+
             <li>
-                <a href="{% url 'settings:settings' %}"
-                    class="flex items-center p-2 text-base text-gray-900  {% if request.resolver_match.url_name == 'settings' %}bg-gray-100 dark:bg-gray-700{% endif %} rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
-                    <svg class="w-6 h-6 {% if request.resolver_match.url_name == 'settings' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path clip-rule="evenodd" fill-rule="evenodd"
-                            d="M8.34 1.804A1 1 0 019.32 1h1.36a1 1 0 01.98.804l.295 1.473c.497.144.971.342 1.416.587l1.25-.834a1 1 0 011.262.125l.962.962a1 1 0 01.125 1.262l-.834 1.25c.245.445.443.919.587 1.416l1.473.294a1 1 0 01.804.98v1.361a1 1 0 01-.804.98l-1.473.295a6.95 6.95 0 01-.587 1.416l.834 1.25a1 1 0 01-.125 1.262l-.962.962a1 1 0 01-1.262.125l-1.25-.834a6.953 6.953 0 01-1.416.587l-.294 1.473a1 1 0 01-.98.804H9.32a1 1 0 01-.98-.804l-.295-1.473a6.957 6.957 0 01-1.416-.587l-1.25.834a1 1 0 01-1.262-.125l-.962-.962a1 1 0 01-.125-1.262l.834-1.25a6.957 6.957 0 01-.587-1.416l-1.473-.294A1 1 0 011 10.68V9.32a1 1 0 01.804-.98l1.473-.295c.144-.497.342-.971.587-1.416l-.834-1.25a1 1 0 01.125-1.262l.962-.962A1 1 0 015.38 3.03l1.25.834a6.957 6.957 0 011.416-.587l.294-1.473zM13 10a3 3 0 11-6 0 3 3 0 016 0z">
+                <a href="{% url 'settings:settings' %}" class="flex items-center p-2 text-base text-gray-900  {% if request.resolver_match.url_name == 'settings' %}bg-gray-100 dark:bg-gray-700{% endif %} rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                    <svg class="w-6 h-6 {% if request.resolver_match.url_name == 'settings' %}text-green-500 dark:text-green-500{% else %}text-gray-500{% endif %} transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path clip-rule="evenodd" fill-rule="evenodd" d="M8.34 1.804A1 1 0 019.32 1h1.36a1 1 0 01.98.804l.295 1.473c.497.144.971.342 1.416.587l1.25-.834a1 1 0 011.262.125l.962.962a1 1 0 01.125 1.262l-.834 1.25c.245.445.443.919.587 1.416l1.473.294a1 1 0 01.804.98v1.361a1 1 0 01-.804.98l-1.473.295a6.95 6.95 0 01-.587 1.416l.834 1.25a1 1 0 01-.125 1.262l-.962.962a1 1 0 01-1.262.125l-1.25-.834a6.953 6.953 0 01-1.416.587l-.294 1.473a1 1 0 01-.98.804H9.32a1 1 0 01-.98-.804l-.295-1.473a6.957 6.957 0 01-1.416-.587l-1.25.834a1 1 0 01-1.262-.125l-.962-.962a1 1 0 01-.125-1.262l.834-1.25a6.957 6.957 0 01-.587-1.416l-1.473-.294A1 1 0 011 10.68V9.32a1 1 0 01.804-.98l1.473-.295c.144-.497.342-.971.587-1.416l-.834-1.25a1 1 0 01.125-1.262l.962-.962A1 1 0 015.38 3.03l1.25.834a6.957 6.957 0 011.416-.587l.294-1.473zM13 10a3 3 0 11-6 0 3 3 0 016 0z">
                         </path>
                     </svg>
                     <span class="ml-3" sidebar-toggle-item>Settings</span>
@@ -150,28 +124,18 @@
                 </button>
 
             </div> -->
-            <div id="dropdown-cta-premiums"
-                class="shadow-sm p-4 mt-6 rounded-lg bg-gradient-to-br from-teal-300/30 to-lime-300/30 dark:bg-blue-900"
-                role="alert">
+            <div id="dropdown-cta-premiums" class="shadow-sm p-4 mt-6 rounded-lg bg-gradient-to-br from-teal-300/30 to-lime-300/30 dark:bg-blue-900" role="alert">
                 <div class="flex items-center mb-3">
-                    <span
-                        class="flex bg-gradient-to-r from-teal-300 to-lime-300 text-teal-900 dark:text-teal-900 text-sm font-semibold me-2 px-2.5 py-0.5 rounded-sm dark:bg-orange-200 dark:text-orange-900 items-start justify-between">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-crown-icon lucide-crown w-4 h-4 me-2">
-                            <path
-                                d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" />
+                    <span class="flex bg-gradient-to-r from-teal-300 to-lime-300 text-teal-900 dark:text-teal-900 text-sm font-semibold me-2 px-2.5 py-0.5 rounded-sm dark:bg-orange-200 dark:text-orange-900 items-start justify-between">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-crown-icon lucide-crown w-4 h-4 me-2">
+                            <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" />
                             <path d="M5 21h14" />
                         </svg>
                         Premium</span>
-                    <button type="button"
-                        class="ms-auto -mx-1.5 -my-1.5 inline-flex justify-center items-center w-6 h-6 text-blue-900 rounded-lg focus:ring-2 focus:ring-blue-400 p-1 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800"
-                        data-dismiss-target="#dropdown-cta-premium" aria-label="Close">
+                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 inline-flex justify-center items-center w-6 h-6 text-blue-900 rounded-lg focus:ring-2 focus:ring-blue-400 p-1 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800" data-dismiss-target="#dropdown-cta-premium" aria-label="Close">
                         <span class="sr-only">Close</span>
-                        <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                     </button>
                 </div>
